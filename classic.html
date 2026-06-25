@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>VibeCheck — Dating without the dead zone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --cream:#FBF7F1;
+  --cream-2:#F4ECE1;
+  --ink:#231C2E;
+  --ink-soft:#6E6678;
+  --ink-faint:#A39BAD;
+  --brand:#E25C45;
+  --brand-deep:#C9492F;
+  --brand-tint:#FBE7E1;
+  --plum:#2D2440;
+  --plum-2:#3C3155;
+  --green:#3F9D6B;
+  --green-tint:#E2F0E7;
+  --amber:#E0A338;
+  --amber-tint:#F8EDD5;
+  --red:#D85C49;
+  --red-tint:#FBE4DF;
+  --line:#ECE3D7;
+  --card:#FFFFFF;
+  --shadow-sm:0 1px 2px rgba(45,36,64,.05),0 2px 8px rgba(45,36,64,.05);
+  --shadow-md:0 6px 22px rgba(45,36,64,.10),0 2px 6px rgba(45,36,64,.06);
+  --shadow-lg:0 24px 60px rgba(45,36,64,.18);
+  --r-lg:26px;
+  --r-md:18px;
+  --r-sm:13px;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 600px at 12% -8%, #F6E2D6 0%, rgba(246,226,214,0) 55%),
+    radial-gradient(1000px 700px at 110% 12%, #ECE0F2 0%, rgba(236,224,242,0) 50%),
+    linear-gradient(160deg,#EFE6DA 0%, #E9DDCC 100%);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ---------- Desktop canvas ---------- */
+.canvas{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:54px;
+  padding:40px 24px;
+}
+.pitch{
+  display:none;
+  max-width:340px;
+}
+.pitch .mark{display:flex;align-items:center;gap:11px;margin-bottom:22px}
+.pitch h1{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:40px;
+  line-height:1.08;
+  letter-spacing:-.5px;
+  color:var(--plum);
+}
+.pitch p{margin-top:16px;color:var(--ink-soft);font-size:16px;line-height:1.6}
+.pitch .legend{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+.pitch .legend .row{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--ink-soft)}
+.pitch .legend b{color:var(--ink);font-weight:600}
+.pitch .legend .n{
+  flex:none;width:24px;height:24px;border-radius:8px;background:var(--plum);color:#fff;
+  font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--sans);
+}
+
+/* ---------- Phone ---------- */
+.phone{
+  position:relative;
+  width:418px;
+  height:min(880px,94vh);
+  background:var(--cream);
+  border-radius:46px;
+  box-shadow:var(--shadow-lg), 0 0 0 11px #15101E, 0 0 0 13px #2c2438;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  flex:none;
+}
+.statusbar{
+  flex:none;height:46px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;font-size:13px;font-weight:600;color:var(--ink);
+  background:transparent;z-index:6;position:relative;
+}
+.statusbar .dots{display:flex;gap:5px;align-items:center}
+.statusbar .sig{display:flex;gap:2px;align-items:flex-end;height:11px}
+.statusbar .sig i{width:3px;background:var(--ink);border-radius:1px;display:block}
+.statusbar .sig i:nth-child(1){height:4px}
+.statusbar .sig i:nth-child(2){height:6px}
+.statusbar .sig i:nth-child(3){height:8px}
+.statusbar .sig i:nth-child(4){height:11px}
+.statusbar .bat{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative;padding:1.5px}
+.statusbar .bat::after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+.statusbar .bat span{display:block;height:100%;width:72%;background:var(--ink);border-radius:1px}
+
+.screens{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;scroll-behavior:smooth}
+.screens::-webkit-scrollbar{width:0}
+.screen{display:none;min-height:100%;animation:fade .42s ease both}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- Brand mark ---------- */
+.logo{display:inline-flex;align-items:center;gap:9px;font-family:var(--serif);font-weight:600;font-size:19px;color:var(--plum);letter-spacing:-.2px}
+.logo .glyph{
+  width:30px;height:30px;border-radius:9px;flex:none;
+  background:linear-gradient(150deg,var(--brand),#F0865B);
+  display:flex;align-items:center;justify-content:center;gap:2px;
+  box-shadow:0 3px 8px rgba(226,92,69,.4);
+}
+.logo .glyph i{width:2.5px;border-radius:2px;background:#fff;display:block;animation:eq 1.1s ease-in-out infinite}
+.logo .glyph i:nth-child(1){height:7px;animation-delay:0s}
+.logo .glyph i:nth-child(2){height:13px;animation-delay:.15s}
+.logo .glyph i:nth-child(3){height:9px;animation-delay:.3s}
+.logo.lg{font-size:25px}
+.logo.lg .glyph{width:40px;height:40px;border-radius:12px}
+.logo.lg .glyph i{width:3px}
+.logo.lg .glyph i:nth-child(1){height:9px}
+.logo.lg .glyph i:nth-child(2){height:18px}
+.logo.lg .glyph i:nth-child(3){height:12px}
+@keyframes eq{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
+
+/* ---------- Generic ---------- */
+.pad{padding:8px 24px 30px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--brand-deep)}
+h2.title{font-family:var(--serif);font-weight:600;font-size:27px;line-height:1.14;letter-spacing:-.4px;color:var(--plum)}
+.lede{color:var(--ink-soft);font-size:15px;line-height:1.6}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  border:none;cursor:pointer;font-family:var(--sans);font-weight:600;font-size:16px;
+  padding:16px 22px;border-radius:15px;background:var(--brand);color:#fff;
+  box-shadow:0 8px 20px rgba(226,92,69,.32);transition:transform .12s ease, box-shadow .2s, background .2s;
+}
+.btn:hover{background:var(--brand-deep)}
+.btn:active{transform:scale(.975)}
+.btn.ghost{background:transparent;color:var(--plum);box-shadow:none;border:1.5px solid var(--line)}
+.btn.ghost:hover{background:#fff;border-color:#ddd1c2}
+.btn.dark{background:var(--plum);box-shadow:0 8px 20px rgba(45,36,64,.28)}
+.btn.dark:hover{background:var(--plum-2)}
+.btn.sm{width:auto;padding:11px 18px;font-size:14px;border-radius:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow-sm)}
+
+/* sticky footer cta */
+.footer-cta{
+  position:sticky;bottom:0;left:0;right:0;padding:14px 24px 22px;
+  background:linear-gradient(to top, var(--cream) 62%, rgba(251,247,241,0));
+  z-index:5;
+}
+
+/* ---------- LANDING ---------- */
+#landing .pad{padding-top:6px}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:6px 24px 4px}
+.nav .signin{font-size:13px;font-weight:600;color:var(--ink-soft);background:#fff;border:1px solid var(--line);padding:8px 14px;border-radius:11px;cursor:pointer}
+.hero{padding:30px 24px 22px;text-align:left}
+.hero .eyebrow{display:inline-block;background:var(--brand-tint);color:var(--brand-deep);padding:6px 12px;border-radius:999px;letter-spacing:.6px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:43px;line-height:1.04;letter-spacing:-1px;color:var(--plum);margin-top:18px}
+.hero h1 em{font-style:italic;color:var(--brand)}
+.hero .sub{margin-top:16px;font-size:17px;line-height:1.5;color:var(--ink-soft);max-width:330px}
+.hero .micro{margin-top:14px;font-size:13px;color:var(--ink-faint);display:flex;align-items:center;gap:7px}
+.hero .micro b{color:var(--green);font-weight:600}
+.hero-visual{
+  margin:24px 24px 8px;height:172px;border-radius:24px;position:relative;overflow:hidden;
+  background:linear-gradient(140deg,#2D2440,#48395f 60%,#7d4f63);
+  box-shadow:var(--shadow-md);
+}
+.hero-visual .orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.85}
+.hero-visual .o1{width:120px;height:120px;background:radial-gradient(circle at 30% 30%,#F0865B,#E25C45);top:-30px;right:-20px}
+.hero-visual .o2{width:90px;height:90px;background:radial-gradient(circle at 40% 40%,#E9C6A0,#caa06f);bottom:-26px;left:30px;opacity:.7}
+.hero-visual .chip{position:absolute;background:rgba(255,255,255,.95);border-radius:13px;padding:9px 13px;box-shadow:var(--shadow-md);font-size:12.5px;font-weight:600;color:var(--plum);display:flex;align-items:center;gap:8px}
+.hero-visual .chip .d{width:8px;height:8px;border-radius:50%}
+.hero-visual .c1{top:26px;left:22px;animation:floaty 4s ease-in-out infinite}
+.hero-visual .c2{top:74px;right:26px;animation:floaty 4s ease-in-out infinite .8s}
+.hero-visual .c3{bottom:24px;left:50%;transform:translateX(-50%);animation:floaty 4s ease-in-out infinite 1.6s}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.hero-visual .c3{animation-name:floaty3}
+@keyframes floaty3{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}
+
+.section{padding:30px 24px}
+.section .eyebrow{margin-bottom:10px;display:block}
+.statgrid{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.stat{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:15px 16px;box-shadow:var(--shadow-sm)}
+.stat .big{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--brand);flex:none;line-height:1}
+.stat .t{font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+.steps{margin-top:20px;display:flex;flex-direction:column;gap:14px}
+.step{display:flex;gap:15px;align-items:flex-start}
+.step .n{flex:none;width:34px;height:34px;border-radius:11px;background:var(--plum);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif)}
+.step h4{font-size:15.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.step p{font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.section.dark{background:var(--plum);border-radius:30px;margin:14px 18px;color:#fff}
+.section.dark .eyebrow{color:#F0865B}
+.section.dark h2.title{color:#fff}
+.compare{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.compare .col{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-md);padding:16px 14px}
+.compare .col.win{background:#fff;border-color:#fff}
+.compare .col h5{font-size:13px;font-weight:700;margin-bottom:12px;color:rgba(255,255,255,.7);letter-spacing:.3px}
+.compare .col.win h5{color:var(--brand-deep)}
+.compare .col li{list-style:none;font-size:13px;line-height:1.4;color:rgba(255,255,255,.92);padding:7px 0;display:flex;gap:8px;align-items:flex-start;border-top:1px solid rgba(255,255,255,.1)}
+.compare .col li:first-child{border-top:none}
+.compare .col.win li{color:var(--ink)}
+.compare .col li .m{flex:none;font-weight:700}
+.compare .col.win li .m{color:var(--green)}
+.compare .col li .m.x{color:rgba(255,255,255,.45)}
+.land-foot{text-align:center;padding:24px;color:var(--ink-faint);font-size:11.5px}
+
+/* ---------- INTAKE ---------- */
+.intake-top{padding:14px 24px 6px}
+.progress{height:7px;background:var(--cream-2);border-radius:999px;overflow:hidden;margin-top:12px}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),#F0865B);border-radius:999px;width:0;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.q-count{font-size:12px;font-weight:600;color:var(--ink-faint);letter-spacing:.3px}
+.q-wrap{padding:18px 24px 20px}
+.q-prompt{font-family:var(--serif);font-weight:600;font-size:25px;line-height:1.18;letter-spacing:-.3px;color:var(--plum)}
+.q-help{margin-top:9px;font-size:13.5px;color:var(--ink-soft)}
+.opts{margin-top:22px;display:flex;flex-direction:column;gap:11px}
+.opt{
+  text-align:left;background:#fff;border:1.6px solid var(--line);border-radius:15px;padding:16px 17px;
+  font-size:15px;font-weight:500;color:var(--ink);cursor:pointer;transition:all .16s ease;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow-sm);
+}
+.opt:hover{border-color:#dcc7bd;transform:translateY(-1px)}
+.opt .tick{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .16s}
+.opt .tick svg{width:12px;height:12px;opacity:0;transition:opacity .16s}
+.opt.sel{border-color:var(--brand);background:var(--brand-tint)}
+.opt.sel .tick{background:var(--brand);border-color:var(--brand)}
+.opt.sel .tick svg{opacity:1}
+.multi-hint{font-size:12.5px;color:var(--ink-faint);margin-top:14px;text-align:center}
+
+/* ---------- PROFILE SUMMARY ---------- */
+.profile-hero{background:linear-gradient(150deg,var(--plum),#4a3a64);color:#fff;padding:34px 26px 30px;border-radius:0 0 30px 30px;text-align:center}
+.profile-hero .ring{width:74px;height:74px;border-radius:50%;margin:0 auto 16px;background:linear-gradient(150deg,var(--brand),#F0865B);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:30px;font-weight:600;box-shadow:0 8px 22px rgba(226,92,69,.45)}
+.profile-hero .eyebrow{color:#F0A07E;display:block;margin-bottom:8px}
+.profile-hero h2{font-family:var(--serif);font-weight:600;font-size:25px;line-height:1.15;letter-spacing:-.3px}
+.profile-body{padding:22px 24px 8px}
+.profile-body .summary{font-size:15.5px;line-height:1.62;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:19px 20px;box-shadow:var(--shadow-sm)}
+.profile-body .summary .lead{font-family:var(--serif);font-size:17px;color:var(--plum);font-weight:600;display:block;margin-bottom:8px}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tag{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:600;color:var(--plum);display:flex;align-items:center;gap:7px;box-shadow:var(--shadow-sm)}
+.tag .d{width:7px;height:7px;border-radius:50%;background:var(--brand)}
+.intent-line{margin-top:16px;background:var(--brand-tint);border-radius:var(--r-md);padding:15px 17px;font-size:14px;color:var(--brand-deep);font-weight:500;line-height:1.5}
+
+/* ---------- DASHBOARD ---------- */
+.dash-head{padding:18px 24px 4px}
+.dash-head .row{display:flex;align-items:center;justify-content:space-between}
+.refresh-pill{font-size:11.5px;font-weight:600;color:var(--green);background:var(--green-tint);padding:6px 11px;border-radius:999px;display:flex;align-items:center;gap:6px}
+.refresh-pill .d{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.match-list{padding:16px 24px 10px;display:flex;flex-direction:column;gap:16px}
+.match-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:var(--shadow-md);cursor:pointer;transition:transform .15s ease, box-shadow .2s}
+.match-card:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(45,36,64,.14)}
+.mc-top{display:flex;gap:14px;align-items:center}
+.avatar{flex:none;width:62px;height:62px;border-radius:19px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:26px;font-weight:600;color:#fff;position:relative}
+.avatar.lg{width:84px;height:84px;border-radius:24px;font-size:34px}
+.mc-id{flex:1;min-width:0}
+.mc-id h3{font-size:18px;font-weight:700;color:var(--ink);display:flex;align-items:baseline;gap:7px}
+.mc-id h3 span{font-size:14px;font-weight:500;color:var(--ink-soft)}
+.mc-id .job{font-size:13px;color:var(--ink-soft);margin-top:2px}
+.ring-score{flex:none;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative}
+.ring-score .inner{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-score .inner b{font-size:15px;font-weight:700;color:var(--plum);line-height:1}
+.ring-score .inner small{font-size:8px;font-weight:600;color:var(--ink-faint);letter-spacing:.3px;text-transform:uppercase}
+.dims{display:flex;gap:7px;margin-top:15px}
+.dim{flex:1;background:var(--cream);border-radius:12px;padding:10px 8px;text-align:center}
+.dim .d{width:9px;height:9px;border-radius:50%;margin:0 auto 6px}
+.dim .lab{font-size:10.5px;font-weight:600;color:var(--ink-soft);letter-spacing:.1px}
+.dim .st{font-size:10px;font-weight:700;margin-top:2px}
+.g .d{background:var(--green)} .g .st{color:var(--green)}
+.y .d{background:var(--amber)} .y .st{color:var(--amber)}
+.r .d{background:var(--red)} .r .st{color:var(--red)}
+.why{margin-top:14px;background:var(--cream);border-radius:13px;padding:12px 14px;font-size:13px;line-height:1.5;color:var(--ink)}
+.why b{color:var(--brand-deep);font-weight:700}
+.mc-go{margin-top:13px;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;color:var(--brand-deep)}
+
+/* ---------- MATCH DETAIL ---------- */
+.detail-head{position:relative;padding:14px 24px 0}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--ink-soft);background:#fff;border:1px solid var(--line);padding:9px 14px;border-radius:11px;cursor:pointer}
+.detail-hero{display:flex;gap:16px;align-items:center;padding:20px 24px 6px}
+.detail-hero .meta h2{font-family:var(--serif);font-size:25px;font-weight:600;color:var(--plum)}
+.detail-hero .meta .job{font-size:13.5px;color:var(--ink-soft);margin-top:3px}
+.detail-hero .meta .score{margin-top:9px;display:inline-flex;align-items:center;gap:7px;background:var(--brand-tint);color:var(--brand-deep);font-weight:700;font-size:13px;padding:6px 12px;border-radius:999px}
+.dims-wide{padding:8px 24px 4px;display:flex;gap:9px}
+.section-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);margin:0 24px 9px;display:block}
+.block{margin:18px 0}
+.block .body{padding:0 24px}
+.expl{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:17px 18px;font-size:14.5px;line-height:1.62;color:var(--ink);box-shadow:var(--shadow-sm)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px}
+.chip2{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:500;color:var(--plum)}
+.friction{background:var(--amber-tint);border:1px solid #efdcb4;border-radius:var(--r-md);padding:15px 17px;margin:0 24px;font-size:14px;line-height:1.55;color:#8a6614;display:flex;gap:11px}
+.friction .ic{flex:none;font-size:16px}
+.date-idea{margin:0 24px;background:linear-gradient(150deg,#2D2440,#46375f);color:#fff;border-radius:var(--r-md);padding:18px 19px}
+.date-idea .l{font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#F0A07E;margin-bottom:8px}
+.date-idea p{font-size:14.5px;line-height:1.55}
+
+/* ---------- VIBECHECK ---------- */
+.vc-intro{padding:30px 26px;text-align:center;display:flex;flex-direction:column;min-height:100%;justify-content:center;align-items:center}
+.vc-intro .pulse{width:96px;height:96px;border-radius:50%;background:linear-gradient(150deg,var(--brand),#F0865B);display:flex;align-items:center;justify-content:center;margin-bottom:24px;position:relative;box-shadow:0 12px 30px rgba(226,92,69,.4)}
+.vc-intro .pulse::before,.vc-intro .pulse::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--brand);opacity:0;animation:ripple 2.4s ease-out infinite}
+.vc-intro .pulse::after{animation-delay:1.2s}
+@keyframes ripple{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.9);opacity:0}}
+.vc-intro .pulse .wave{display:flex;gap:3px;align-items:center;height:34px}
+.vc-intro .pulse .wave i{width:4px;background:#fff;border-radius:3px;animation:eq 1s ease-in-out infinite}
+.vc-intro .pulse .wave i:nth-child(1){height:12px;animation-delay:0s}
+.vc-intro .pulse .wave i:nth-child(2){height:26px;animation-delay:.12s}
+.vc-intro .pulse .wave i:nth-child(3){height:18px;animation-delay:.24s}
+.vc-intro .pulse .wave i:nth-child(4){height:30px;animation-delay:.36s}
+.vc-intro .pulse .wave i:nth-child(5){height:14px;animation-delay:.48s}
+.vc-intro h2{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--plum);line-height:1.2}
+.vc-intro p{margin-top:14px;font-size:15px;color:var(--ink-soft);line-height:1.6;max-width:300px}
+.vc-intro .steps3{margin:22px 0 6px;display:flex;gap:8px;align-items:center;justify-content:center;font-size:12.5px;color:var(--ink-faint);font-weight:600}
+.vc-intro .steps3 .pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+
+.vc-chat{padding:14px 0 6px;min-height:100%}
+.vc-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 24px 14px;border-bottom:1px solid var(--line)}
+.vc-bar .who{display:flex;align-items:center;gap:10px}
+.vc-bar .who .avatar{width:38px;height:38px;border-radius:12px;font-size:17px}
+.vc-bar .who b{font-size:14.5px;font-weight:700}
+.vc-bar .who small{font-size:11.5px;color:var(--ink-faint);display:block}
+.vc-timer{font-size:13px;font-weight:700;color:var(--brand-deep);background:var(--brand-tint);padding:6px 11px;border-radius:999px;font-variant-numeric:tabular-nums}
+.vc-feed{padding:18px 22px 8px;display:flex;flex-direction:column;gap:14px}
+.prompt-bubble{align-self:center;background:var(--plum);color:#fff;border-radius:14px;padding:11px 16px;font-size:13.5px;font-weight:500;text-align:center;max-width:88%;line-height:1.4;box-shadow:var(--shadow-sm)}
+.prompt-bubble .lab{display:block;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#F0A07E;margin-bottom:4px}
+.vnote{max-width:82%;border-radius:17px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;animation:pop .35s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.vnote.me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:6px}
+.vnote.them{align-self:flex-start;background:#fff;border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:6px;box-shadow:var(--shadow-sm)}
+.vnote .av{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;opacity:.85}
+.vnote.me .av{justify-content:flex-end}
+.vnote .player{display:flex;align-items:center;gap:9px}
+.vnote .play{flex:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.22)}
+.vnote.them .play{background:var(--brand-tint);color:var(--brand)}
+.vnote .play svg{width:13px;height:13px}
+.wave2{display:flex;align-items:center;gap:2.5px;height:26px;flex:1}
+.wave2 i{flex:1;max-width:4px;border-radius:3px;background:currentColor;opacity:.5;height:30%}
+.vnote .dur{font-size:11px;font-weight:700;opacity:.8;font-variant-numeric:tabular-nums}
+.vnote.playing .wave2 i{animation:wv .7s ease-in-out infinite}
+.wave2 i:nth-child(2n){animation-delay:.1s}
+.wave2 i:nth-child(3n){animation-delay:.22s}
+.wave2 i:nth-child(4n){animation-delay:.32s}
+@keyframes wv{0%,100%{height:25%;opacity:.5}50%{height:95%;opacity:1}}
+.vnote .transcript{font-size:13px;line-height:1.5;opacity:.97;font-style:italic}
+.typing{align-self:flex-start;background:#fff;border:1px solid var(--line);border-radius:17px;border-bottom-left-radius:6px;padding:13px 16px;display:flex;gap:5px;box-shadow:var(--shadow-sm)}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--ink-faint);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+.rec-dock{position:sticky;bottom:0;padding:14px 24px 22px;background:linear-gradient(to top,var(--cream) 60%,rgba(251,247,241,0))}
+.rec-btn{width:100%;border:none;cursor:pointer;font-family:var(--sans);font-weight:600;font-size:15px;color:#fff;background:var(--brand);padding:15px;border-radius:15px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 20px rgba(226,92,69,.32)}
+.rec-btn.recording{background:var(--plum)}
+.rec-btn .mic{width:18px;height:18px}
+.rec-btn .recwave{display:flex;gap:2px;align-items:center;height:18px}
+.rec-btn .recwave i{width:3px;background:#fff;border-radius:2px;animation:eq .8s ease-in-out infinite}
+.rec-btn .recwave i:nth-child(1){height:7px}.rec-btn .recwave i:nth-child(2){height:16px;animation-delay:.1s}.rec-btn .recwave i:nth-child(3){height:10px;animation-delay:.2s}.rec-btn .recwave i:nth-child(4){height:14px;animation-delay:.3s}
+
+/* vibecheck complete */
+.vc-done{padding:34px 26px;text-align:center;min-height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.checkmark{width:88px;height:88px;border-radius:50%;background:var(--green-tint);display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.checkmark svg{width:42px;height:42px}
+.checkmark circle{stroke:var(--green);stroke-width:3;fill:none;stroke-dasharray:170;stroke-dashoffset:170;animation:draw .6s ease forwards}
+.checkmark path{stroke:var(--green);stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:50;stroke-dashoffset:50;animation:draw .4s .5s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.vc-done h2{font-family:var(--serif);font-size:27px;font-weight:600;color:var(--plum)}
+.vc-done .aligned{margin-top:8px;font-size:16px;color:var(--green);font-weight:600}
+.align-card{margin-top:22px;width:100%;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:6px 18px;box-shadow:var(--shadow-sm)}
+.align-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line);text-align:left}
+.align-row:first-child{border-top:none}
+.align-row .ic{flex:none;width:30px;height:30px;border-radius:9px;background:var(--green-tint);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700}
+.align-row .t{flex:1}
+.align-row .t b{font-size:13.5px;display:block;color:var(--ink)}
+.align-row .t small{font-size:12px;color:var(--ink-soft)}
+.align-row .match-dot{color:var(--green);font-size:12px;font-weight:700}
+
+/* ---------- SCHEDULING ---------- */
+.sched-head{padding:18px 24px 4px}
+.opt-time{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1.6px solid var(--line);border-radius:15px;padding:15px 17px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
+.opt-time:hover{border-color:#dcc7bd}
+.opt-time.sel{border-color:var(--brand);background:var(--brand-tint)}
+.opt-time .day{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-faint)}
+.opt-time .time{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--plum);margin-top:2px}
+.opt-time .tag-best{font-size:10.5px;font-weight:700;color:var(--green);background:var(--green-tint);padding:4px 9px;border-radius:999px}
+.opt-time .tick{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center}
+.opt-time .tick svg{width:12px;height:12px;opacity:0}
+.opt-time.sel .tick{background:var(--brand);border-color:var(--brand)}
+.opt-time.sel .tick svg{opacity:1}
+.venue{display:flex;gap:13px;align-items:center;background:#fff;border:1.6px solid var(--line);border-radius:15px;padding:13px 15px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
+.venue.sel{border-color:var(--brand);background:var(--brand-tint)}
+.venue .vic{flex:none;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--cream-2)}
+.venue .vmeta b{font-size:14.5px;font-weight:700;color:var(--ink);display:block}
+.venue .vmeta small{font-size:12px;color:var(--ink-soft)}
+.venue .rec{margin-left:auto;font-size:10px;font-weight:700;color:var(--green);background:var(--green-tint);padding:4px 8px;border-radius:999px;flex:none}
+
+/* confirmed */
+.confirmed{padding:36px 26px;text-align:center;min-height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.confirmed .seal{width:96px;height:96px;border-radius:50%;background:linear-gradient(150deg,var(--brand),#F0865B);display:flex;align-items:center;justify-content:center;margin-bottom:22px;box-shadow:0 12px 30px rgba(226,92,69,.4)}
+.confirmed .seal svg{width:46px;height:46px;stroke:#fff;stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.confirmed h2{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--plum)}
+.confirmed > p{margin-top:10px;font-size:15px;color:var(--ink-soft);line-height:1.55;max-width:300px}
+.ticket{margin-top:24px;width:100%;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow-md);overflow:hidden;text-align:left}
+.ticket .head{background:var(--plum);color:#fff;padding:15px 18px;display:flex;align-items:center;gap:12px}
+.ticket .head .avatar{width:42px;height:42px;border-radius:12px;font-size:18px}
+.ticket .head b{font-size:15px}
+.ticket .head small{font-size:11.5px;color:rgba(255,255,255,.7);display:block}
+.ticket .rows{padding:6px 18px}
+.ticket .trow{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px dashed var(--line);font-size:13.5px}
+.ticket .trow:first-child{border-top:none}
+.ticket .trow .ic{flex:none;font-size:16px;width:22px;text-align:center}
+.ticket .trow .k{color:var(--ink-faint);font-weight:600;width:60px;flex:none;font-size:12px}
+.ticket .trow .v{color:var(--ink);font-weight:600}
+.confirmed .note{margin-top:18px;font-size:12.5px;color:var(--green);font-weight:600;background:var(--green-tint);padding:10px 14px;border-radius:12px}
+
+/* ---------- ADMIN ---------- */
+.admin{padding:18px 22px 30px;background:var(--cream)}
+.admin .head h2{font-family:var(--serif);font-size:23px;font-weight:600;color:var(--plum)}
+.admin .head .sub{font-size:12.5px;color:var(--ink-soft);margin-top:4px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:18px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px 15px;box-shadow:var(--shadow-sm)}
+.kpi .v{font-family:var(--serif);font-size:25px;font-weight:600;color:var(--plum);line-height:1}
+.kpi .k{font-size:11.5px;color:var(--ink-soft);margin-top:6px;line-height:1.3}
+.kpi .delta{font-size:10.5px;font-weight:700;margin-top:7px;display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:999px}
+.kpi .delta.up{color:var(--green);background:var(--green-tint)}
+.kpi .delta.down{color:var(--green);background:var(--green-tint)}
+.exp{margin-top:24px}
+.exp-title{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.exp-title h3{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--plum)}
+.exp .leg{display:flex;gap:16px;margin:12px 0 16px;font-size:11.5px;font-weight:600}
+.exp .leg .l{display:flex;align-items:center;gap:6px;color:var(--ink-soft)}
+.exp .leg .sw{width:12px;height:12px;border-radius:4px}
+.bar-group{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:15px 16px;margin-bottom:11px;box-shadow:var(--shadow-sm)}
+.bar-group .bg-lab{font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:11px;display:flex;justify-content:space-between;align-items:center}
+.bar-group .bg-lab .lift{font-size:11px;font-weight:700;color:var(--green);background:var(--green-tint);padding:3px 8px;border-radius:999px}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.bar:last-child{margin-bottom:0}
+.bar .name{font-size:10.5px;font-weight:700;color:var(--ink-faint);width:54px;flex:none;letter-spacing:.2px}
+.bar .track{flex:1;height:26px;background:var(--cream-2);border-radius:8px;overflow:hidden;position:relative}
+.bar .fill{height:100%;border-radius:8px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1);display:flex;align-items:center;justify-content:flex-end;padding-right:9px;color:#fff;font-size:11px;font-weight:700}
+.bar.ctrl .fill{background:#B5AABb}
+.bar.test .fill{background:linear-gradient(90deg,var(--brand),#F0865B)}
+.insight{margin-top:20px;background:linear-gradient(150deg,var(--plum),#46375f);color:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-md)}
+.insight .l{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#F0A07E;margin-bottom:9px}
+.insight p{font-size:14.5px;line-height:1.6}
+.insight p b{color:#fff;font-weight:700;border-bottom:2px solid var(--brand)}
+
+/* ---------- presenter menu ---------- */
+.menu-btn{position:fixed;top:20px;right:22px;z-index:40;background:rgba(45,36,64,.92);color:#fff;border:none;cursor:pointer;backdrop-filter:blur(6px);font-family:var(--sans);font-weight:600;font-size:12.5px;padding:10px 14px;border-radius:12px;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow-md)}
+.menu-btn .bars{display:flex;flex-direction:column;gap:3px}
+.menu-btn .bars i{width:15px;height:2px;background:#fff;border-radius:2px;display:block}
+.menu-panel{position:fixed;top:62px;right:22px;z-index:40;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);width:230px;padding:8px;display:none}
+.menu-panel.open{display:block;animation:fade .25s ease both}
+.menu-panel .mtitle{font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-faint);padding:9px 12px 6px}
+.menu-panel button{display:flex;width:100%;align-items:center;gap:11px;background:none;border:none;cursor:pointer;text-align:left;padding:10px 12px;border-radius:10px;font-family:var(--sans);font-size:13.5px;font-weight:500;color:var(--ink)}
+.menu-panel button:hover{background:var(--cream)}
+.menu-panel button .num{flex:none;width:22px;height:22px;border-radius:7px;background:var(--cream-2);color:var(--plum);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.menu-panel button.active-link{background:var(--brand-tint);color:var(--brand-deep)}
+.menu-panel button.active-link .num{background:var(--brand);color:#fff}
+.menu-panel .divider{height:1px;background:var(--line);margin:6px 8px}
+
+@media (min-width:1080px){ .pitch{display:block} .menu-btn{top:28px;right:32px} .menu-panel{top:70px;right:32px} }
+@media (max-width:560px){
+  .canvas{padding:0}
+  .phone{width:100vw;height:100vh;height:100dvh;border-radius:0;box-shadow:none}
+  .statusbar{height:42px}
+  .menu-btn{top:auto;bottom:18px;right:16px}
+  .menu-panel{top:auto;bottom:62px;right:16px}
+}
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- desktop side pitch -->
+  <aside class="pitch">
+    <div class="mark"><span class="logo lg"><span class="glyph"><i></i><i></i><i></i></span>VibeCheck</span></div>
+    <h1>Dating without the dead zone.</h1>
+    <p>An AI dating platform built for serious daters. It replaces endless swiping with a short intake, three curated matches a week, and a 90-second voice vibe check before you meet.</p>
+    <div class="legend">
+      <div class="row"><span class="n">1</span><div><b>Click "Start your VibeCheck"</b> to walk the full flow, or jump anywhere with the Screens menu.</div></div>
+      <div class="row"><span class="n">2</span><div><b>Mock data only.</b> No login, no payments, voice is simulated. Built for a 2-minute demo.</div></div>
+      <div class="row"><span class="n">3</span><div><b>The point:</b> the admin dashboard shows voice vibe checks nearly double match-to-date conversion.</div></div>
+    </div>
+  </aside>
+
+  <!-- phone -->
+  <div class="phone">
+    <div class="statusbar">
+      <span id="clock">9:41</span>
+      <span class="dots">
+        <span class="sig"><i></i><i></i><i></i><i></i></span>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 10.5 C5 7 1 5.5 1 5.5 C3 3 5.5 2 8 2 C10.5 2 13 3 15 5.5 C15 5.5 11 7 8 10.5Z" stroke="#231C2E" stroke-width="1.3" fill="none"/></svg>
+        <span class="bat"><span></span></span>
+      </span>
+    </div>
+
+    <div class="screens" id="screens">
+
+      <!-- ========== 1. LANDING ========== -->
+      <section class="screen active" id="landing">
+        <div class="nav">
+          <span class="logo"><span class="glyph"><i></i><i></i><i></i></span>VibeCheck</span>
+          <button class="signin" onclick="go('admin')">For teams</button>
+        </div>
+        <div class="hero">
+          <span class="eyebrow">Intentional dating</span>
+          <h1>Dating without the <em>dead zone.</em></h1>
+          <p class="sub">Fewer matches. Better intent. Faster first dates.</p>
+          <p class="micro"><b>2 min</b> to set up. No endless swiping, ever.</p>
+        </div>
+        <div class="hero-visual">
+          <div class="orb o1"></div><div class="orb o2"></div>
+          <div class="chip c1"><span class="d" style="background:var(--green)"></span>94% match</div>
+          <div class="chip c2"><span class="d" style="background:var(--brand)"></span>Voice vibe check</div>
+          <div class="chip c3"><span class="d" style="background:var(--amber)"></span>Date booked in 1 day</div>
+        </div>
+        <div class="pad" style="padding-top:18px">
+          <button class="btn" onclick="go('intake-screen'); startIntake()">Start your VibeCheck</button>
+        </div>
+
+        <div class="section">
+          <span class="eyebrow">The problem</span>
+          <h2 class="title">Swipe apps optimize for the wrong thing.</h2>
+          <p class="lede" style="margin-top:12px">They make money when you stay. So they reward swiping, not meeting. You get a feed that never ends, a pile of matches that never message, and a calendar that stays empty.</p>
+          <div class="statgrid">
+            <div class="stat"><span class="big">11h</span><span class="t">The average dating-app user spends nearly <b>11 hours a week</b> swiping and messaging.</span></div>
+            <div class="stat"><span class="big">~50%</span><span class="t">About half of matches never turn into a single message, let alone a date.</span></div>
+            <div class="stat"><span class="big">#1</span><span class="t">Ghosting is now the <b>default</b> exit, not the exception. Burnout follows.</span></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <span class="eyebrow">How it works</span>
+          <h2 class="title">Four steps. One real date.</h2>
+          <div class="steps">
+            <div class="step"><span class="n">1</span><div><h4>A 2-minute AI intake</h4><p>We learn your intent, values, and pace. No 200-field questionnaire.</p></div></div>
+            <div class="step"><span class="n">2</span><div><h4>Curated weekly matches</h4><p>Three people, hand-picked for you. Not a feed to scroll.</p></div></div>
+            <div class="step"><span class="n">3</span><div><h4>A 90-second voice VibeCheck</h4><p>Hear each other before you commit to meeting. Tone says what text can't.</p></div></div>
+            <div class="step"><span class="n">4</span><div><h4>Skip straight to a date</h4><p>We help you pick a time and a place, fast. Offline is the whole point.</p></div></div>
+          </div>
+        </div>
+
+        <div class="section dark">
+          <span class="eyebrow">Why VibeCheck</span>
+          <h2 class="title">We optimize for time-to-date, not time-in-app.</h2>
+          <div class="compare">
+            <div class="col">
+              <h5>SWIPE APPS</h5>
+              <ul>
+                <li><span class="m x">·</span>An endless feed</li>
+                <li><span class="m x">·</span>Matches that go nowhere</li>
+                <li><span class="m x">·</span>Texting for weeks</li>
+                <li><span class="m x">·</span>Built to keep you scrolling</li>
+              </ul>
+            </div>
+            <div class="col win">
+              <h5>VIBECHECK</h5>
+              <ul>
+                <li><span class="m">✓</span>3 curated matches a week</li>
+                <li><span class="m">✓</span>Voice before you meet</li>
+                <li><span class="m">✓</span>Match to date in days</li>
+                <li><span class="m">✓</span>Built to get you offline</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad">
+          <button class="btn" onclick="go('intake-screen'); startIntake()">Start your VibeCheck</button>
+          <div class="land-foot">VibeCheck. Dating with intent.<br/>Product demo with mock data. No real accounts, no payments.</div>
+        </div>
+      </section>
+
+      <!-- ========== 2. INTAKE ========== -->
+      <section class="screen" id="intake-screen">
+        <div class="intake-top">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span class="logo" style="font-size:16px"><span class="glyph" style="width:24px;height:24px;border-radius:7px"><i></i><i></i><i></i></span>VibeCheck</span>
+            <span class="q-count" id="qCount">Question 1 of 10</span>
+          </div>
+          <div class="progress"><i id="progressBar"></i></div>
+        </div>
+        <div class="q-wrap" id="qWrap"><!-- rendered by JS --></div>
+      </section>
+
+      <!-- ========== 3. PROFILE SUMMARY ========== -->
+      <section class="screen" id="profile-screen">
+        <div class="profile-hero">
+          <div class="ring" id="profileInitial">JS</div>
+          <span class="eyebrow">Your VibeCheck profile</span>
+          <h2 id="profilePersona">Intentional and ready to meet.</h2>
+        </div>
+        <div class="profile-body">
+          <div class="summary" id="profileSummary"></div>
+          <div class="tagrow" id="profileTags"></div>
+          <div class="intent-line" id="profileIntent"></div>
+        </div>
+        <div class="footer-cta"><button class="btn" onclick="go('dashboard')">See my matches</button></div>
+      </section>
+
+      <!-- ========== 4. DASHBOARD ========== -->
+      <section class="screen" id="dashboard">
+        <div class="dash-head">
+          <div class="row">
+            <span class="logo" style="font-size:17px"><span class="glyph" style="width:26px;height:26px;border-radius:7px"><i></i><i></i><i></i></span>VibeCheck</span>
+            <span class="refresh-pill"><span class="d"></span>Refreshes Sun</span>
+          </div>
+          <h2 class="title" style="margin-top:16px">Your matches this week</h2>
+          <p class="lede" style="margin-top:7px">Three people, hand-picked. No feed to scroll, no swiping. Tap a match to go deeper.</p>
+        </div>
+        <div class="match-list" id="matchList"><!-- rendered by JS --></div>
+        <div class="land-foot" style="padding-bottom:30px">That's it for this week. Quality over quantity, on purpose.</div>
+      </section>
+
+      <!-- ========== 5. MATCH DETAIL ========== -->
+      <section class="screen" id="match-detail">
+        <div class="detail-head"><button class="back" onclick="go('dashboard')">‹ Matches</button></div>
+        <div id="detailBody"><!-- rendered by JS --></div>
+      </section>
+
+      <!-- ========== 6. VIBECHECK INTRO ========== -->
+      <section class="screen" id="vibecheck-intro">
+        <div class="vc-intro">
+          <div class="pulse"><div class="wave"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <span class="eyebrow" style="margin-bottom:10px">90-second VibeCheck</span>
+          <h2 id="vcIntroTitle">A quick voice check with Maya</h2>
+          <p>Three short prompts. You answer by voice, they hear it, you hear theirs. No texting for days, no pressure. Just enough to know if it's worth meeting.</p>
+          <div class="steps3">
+            <span class="pill">1. Intent</span><span>›</span><span class="pill">2. The date</span><span>›</span><span class="pill">3. Vibe</span>
+          </div>
+        </div>
+        <div class="footer-cta">
+          <button class="btn" onclick="startVibeCheck()">Begin VibeCheck</button>
+          <button class="btn ghost" style="margin-top:10px" onclick="go('match-detail')">Back</button>
+        </div>
+      </section>
+
+      <!-- ========== VIBECHECK CHAT ========== -->
+      <section class="screen" id="vibecheck-chat">
+        <div class="vc-chat">
+          <div class="vc-bar">
+            <div class="who">
+              <div class="avatar" id="vcAvatar">M</div>
+              <div><b id="vcName">Maya</b><small>VibeCheck in progress</small></div>
+            </div>
+            <span class="vc-timer" id="vcTimer">0:90</span>
+          </div>
+          <div class="vc-feed" id="vcFeed"></div>
+        </div>
+        <div class="rec-dock" id="recDock"></div>
+      </section>
+
+      <!-- ========== VIBECHECK COMPLETE ========== -->
+      <section class="screen" id="vibecheck-done">
+        <div class="vc-done">
+          <div class="checkmark"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="27"/><path d="M18 31 l8 8 l16 -18"/></svg></div>
+          <h2>VibeCheck complete</h2>
+          <div class="aligned" id="vcDoneAligned">You both seem aligned</div>
+          <div class="align-card">
+            <div class="align-row"><span class="ic">♥</span><div class="t"><b>What you both want</b><small>Something real, not a situationship</small></div><span class="match-dot">MATCH</span></div>
+            <div class="align-row"><span class="ic">☕</span><div class="t"><b>Ideal first date</b><small>Low-key, a walk and a good coffee</small></div><span class="match-dot">MATCH</span></div>
+            <div class="align-row"><span class="ic">◎</span><div class="t"><b>Date energy</b><small>Relaxed and curious, no interview vibe</small></div><span class="match-dot">MATCH</span></div>
+          </div>
+        </div>
+        <div class="footer-cta"><button class="btn" onclick="go('scheduling'); renderScheduling()">Pick a time to meet</button></div>
+      </section>
+
+      <!-- ========== 7. SCHEDULING ========== -->
+      <section class="screen" id="scheduling">
+        <div class="detail-head"><button class="back" onclick="go('vibecheck-done')">‹ Back</button></div>
+        <div class="sched-head">
+          <h2 class="title" id="schedTitle">Pick a time to meet Maya</h2>
+          <p class="lede" style="margin-top:7px">You both vibed. Here's when you're both free this week.</p>
+        </div>
+        <span class="section-label" style="margin-top:18px">Suggested times</span>
+        <div style="padding:0 24px;display:flex;flex-direction:column;gap:11px">
+          <div class="opt-time" onclick="pickTime(this,0)"><div><div class="day">Saturday · Jun 27</div><div class="time">10:30 AM</div></div><div style="display:flex;align-items:center;gap:10px"><span class="tag-best">Best overlap</span><span class="tick"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5 5.5 11 12 3.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+          <div class="opt-time" onclick="pickTime(this,1)"><div><div class="day">Sunday · Jun 28</div><div class="time">5:00 PM</div></div><span class="tick"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5 5.5 11 12 3.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <div class="opt-time" onclick="pickTime(this,2)"><div><div class="day">Wednesday · Jul 1</div><div class="time">7:30 PM</div></div><span class="tick"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5 5.5 11 12 3.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        </div>
+        <span class="section-label" style="margin-top:24px">Suggested spots <span style="color:var(--ink-soft);text-transform:none;letter-spacing:0;font-weight:500">· based on your shared vibe</span></span>
+        <div style="padding:0 24px;display:flex;flex-direction:column;gap:11px">
+          <div class="venue" onclick="pickVenue(this,0)"><div class="vic">🥐</div><div class="vmeta"><b>Ferry Building Marketplace</b><small>Coffee + a market walk · Embarcadero</small></div><span class="rec">YOU BOTH</span></div>
+          <div class="venue" onclick="pickVenue(this,1)"><div class="vic">☕</div><div class="vmeta"><b>Réveille Coffee Co.</b><small>Relaxed, easy to talk · Hayes Valley</small></div></div>
+          <div class="venue" onclick="pickVenue(this,2)"><div class="vic">🌿</div><div class="vmeta"><b>Lands End Trail</b><small>A walk with a view · Outer Richmond</small></div></div>
+        </div>
+        <div class="footer-cta"><button class="btn" id="confirmBtn" style="opacity:.5;pointer-events:none" onclick="confirmDate()">Confirm first date</button></div>
+      </section>
+
+      <!-- ========== CONFIRMED ========== -->
+      <section class="screen" id="confirmed">
+        <div class="confirmed">
+          <div class="seal"><svg viewBox="0 0 60 60"><path d="M16 31 l9 9 l19 -21"/></svg></div>
+          <h2>You're set.</h2>
+          <p>Your first date is on the calendar. We'll send a reminder and a one-tap reschedule link the day before.</p>
+          <div class="ticket">
+            <div class="head"><div class="avatar" id="confAvatar">M</div><div><b id="confName">Maya Chen</b><small id="confJob">Product Designer · Mission District</small></div></div>
+            <div class="rows">
+              <div class="trow"><span class="ic">🗓️</span><span class="k">When</span><span class="v" id="confWhen">Saturday, Jun 27 · 10:30 AM</span></div>
+              <div class="trow"><span class="ic">📍</span><span class="k">Where</span><span class="v" id="confWhere">Ferry Building Marketplace</span></div>
+              <div class="trow"><span class="ic">✨</span><span class="k">Vibe</span><span class="v">Coffee and a market walk</span></div>
+            </div>
+          </div>
+          <div class="note" id="confSpeed">From match to date in 1 day. That's the whole idea.</div>
+        </div>
+        <div class="footer-cta">
+          <button class="btn dark" onclick="go('admin')">See the experiment results</button>
+          <button class="btn ghost" style="margin-top:10px" onclick="resetDemo()">Restart demo</button>
+        </div>
+      </section>
+
+      <!-- ========== 8. ADMIN ========== -->
+      <section class="screen" id="admin">
+        <div class="admin">
+          <div class="head">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span class="logo" style="font-size:16px"><span class="glyph" style="width:24px;height:24px;border-radius:7px"><i></i><i></i><i></i></span>VibeCheck</span>
+              <button class="signin" onclick="go('landing')">Exit</button>
+            </div>
+            <h2 style="margin-top:16px">MVP experiment dashboard</h2>
+            <div class="sub">4-week pilot · SF Bay Area · 2,847 signups · updated today</div>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><div class="v">2,847</div><div class="k">Landing page signups</div><span class="delta up">▲ 18% WoW</span></div>
+            <div class="kpi"><div class="v">71%</div><div class="k">Intake completion rate</div><span class="delta up">▲ vs 41% industry</span></div>
+            <div class="kpi"><div class="v">54%</div><div class="k">Match → VibeCheck started</div><span class="delta up">blended</span></div>
+            <div class="kpi"><div class="v">58%</div><div class="k">VibeCheck → date booked</div><span class="delta up">blended</span></div>
+            <div class="kpi"><div class="v">16%</div><div class="k">Ghosting rate</div><span class="delta down">▼ vs 29% control</span></div>
+            <div class="kpi"><div class="v">4.2/5</div><div class="k">Post-date satisfaction</div><span class="delta up">▲ 0.8 vs control</span></div>
+          </div>
+
+          <div class="exp">
+            <div class="exp-title"><h3>Text-only control vs. voice VibeCheck</h3></div>
+            <div class="sub" style="color:var(--ink-soft);font-size:12.5px">Randomized: 1,423 users got text-only intros, 1,424 got the 90-second voice check.</div>
+            <div class="leg">
+              <span class="l"><span class="sw" style="background:#B5AABb"></span>Text-only (control)</span>
+              <span class="l"><span class="sw" style="background:var(--brand)"></span>Voice VibeCheck (test)</span>
+            </div>
+
+            <div class="bar-group">
+              <div class="bg-lab">Match → first conversation <span class="lift">+61%</span></div>
+              <div class="bar ctrl"><span class="name">CONTROL</span><div class="track"><div class="fill" data-w="38">38%</div></div></div>
+              <div class="bar test"><span class="name">TEST</span><div class="track"><div class="fill" data-w="61">61%</div></div></div>
+            </div>
+            <div class="bar-group">
+              <div class="bg-lab">Conversation → date booked <span class="lift">+52%</span></div>
+              <div class="bar ctrl"><span class="name">CONTROL</span><div class="track"><div class="fill" data-w="44">44%</div></div></div>
+              <div class="bar test"><span class="name">TEST</span><div class="track"><div class="fill" data-w="67">67%</div></div></div>
+            </div>
+            <div class="bar-group">
+              <div class="bg-lab">Ghosting rate <span class="lift">−59% lower</span></div>
+              <div class="bar ctrl"><span class="name">CONTROL</span><div class="track"><div class="fill" data-w="29">29%</div></div></div>
+              <div class="bar test"><span class="name">TEST</span><div class="track"><div class="fill" data-w="12">12%</div></div></div>
+            </div>
+            <div class="bar-group">
+              <div class="bg-lab">Post-date satisfaction (of 5) <span class="lift">+0.9</span></div>
+              <div class="bar ctrl"><span class="name">CONTROL</span><div class="track"><div class="fill" data-w="68">3.4</div></div></div>
+              <div class="bar test"><span class="name">TEST</span><div class="track"><div class="fill" data-w="86">4.3</div></div></div>
+            </div>
+            <div class="bar-group">
+              <div class="bg-lab">Days from match to date <span class="lift">3.3× faster</span></div>
+              <div class="bar ctrl"><span class="name">CONTROL</span><div class="track"><div class="fill" data-w="100" style="background:#B5AABb">9.2 days</div></div></div>
+              <div class="bar test"><span class="name">TEST</span><div class="track"><div class="fill" data-w="30">2.8 days</div></div></div>
+            </div>
+
+            <div class="insight">
+              <div class="l">The insight</div>
+              <p>The voice VibeCheck <b>nearly doubled match-to-date conversion</b> and <b>cut ghosting by more than half</b>. Serious daters don't need more options. They need a faster, lower-risk path to a real conversation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /screens -->
+  </div><!-- /phone -->
+</div><!-- /canvas -->
+
+<!-- presenter menu -->
+<button class="menu-btn" onclick="toggleMenu()"><span class="bars"><i></i><i></i><i></i></span>Screens</button>
+<div class="menu-panel" id="menuPanel">
+  <div class="mtitle">Jump to any screen</div>
+  <button data-target="landing" onclick="jump('landing')"><span class="num">1</span>Landing page</button>
+  <button data-target="intake-screen" onclick="jump('intake-screen'); startIntake()"><span class="num">2</span>AI intake</button>
+  <button data-target="profile-screen" onclick="jump('profile-screen'); ensureProfile()"><span class="num">3</span>Profile summary</button>
+  <button data-target="dashboard" onclick="jump('dashboard')"><span class="num">4</span>Match dashboard</button>
+  <button data-target="match-detail" onclick="jump('match-detail'); openMatch(activeMatch)"><span class="num">5</span>Match detail</button>
+  <button data-target="vibecheck-intro" onclick="jump('vibecheck-intro'); prepVibe()"><span class="num">6</span>VibeCheck flow</button>
+  <button data-target="scheduling" onclick="jump('scheduling'); renderScheduling()"><span class="num">7</span>Date scheduling</button>
+  <button data-target="confirmed" onclick="jump('confirmed')"><span class="num">8</span>Date confirmed</button>
+  <div class="divider"></div>
+  <button data-target="admin" onclick="jump('admin')"><span class="num">9</span>Admin dashboard</button>
+</div>
+
+<script>
+/* ============ DATA ============ */
+var MATCHES = [
+  {
+    id:0, name:"Maya Chen", first:"Maya", age:29, job:"Product Designer", hood:"Mission District",
+    initial:"M", grad:"linear-gradient(150deg,#E25C45,#F0865B)", score:94,
+    dims:[["Values","g","Strong"],["Lifestyle","g","Strong"],["Date energy","y","Mixed"]],
+    why:"Same intent, same pace. You both want depth without the games.",
+    explain:"You and Maya both came in looking for something serious without rushing it. You share a quiet-mornings, market-and-a-walk rhythm, and you both lead with honesty. Her communication style, consistent little check-ins, lines up almost exactly with yours.",
+    shared:["Specialty coffee","Design","Hiking","Indie films","Sunday markets","Pottery"],
+    friction:"Maya is a planner and you like leaving room to improvise. Date energy is the one place you differ: she likes a plan, you like to wing it. Easy to navigate if you each flex a little.",
+    idea:"Saturday morning at the Ferry Building market, then a walk along the Embarcadero. Low pressure, and easy to extend if it is clicking."
+  },
+  {
+    id:1, name:"Daniel Okafor", first:"Daniel", age:31, job:"Pediatric Nurse", hood:"Hayes Valley",
+    initial:"D", grad:"linear-gradient(150deg,#C9742F,#E0A338)", score:88,
+    dims:[["Values","g","Strong"],["Lifestyle","y","Mixed"],["Date energy","g","Strong"]],
+    why:"Big-hearted and direct. He matches the way you like to communicate.",
+    explain:"Daniel scores highest with you on values and date energy. He is direct, warm, and shows up, which is exactly what you said you want. Your lifestyles differ a little because his shifts can run late, but your intent and the way you both like to connect are strongly aligned.",
+    shared:["Live music","Cooking","Weekend trails","Dogs","Travel","Sci-fi"],
+    friction:"His schedule is unpredictable. Night shifts mean planning takes a bit more effort. Worth it if you both protect the time you do get.",
+    idea:"A cocktail and small plates in Hayes Valley on a night you are both free. Relaxed, conversation first, no rush."
+  },
+  {
+    id:2, name:"Priya Nair", first:"Priya", age:27, job:"Climate Policy Analyst", hood:"Oakland",
+    initial:"P", grad:"linear-gradient(150deg,#9A4E6B,#C95C7A)", score:82,
+    dims:[["Values","y","Mixed"],["Lifestyle","g","Strong"],["Date energy","g","Strong"]],
+    why:"Shared pace and play. A different angle on the big stuff, worth a conversation.",
+    explain:"Priya is your easiest day-to-day match: same weekend rhythm, same low-key date energy. The yellow on values is not a red flag, it is a conversation. She is career-first right now and your timelines might differ. Strong chemistry potential if you are both honest about pace.",
+    shared:["Climate","Running","Natural wine","Podcasts","Cooking","Bouldering"],
+    friction:"Different timelines. She is heads-down on her career and you are readier to build something now. Name it early and you will know fast if it works.",
+    idea:"A loop around Lake Merritt and a coffee. Active, easy, and no pressure to turn it into a whole evening."
+  }
+];
+
+var QUESTIONS = [
+  { prompt:"First things first. What are you actually here for?", help:"No wrong answer. This sets the tone for who you meet.",
+    opts:[
+      {l:"A serious relationship",bit:"You are here for a serious relationship and you are done wasting time."},
+      {l:"Something real, no rush",bit:"You want something real without forcing the timeline."},
+      {l:"Dating with intention, open to serious",bit:"You are dating with intention and open to it turning serious."},
+      {l:"Honestly, figuring it out",bit:"You are still figuring out exactly what you want, and that is allowed."}
+    ]},
+  { prompt:"When you picture the next year, what would feel like a win?", help:"We use this to match your timeline, not just your hobbies.",
+    opts:[
+      {l:"Building something with one person",bit:""},
+      {l:"Meeting someone worth rearranging my life for",bit:""},
+      {l:"Great dates, seeing what sticks",bit:""},
+      {l:"More clarity on what I actually want",bit:""}
+    ]},
+  { prompt:"Pick the one value you won't compromise on.", help:"The thing a person has to have for it to ever work.",
+    opts:[
+      {l:"Honesty",bit:"You will not compromise on honesty."},
+      {l:"Ambition",bit:"You will not compromise on ambition."},
+      {l:"Kindness",bit:"You will not compromise on kindness."},
+      {l:"Curiosity",bit:"You will not compromise on curiosity."}
+    ]},
+  { prompt:"When you're into someone, how do you show it?", help:"Your communication style, in your own words.",
+    opts:[
+      {l:"I just say it, directly",bit:"You show you care by saying it directly."},
+      {l:"Consistent little check-ins",bit:"You show you care with consistent little check-ins."},
+      {l:"Quality time over texting",bit:"You show you care by showing up in person rather than over text."},
+      {l:"Slow to open up, then all in",bit:"You are slow to open up, then all in."}
+    ]},
+  { prompt:"Your ideal Saturday is closest to...", help:"Be honest, not aspirational.",
+    opts:[
+      {l:"Farmers market and a long walk",bit:"a farmers market and a long walk"},
+      {l:"A trail, then tacos",bit:"a trail and then tacos"},
+      {l:"Slow morning, a gallery, natural wine",bit:"a slow morning, a gallery, and natural wine"},
+      {l:"No plan at all, see where it goes",bit:"no plan at all, just seeing where the day goes"}
+    ]},
+  { prompt:"How do you recharge?", help:"Introvert, extrovert, or it depends.",
+    opts:[
+      {l:"Quiet nights in",bit:"on quiet nights in"},
+      {l:"A few close friends",bit:"with a few close friends"},
+      {l:"Out and about, people energize me",bit:"out among people, who tend to energize you"},
+      {l:"A mix, depends on the week",bit:"however the week happens to call for it"}
+    ]},
+  { prompt:"Be honest about your phone.", help:"This tells us a lot about pace and presence.",
+    opts:[
+      {l:"Trying to use it less",bit:""},
+      {l:"On for work, off after",bit:""},
+      {l:"Pretty online, it's my job",bit:""},
+      {l:"Always reachable",bit:""}
+    ]},
+  { prompt:"What's an actual deal-breaker? Pick up to 2.", help:"The things that end it before it starts.", multi:true,
+    opts:[
+      {l:"No clear intent",bit:"no clear intent"},
+      {l:"Poor communication",bit:"poor communication"},
+      {l:"Different views on family",bit:"clashing views on family"},
+      {l:"Doesn't make time",bit:"not making time"},
+      {l:"No curiosity",bit:"no curiosity"},
+      {l:"Hot and cold",bit:"hot-and-cold inconsistency"}
+    ]},
+  { prompt:"Your ideal first date is...", help:"What actually sounds good to you.",
+    opts:[
+      {l:"Low-key coffee or a walk",bit:"low-key, a coffee or a walk where the conversation can breathe"},
+      {l:"A good cocktail bar",bit:"a good cocktail bar with a real conversation"},
+      {l:"Something active",bit:"something active that takes the pressure off"},
+      {l:"Dinner and real talk",bit:"dinner and an honest, unhurried conversation"}
+    ]},
+  { prompt:"What makes a first date feel worth your time?", help:"Last one. This shapes your VibeCheck prompts.",
+    opts:[
+      {l:"Real conversation, not small talk",bit:"a real conversation instead of small talk"},
+      {l:"Feeling relaxed, not interviewed",bit:"feeling relaxed rather than interviewed"},
+      {l:"A spark I can actually feel",bit:"a spark you can actually feel"},
+      {l:"Knowing we both showed up with intent",bit:"knowing you both showed up with real intent"}
+    ]}
+];
+
+/* ============ STATE ============ */
+var qIndex=0;
+var answers={};          // index -> chosen option(s)
+var activeMatch=0;
+var sched={time:null, venue:null};
+var profileBuilt=false;
+
+var DIM_COLOR={g:"green",y:"amber",r:"red"};
+
+/* ============ ROUTER ============ */
+function go(id){
+  var screens=document.querySelectorAll('.screen');
+  for(var i=0;i<screens.length;i++) screens[i].classList.remove('active');
+  var el=document.getElementById(id);
+  if(el){ el.classList.add('active'); }
+  document.getElementById('screens').scrollTop=0;
+  closeMenu();
+  markMenu(id);
+}
+function jump(id){ go(id); }
+function markMenu(id){
+  var btns=document.querySelectorAll('.menu-panel button[data-target]');
+  for(var i=0;i<btns.length;i++){
+    btns[i].classList.toggle('active-link', btns[i].getAttribute('data-target')===id);
+  }
+}
+function toggleMenu(){ document.getElementById('menuPanel').classList.toggle('open'); }
+function closeMenu(){ document.getElementById('menuPanel').classList.remove('open'); }
+
+/* ============ INTAKE ============ */
+function startIntake(){ qIndex=0; answers={}; profileBuilt=false; renderQuestion(); }
+function renderQuestion(){
+  var q=QUESTIONS[qIndex];
+  document.getElementById('qCount').textContent="Question "+(qIndex+1)+" of "+QUESTIONS.length;
+  document.getElementById('progressBar').style.width=((qIndex)/QUESTIONS.length*100)+"%";
+  var wrap=document.getElementById('qWrap');
+  var sel=answers[qIndex];
+  var html='<div class="q-prompt">'+q.prompt+'</div><div class="q-help">'+q.help+'</div><div class="opts">';
+  for(var i=0;i<q.opts.length;i++){
+    var on = q.multi ? (sel && sel.indexOf(i)>-1) : (sel===i);
+    html+='<button class="opt'+(on?' sel':'')+'" onclick="choose('+i+')">'+q.opts[i].l+
+      '<span class="tick"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5 5.5 11 12 3.5" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>';
+  }
+  html+='</div>';
+  if(q.multi){
+    html+='<div class="multi-hint">Pick the one or two that matter most.</div>';
+    html+='<div style="padding:18px 0 6px"><button class="btn" onclick="nextQ()">Continue</button></div>';
+  }
+  if(qIndex>0){
+    html+='<div style="padding:'+(q.multi?'4':'18')+'px 0 6px"><button class="btn ghost" onclick="prevQ()">Back</button></div>';
+  }
+  wrap.innerHTML=html;
+}
+function choose(i){
+  var q=QUESTIONS[qIndex];
+  if(q.multi){
+    var cur=answers[qIndex]||[];
+    var at=cur.indexOf(i);
+    if(at>-1){ cur.splice(at,1); }
+    else { if(cur.length>=2){ cur.shift(); } cur.push(i); }
+    answers[qIndex]=cur;
+    renderQuestion();
+  } else {
+    answers[qIndex]=i;
+    renderQuestion();
+    setTimeout(nextQ,260);
+  }
+}
+function nextQ(){
+  if(qIndex<QUESTIONS.length-1){ qIndex++; renderQuestion(); }
+  else { buildProfile(); go('profile-screen'); }
+}
+function prevQ(){ if(qIndex>0){ qIndex--; renderQuestion(); } }
+
+/* ============ PROFILE ============ */
+function pick(qi,def){ // returns chosen opt object for single-select, or fallback default index
+  var a=answers[qi];
+  if(a===undefined||a===null) a=def;
+  return QUESTIONS[qi].opts[a];
+}
+function buildProfile(){
+  var intent=pick(0,1), win=pick(1,0), val=pick(2,0), comm=pick(3,1),
+      wknd=pick(4,0), recharge=pick(5,0), date=pick(8,0), worth=pick(9,3);
+  // deal-breakers (multi)
+  var dbIdx=answers[7]||[0,1];
+  var dbWords=[];
+  for(var i=0;i<dbIdx.length;i++) dbWords.push(QUESTIONS[7].opts[dbIdx[i]].bit);
+  var dbText = dbWords.length? dbWords.join(" and ") : "no clear intent";
+
+  var persona = (answers[0]===0||answers[0]===undefined)?"Intentional and ready to meet."
+    : answers[0]===1?"Open-hearted, in no rush."
+    : answers[0]===2?"Intentional, and open to more."
+    : "Curious and figuring it out.";
+  document.getElementById('profilePersona').textContent=persona;
+
+  var summary = '<span class="lead">'+persona+'</span>'+
+    intent.bit+" "+
+    "You won't compromise on "+val.l.toLowerCase()+", and "+comm.bit.charAt(0).toLowerCase()+comm.bit.slice(1)+" "+
+    "Your perfect Saturday is "+wknd.bit+", and you recharge best "+recharge.bit+". "+
+    "On a first date you'd rather keep it "+date.bit+". "+
+    "Deal-breakers: "+dbText+". "+
+    "We'll match you with people who show up with the same intent.";
+  document.getElementById('profileSummary').innerHTML=summary;
+
+  document.getElementById('profileIntent').textContent =
+    "What makes a date worth it for you: "+worth.bit+". Your VibeCheck prompts are tuned to surface exactly that.";
+
+  var tags=[val.l, shortComm(comm.l), shortWknd(wknd.l), shortDate(date.l)];
+  var th='';
+  for(var t=0;t<tags.length;t++) th+='<span class="tag"><span class="d"></span>'+tags[t]+'</span>';
+  document.getElementById('profileTags').innerHTML=th;
+
+  document.getElementById('profileInitial').textContent="You";
+  document.getElementById('profileInitial').style.fontSize="20px";
+  profileBuilt=true;
+}
+function shortComm(l){ return l.indexOf("directly")>-1?"Direct":l.indexOf("check-ins")>-1?"Consistent":l.indexOf("Quality")>-1?"Present":"Slow burn"; }
+function shortWknd(l){ return l.indexOf("market")>-1?"Market mornings":l.indexOf("trail")>-1?"Trails + tacos":l.indexOf("gallery")>-1?"Galleries + wine":"Spontaneous"; }
+function shortDate(l){ return l.indexOf("coffee")>-1?"Low-key dates":l.indexOf("cocktail")>-1?"Cocktail bars":l.indexOf("active")>-1?"Active dates":"Dinner + real talk"; }
+function ensureProfile(){ if(!profileBuilt) buildProfile(); }
+
+/* ============ DASHBOARD ============ */
+function renderDashboard(){
+  var list=document.getElementById('matchList');
+  var html='';
+  for(var m=0;m<MATCHES.length;m++){
+    var x=MATCHES[m];
+    var deg=Math.round(x.score*3.6);
+    var ring='conic-gradient(var(--brand) '+deg+'deg, var(--cream-2) '+deg+'deg)';
+    var dims='';
+    for(var d=0;d<x.dims.length;d++){
+      var dd=x.dims[d];
+      dims+='<div class="dim '+dd[1]+'"><div class="d"></div><div class="lab">'+dd[0]+'</div><div class="st">'+dd[2]+'</div></div>';
+    }
+    html+='<div class="match-card" onclick="openMatch('+x.id+')">'+
+      '<div class="mc-top">'+
+        '<div class="avatar" style="background:'+x.grad+'">'+x.initial+'</div>'+
+        '<div class="mc-id"><h3>'+x.first+' <span>'+x.age+'</span></h3><div class="job">'+x.job+' · '+x.hood+'</div></div>'+
+        '<div class="ring-score" style="background:'+ring+'"><div class="inner"><b>'+x.score+'</b><small>match</small></div></div>'+
+      '</div>'+
+      '<div class="dims">'+dims+'</div>'+
+      '<div class="why"><b>Why this might work.</b> '+x.why+'</div>'+
+      '<div class="mc-go">View match and start a VibeCheck<span>›</span></div>'+
+    '</div>';
+  }
+  list.innerHTML=html;
+}
+
+/* ============ MATCH DETAIL ============ */
+function openMatch(id){
+  activeMatch=id;
+  var x=MATCHES[id];
+  var dims='';
+  for(var d=0;d<x.dims.length;d++){
+    var dd=x.dims[d];
+    dims+='<div class="dim '+dd[1]+'" style="flex:1"><div class="d"></div><div class="lab">'+dd[0]+'</div><div class="st">'+dd[2]+'</div></div>';
+  }
+  var chips='';
+  for(var s=0;s<x.shared.length;s++) chips+='<span class="chip2">'+x.shared[s]+'</span>';
+  var html=
+    '<div class="detail-hero">'+
+      '<div class="avatar lg" style="background:'+x.grad+'">'+x.initial+'</div>'+
+      '<div class="meta"><h2>'+x.first+', '+x.age+'</h2><div class="job">'+x.job+' · '+x.hood+'</div>'+
+      '<span class="score">'+x.score+'% compatibility</span></div>'+
+    '</div>'+
+    '<div class="dims-wide">'+dims+'</div>'+
+    '<div class="block"><span class="section-label">Why this match might work</span><div class="body"><div class="expl">'+x.explain+'</div></div></div>'+
+    '<div class="block"><span class="section-label">Shared interests</span><div class="chips">'+chips+'</div></div>'+
+    '<div class="block"><span class="section-label">Potential friction</span><div class="friction"><span class="ic">⚠️</span><div>'+x.friction+'</div></div></div>'+
+    '<div class="block"><span class="section-label">Suggested first date</span><div class="date-idea"><div class="l">Tuned to you both</div><p>'+x.idea+'</p></div></div>'+
+    '<div class="footer-cta"><button class="btn" onclick="prepVibe(); go(\'vibecheck-intro\')">Start 90-second VibeCheck</button></div>';
+  document.getElementById('detailBody').innerHTML=html;
+}
+
+/* ============ VIBECHECK ============ */
+var VC_PROMPTS=[
+  {q:"What kind of relationship are you actually looking for right now?",
+   me:"Honestly? Something real. I'm done with situationships. I want to build with someone.",
+   them:"Same. I'm not here to collect matches. I want one person I'm genuinely excited about.", myDur:"0:24", theirDur:"0:21"},
+  {q:"What would make a first date feel worth your time?",
+   me:"No interview energy. Just an easy conversation where we both actually showed up.",
+   them:"Agreed. If I leave feeling relaxed and curious about you, that's a win for me.", myDur:"0:19", theirDur:"0:18"},
+  {q:"What's your ideal low-pressure first date?",
+   me:"Low-key. A walk and a good coffee beats a fancy dinner on a first date, every time.",
+   them:"That's my exact answer. Saturday market and a walk. I'm in.", myDur:"0:17", theirDur:"0:15"}
+];
+var vcStep=0, vcSeconds=90;
+
+function prepVibe(){
+  var x=MATCHES[activeMatch];
+  document.getElementById('vcIntroTitle').textContent="A quick voice check with "+x.first;
+  document.getElementById('vcName').textContent=x.first;
+  document.getElementById('vcAvatar').textContent=x.initial;
+  document.getElementById('vcAvatar').style.background=x.grad;
+  document.getElementById('vcDoneAligned').textContent="You and "+x.first+" seem genuinely aligned";
+}
+function startVibeCheck(){
+  go('vibecheck-chat');
+  vcStep=0; vcSeconds=90;
+  document.getElementById('vcFeed').innerHTML='';
+  document.getElementById('vcTimer').textContent="0:90";
+  showPrompt();
+}
+function fmt(s){ var m=Math.floor(s/60); var r=s%60; return m+":"+(r<10?"0":"")+r; }
+function showPrompt(){
+  var p=VC_PROMPTS[vcStep];
+  var feed=document.getElementById('vcFeed');
+  feed.insertAdjacentHTML('beforeend','<div class="prompt-bubble"><span class="lab">Prompt '+(vcStep+1)+' of 3</span>'+p.q+'</div>');
+  scrollFeed();
+  renderRecBtn(false);
+}
+function bars(n){ var s=''; for(var i=0;i<n;i++) s+='<i></i>'; return s; }
+function renderRecBtn(recording){
+  var dock=document.getElementById('recDock');
+  if(recording){
+    dock.innerHTML='<button class="rec-btn recording"><span class="recwave"><i></i><i></i><i></i><i></i></span>Recording your answer...</button>';
+  } else {
+    dock.innerHTML='<button class="rec-btn" onclick="recordAnswer()">'+
+      '<svg class="mic" viewBox="0 0 24 24" fill="none"><rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>'+
+      'Hold to answer by voice</button>';
+  }
+}
+function recordAnswer(){
+  renderRecBtn(true);
+  var p=VC_PROMPTS[vcStep];
+  var feed=document.getElementById('vcFeed');
+  // simulate recording time
+  setTimeout(function(){
+    feed.insertAdjacentHTML('beforeend',
+      '<div class="vnote me playing"><div class="av">You ◉</div>'+
+      '<div class="player"><span class="play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>'+
+      '<div class="wave2">'+bars(26)+'</div><span class="dur">'+p.myDur+'</span></div>'+
+      '<div class="transcript">"'+p.me+'"</div></div>');
+    scrollFeed();
+    var dock=document.getElementById('recDock');
+    dock.innerHTML='<button class="rec-btn" style="background:var(--ink-faint);pointer-events:none">Sent · '+MATCHES[activeMatch].first+' is listening...</button>';
+    advanceTimer(8);
+    // their reply
+    setTimeout(showTyping, 1100);
+  }, 1900);
+}
+function showTyping(){
+  var feed=document.getElementById('vcFeed');
+  feed.insertAdjacentHTML('beforeend','<div class="typing" id="typingNow"><i></i><i></i><i></i></div>');
+  scrollFeed();
+  setTimeout(function(){
+    var t=document.getElementById('typingNow'); if(t) t.remove();
+    var p=VC_PROMPTS[vcStep];
+    var x=MATCHES[activeMatch];
+    feed.insertAdjacentHTML('beforeend',
+      '<div class="vnote them playing"><div class="av">'+x.first+' ◉</div>'+
+      '<div class="player"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>'+
+      '<div class="wave2">'+bars(26)+'</div><span class="dur">'+p.theirDur+'</span></div>'+
+      '<div class="transcript">"'+p.them+'"</div></div>');
+    scrollFeed();
+    advanceTimer(7);
+    setTimeout(function(){
+      vcStep++;
+      if(vcStep<VC_PROMPTS.length){ showPrompt(); }
+      else { finishVibe(); }
+    }, 1500);
+  }, 1600);
+}
+function advanceTimer(by){
+  vcSeconds=Math.max(0, vcSeconds-by);
+  document.getElementById('vcTimer').textContent=fmt(vcSeconds);
+}
+function finishVibe(){
+  var dock=document.getElementById('recDock');
+  dock.innerHTML='<button class="btn" onclick="go(\'vibecheck-done\')">VibeCheck complete · See results</button>';
+  var feed=document.getElementById('vcFeed');
+  feed.insertAdjacentHTML('beforeend','<div class="prompt-bubble" style="background:var(--green)">All three prompts done. Nicely aligned.</div>');
+  scrollFeed();
+  document.getElementById('vcTimer').textContent="0:00";
+}
+function scrollFeed(){
+  var s=document.getElementById('screens');
+  setTimeout(function(){ s.scrollTop=s.scrollHeight; }, 60);
+}
+
+/* ============ SCHEDULING ============ */
+var TIMES=[
+  {day:"Saturday, Jun 27", time:"10:30 AM"},
+  {day:"Sunday, Jun 28", time:"5:00 PM"},
+  {day:"Wednesday, Jul 1", time:"7:30 PM"}
+];
+var VENUES=[
+  {name:"Ferry Building Marketplace", vibe:"Coffee and a market walk"},
+  {name:"Réveille Coffee Co.", vibe:"Relaxed, easy to talk"},
+  {name:"Lands End Trail", vibe:"A walk with a view"}
+];
+function renderScheduling(){
+  var x=MATCHES[activeMatch];
+  document.getElementById('schedTitle').textContent="Pick a time to meet "+x.first;
+  sched={time:null, venue:null};
+  var ts=document.querySelectorAll('#scheduling .opt-time');
+  for(var i=0;i<ts.length;i++) ts[i].classList.remove('sel');
+  var vs=document.querySelectorAll('#scheduling .venue');
+  for(var j=0;j<vs.length;j++) vs[j].classList.remove('sel');
+  updateConfirm();
+}
+function pickTime(el,i){
+  var ts=document.querySelectorAll('#scheduling .opt-time');
+  for(var k=0;k<ts.length;k++) ts[k].classList.remove('sel');
+  el.classList.add('sel'); sched.time=i; updateConfirm();
+}
+function pickVenue(el,i){
+  var vs=document.querySelectorAll('#scheduling .venue');
+  for(var k=0;k<vs.length;k++) vs[k].classList.remove('sel');
+  el.classList.add('sel'); sched.venue=i; updateConfirm();
+}
+function updateConfirm(){
+  var b=document.getElementById('confirmBtn');
+  if(sched.time!==null && sched.venue!==null){ b.style.opacity="1"; b.style.pointerEvents="auto"; }
+  else { b.style.opacity=".5"; b.style.pointerEvents="none"; }
+}
+function confirmDate(){
+  var x=MATCHES[activeMatch];
+  var t=TIMES[sched.time], v=VENUES[sched.venue];
+  document.getElementById('confAvatar').textContent=x.initial;
+  document.getElementById('confAvatar').style.background=x.grad;
+  document.getElementById('confName').textContent=x.name;
+  document.getElementById('confJob').textContent=x.job+" · "+x.hood;
+  document.getElementById('confWhen').textContent=t.day+" · "+t.time;
+  document.getElementById('confWhere').textContent=v.name;
+  go('confirmed');
+}
+
+/* ============ ADMIN bars ============ */
+function animateBars(){
+  var fills=document.querySelectorAll('#admin .fill');
+  for(var i=0;i<fills.length;i++){
+    (function(f){ f.style.width="0"; setTimeout(function(){ f.style.width=f.getAttribute('data-w')+"%"; }, 120); })(fills[i]);
+  }
+}
+
+/* ============ RESET ============ */
+function resetDemo(){
+  qIndex=0; answers={}; activeMatch=0; sched={time:null,venue:null}; profileBuilt=false; vcStep=0;
+  go('landing');
+}
+
+/* ============ INIT + hooks on screen show ============ */
+var _go=go;
+go=function(id){
+  _go(id);
+  if(id==='dashboard') renderDashboard();
+  if(id==='admin') setTimeout(animateBars,200);
+};
+
+// clock
+(function(){
+  function tick(){
+    var d=new Date();
+    var h=d.getHours(), m=d.getMinutes();
+    var ap=h>=12?'':''; // 24h-ish off; keep simple 12h
+    var hh=h%12; if(hh===0) hh=12;
+    document.getElementById('clock').textContent=hh+":"+(m<10?"0":"")+m;
+  }
+  tick(); setInterval(tick,30000);
+})();
+
+renderDashboard();
+</script>
+</body>
+</html>
