@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Wingman — The dating show you call the shots on</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0B0912;--bg2:#120E1E;--surface:#19142A;--surface2:#211A36;
+  --magenta:#FF2E93;--magenta2:#FF5CAE;--cyan:#3FE0FF;--purple:#9B5CFF;
+  --gold:#FFC43D;--gold2:#FFD876;--live:#FF3B5C;--green:#33E0A0;
+  --text:#F6F2FC;--muted:#A49FB8;--faint:#6E6981;
+  --line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);
+  --grad:linear-gradient(110deg,#FF2E93,#9B5CFF 70%,#3FE0FF);
+  --grad-gold:linear-gradient(110deg,#FFC43D,#FF8A3D);
+  --display:"Sora",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;
+  --r-lg:22px;--r-md:15px;--r-sm:11px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:var(--body);background:#06050A;color:var(--text);-webkit-font-smoothing:antialiased;overflow:hidden}
+.stage-bg{position:fixed;inset:0;background:
+  radial-gradient(700px 500px at 15% 0%, rgba(255,46,147,.18), transparent 60%),
+  radial-gradient(700px 500px at 85% 100%, rgba(63,224,255,.14), transparent 60%),
+  #06050A;z-index:0}
+
+/* phone column */
+.app{position:relative;z-index:1;width:min(440px,100vw);height:100vh;height:100dvh;margin:0 auto;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.6)}
+@media(min-width:480px){.app{height:min(900px,96vh);margin-top:max(0px,calc((100vh - 900px)/2));border-radius:30px;border:1px solid var(--line)}}
+
+/* top bar */
+.topbar{flex:none;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(11,9,18,.8);backdrop-filter:blur(12px);z-index:6}
+.brand{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.4px;cursor:pointer}
+.brand .mk{width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:15px}
+.brand .mk svg{width:16px;height:16px}
+.wbtn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,196,61,.12);border:1px solid rgba(255,196,61,.35);color:var(--gold2);font-weight:700;font-size:13.5px;padding:7px 12px;border-radius:11px;cursor:pointer;font-variant-numeric:tabular-nums}
+.wbtn .coin{width:16px;height:16px;border-radius:50%;background:var(--grad-gold);display:inline-block;box-shadow:0 0 8px rgba(255,196,61,.5)}
+
+/* screens */
+.screens{flex:1;overflow-y:auto;overflow-x:hidden;position:relative}
+.screens::-webkit-scrollbar{width:0}
+.screen{display:none;animation:fade .35s ease both}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pad{padding:18px 16px 28px}
+
+/* type + buttons */
+h1.big{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.04;letter-spacing:-1.2px}
+h1.big .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--magenta2);background:rgba(255,46,147,.12);border:1px solid rgba(255,46,147,.25);padding:6px 11px;border-radius:999px}
+h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.4px}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;cursor:pointer;font-family:var(--body);font-weight:700;font-size:15.5px;padding:15px;border-radius:14px;background:var(--grad);color:#fff;box-shadow:0 10px 26px rgba(255,46,147,.32);transition:transform .12s}
+.btn:active{transform:scale(.97)}
+.btn.gold{background:var(--grad-gold);color:#2a1800;box-shadow:0 10px 26px rgba(255,196,61,.3)}
+.btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line2);box-shadow:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg)}
+
+/* ===== HOME ===== */
+.hero{padding:26px 18px 8px}
+.hero h1{margin-top:16px}
+.hero p{margin-top:14px;font-size:15.5px;line-height:1.55;color:var(--muted);max-width:320px}
+.live-rail{padding:6px 16px 4px}
+.rail-head{display:flex;align-items:center;justify-content:space-between;margin:18px 4px 12px}
+.rail-head b{font-family:var(--display);font-weight:700;font-size:16px}
+.see{font-size:12.5px;color:var(--magenta2);font-weight:600;cursor:pointer}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:transform .15s,border-color .2s;margin-bottom:13px}
+.dcard:hover{transform:translateY(-2px);border-color:var(--line2)}
+.dcard .thumb{height:130px;position:relative;display:flex;align-items:flex-end;padding:12px}
+.dcard .thumb .avs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.dcard .thumb .av{width:62px;height:62px;border-radius:50%;border:3px solid rgba(11,9,18,.6);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:24px;color:#fff}
+.dcard .thumb .av:nth-child(2){margin-left:-16px}
+.dcard .thumb .heart{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:18px;z-index:2;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+.live-badge{position:absolute;top:11px;left:11px;display:flex;align-items:center;gap:5px;background:var(--live);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.5px;padding:4px 8px;border-radius:7px;z-index:3}
+.live-badge .dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.view-badge{position:absolute;top:11px;right:11px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-size:11px;font-weight:700;padding:4px 9px;border-radius:7px;z-index:3}
+.dcard .meta{padding:13px 15px}
+.dcard .meta h3{font-family:var(--display);font-weight:700;font-size:16px}
+.dcard .meta .host{font-size:12.5px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:6px}
+.dcard .meta .host .vp{color:var(--cyan);font-weight:600}
+.dtags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.dtag{font-size:10.5px;font-weight:700;color:var(--muted);background:var(--surface2);border:1px solid var(--line);padding:4px 9px;border-radius:999px}
+.how{margin:22px 16px 8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}
+.how h4{font-family:var(--display);font-weight:700;font-size:15px;margin-bottom:14px}
+.how .step{display:flex;gap:12px;align-items:flex-start;margin-bottom:13px}
+.how .step:last-child{margin-bottom:0}
+.how .step .n{flex:none;width:28px;height:28px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:13px}
+.how .step p{font-size:13px;line-height:1.45;color:var(--muted)}
+.how .step p b{color:var(--text)}
+
+/* ===== LOBBY ===== */
+.lobby-head{padding:16px 18px 4px}
+
+/* ===== ROOM ===== */
+.room{display:flex;flex-direction:column;height:100%}
+.stream{position:relative;height:248px;flex:none;overflow:hidden;background:linear-gradient(135deg,#2a1140,#4a1d52 55%,#10303f)}
+.stream .vignette{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 30%,transparent,rgba(0,0,0,.55))}
+.stream .daters{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:24px;padding-bottom:30px}
+.stream .dater{display:flex;flex-direction:column;align-items:center;gap:8px}
+.stream .dater .av{width:78px;height:78px;border-radius:50%;border:3px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:32px;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.stream .dater .nm{font-size:13px;font-weight:700;background:rgba(0,0,0,.45);padding:3px 10px;border-radius:999px}
+.stream .vs{font-family:var(--display);font-weight:800;font-size:18px;color:var(--magenta2);filter:drop-shadow(0 0 10px rgba(255,46,147,.6))}
+.stream .rtop{position:absolute;top:12px;left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;z-index:4}
+.stream .back2{background:rgba(0,0,0,.5);backdrop-filter:blur(6px);border:none;color:#fff;width:34px;height:34px;border-radius:10px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.reactions-layer{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.float-emoji{position:absolute;bottom:60px;font-size:26px;animation:floatup 2.2s ease-out forwards}
+@keyframes floatup{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translateY(-180px) scale(1.3)}}
+.spark{position:absolute;left:12px;right:12px;bottom:12px;z-index:4}
+.spark .lab{display:flex;align-items:center;justify-content:space-between;font-size:10.5px;font-weight:700;letter-spacing:.5px;margin-bottom:5px;text-transform:uppercase}
+.spark .lab .v{color:var(--gold2)}
+.spark .track{height:8px;background:rgba(0,0,0,.4);border-radius:999px;overflow:hidden}
+.spark .fill{height:100%;width:55%;background:var(--grad-gold);border-radius:999px;transition:width .6s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(255,196,61,.6)}
+
+.onstage{flex:none;padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--line);min-height:52px;display:flex;align-items:center;gap:11px;transition:background .3s}
+.onstage.flash{background:rgba(255,46,147,.18)}
+.onstage .ic{flex:none;width:30px;height:30px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:15px}
+.onstage .txt{font-size:12.5px;line-height:1.35}
+.onstage .txt b{color:var(--magenta2)}
+.onstage .txt .by{color:var(--faint);font-size:11px}
+.onstage.idle .ic{background:var(--surface)}
+
+.chat{flex:none;height:96px;overflow:hidden;padding:8px 14px;border-bottom:1px solid var(--line);position:relative;mask-image:linear-gradient(to bottom,transparent,#000 30%)}
+.chat .msg{font-size:12px;line-height:1.5;margin-bottom:2px;animation:slidein .3s ease}
+@keyframes slidein{from{opacity:0;transform:translateX(-8px)}to{opacity:1}}
+.chat .msg .u{font-weight:700;color:var(--cyan)}
+.chat .msg .u.gold{color:var(--gold2)}
+.chat .msg .u.mg{color:var(--magenta2)}
+.chat .msg.sys{color:var(--gold2);font-weight:600}
+
+.influence{flex:1;overflow-y:auto;padding:14px 14px 90px}
+.influence::-webkit-scrollbar{width:0}
+.inf-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.inf-head b{font-family:var(--display);font-weight:700;font-size:16px}
+.inf-head .hint{font-size:11px;color:var(--faint)}
+.react-row{display:flex;gap:8px;margin:12px 0 16px}
+.react-row button{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 0;font-size:20px;cursor:pointer;transition:transform .1s}
+.react-row button:active{transform:scale(1.2)}
+.plays{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.play{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:13px;cursor:pointer;text-align:left;transition:border-color .15s,transform .1s;display:flex;flex-direction:column;gap:9px;min-height:118px}
+.play:hover{border-color:var(--magenta)}
+.play:active{transform:scale(.97)}
+.play.wide{grid-column:1 / -1;flex-direction:row;align-items:center;min-height:auto}
+.play .pic{width:38px;height:38px;border-radius:11px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:19px;flex:none}
+.play.spicy .pic{background:rgba(255,59,92,.18)}
+.play .pl{font-size:12.5px;font-weight:600;line-height:1.3;flex:1}
+.play .cost{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--gold2)}
+.play .cost .coin{width:13px;height:13px;border-radius:50%;background:var(--grad-gold)}
+.play.wide .right{margin-left:auto;text-align:right;display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+
+/* ===== WALLET ===== */
+.wallet-bal{margin:16px;background:var(--grad);border-radius:var(--r-lg);padding:22px;text-align:center;position:relative;overflow:hidden}
+.wallet-bal .l{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.85}
+.wallet-bal .v{font-family:var(--display);font-weight:800;font-size:44px;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:10px}
+.wallet-bal .v .coin{width:32px;height:32px;border-radius:50%;background:var(--grad-gold);box-shadow:0 0 16px rgba(255,196,61,.6)}
+.pkgs{padding:4px 16px;display:flex;flex-direction:column;gap:11px}
+.pkg{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:15px 16px;cursor:pointer;transition:border-color .15s}
+.pkg:hover{border-color:var(--gold)}
+.pkg .coins{flex:none;width:46px;height:46px;border-radius:13px;background:rgba(255,196,61,.12);border:1px solid rgba(255,196,61,.3);display:flex;align-items:center;justify-content:center;font-size:22px}
+.pkg .amt{font-family:var(--display);font-weight:700;font-size:18px}
+.pkg .amt small{display:block;font-family:var(--body);font-size:11.5px;color:var(--muted);font-weight:500}
+.pkg .price{margin-left:auto;background:var(--grad-gold);color:#2a1800;font-weight:800;font-size:14px;padding:9px 15px;border-radius:11px}
+.pkg .best{font-size:9.5px;font-weight:800;color:var(--green);background:rgba(51,224,160,.14);padding:3px 7px;border-radius:999px;margin-left:6px}
+.hist{margin:18px 16px 0}
+.hist .hrow{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--line);font-size:13px}
+.hist .hrow .hi{flex:none;width:30px;height:30px;border-radius:9px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:14px}
+.hist .hrow .hc{margin-left:auto;font-weight:700;color:var(--magenta2);font-variant-numeric:tabular-nums}
+
+/* ===== LEADERBOARD ===== */
+.lb-hero{margin:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;text-align:center}
+.lb-hero .yourrank{font-family:var(--display);font-weight:800;font-size:30px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lb-row{display:flex;align-items:center;gap:12px;padding:11px 16px;margin:0 16px;border-radius:13px}
+.lb-row.you{background:rgba(255,46,147,.1);border:1px solid rgba(255,46,147,.3)}
+.lb-row .rk{font-family:var(--display);font-weight:800;font-size:15px;width:24px;color:var(--muted)}
+.lb-row .rk.top{color:var(--gold2)}
+.lb-row .av{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:16px;color:#fff;flex:none}
+.lb-row .nm{font-weight:700;font-size:14px}
+.lb-row .nm small{display:block;color:var(--faint);font-weight:500;font-size:11px}
+.lb-row .sp{margin-left:auto;text-align:right}
+.lb-row .sp b{color:var(--gold2);font-variant-numeric:tabular-nums}
+.lb-row .sp small{display:block;color:var(--faint);font-size:10.5px}
+
+/* ===== RECAP ===== */
+.recap{padding:24px 18px 30px;text-align:center}
+.recap .res{margin:8px auto 0;width:90px;height:90px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 0 40px rgba(255,46,147,.5)}
+.recap h2{font-family:var(--display);font-weight:800;font-size:24px;margin-top:18px;letter-spacing:-.5px}
+.recap .sub{color:var(--muted);font-size:14px;margin-top:8px}
+.votebar{margin:20px 0 6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:15px}
+.votebar .vl{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:8px}
+.votebar .vt{height:12px;border-radius:999px;background:var(--surface2);overflow:hidden;display:flex}
+.votebar .vy{background:var(--grad);height:100%}
+.impact{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:18px;text-align:left}
+.impact .il{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--magenta2);margin-bottom:12px}
+.impact .irow{display:flex;align-items:center;gap:11px;font-size:13px;margin-bottom:10px}
+.impact .irow:last-child{margin-bottom:0}
+.impact .irow .ii{flex:none;width:30px;height:30px;border-radius:9px;background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.impact .irow b{color:var(--gold2)}
+.earn-note{margin-top:16px;font-size:11.5px;color:var(--faint);line-height:1.5}
+.earn-note b{color:var(--cyan)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--surface2);border:1px solid var(--line2);color:var(--text);padding:13px 18px;border-radius:14px;font-size:13.5px;font-weight:600;box-shadow:0 12px 30px rgba(0,0,0,.5);opacity:0;transition:.3s;z-index:50;display:flex;align-items:center;gap:9px;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .ti{font-size:17px}
+
+/* jump menu */
+.jump{position:fixed;top:14px;right:14px;z-index:60;background:rgba(25,20,42,.9);border:1px solid var(--line2);color:#fff;font-size:11.5px;font-weight:700;padding:8px 11px;border-radius:11px;cursor:pointer;backdrop-filter:blur(8px)}
+.jpanel{position:fixed;top:48px;right:14px;z-index:60;background:var(--surface);border:1px solid var(--line2);border-radius:15px;box-shadow:0 24px 50px rgba(0,0,0,.6);padding:7px;width:200px;display:none}
+.jpanel.open{display:block;animation:fade .2s ease both}
+.jpanel .jt{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--faint);padding:8px 10px 5px}
+.jpanel button{display:flex;width:100%;align-items:center;gap:10px;background:none;border:none;color:var(--text);cursor:pointer;text-align:left;padding:9px 10px;border-radius:9px;font-family:var(--body);font-size:13px;font-weight:600}
+.jpanel button:hover{background:var(--surface2)}
+.jpanel button .num{width:20px;height:20px;border-radius:6px;background:var(--surface2);color:var(--magenta2);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+@media(min-width:480px){.jump{top:auto;bottom:20px;right:calc(50% - 220px - 56px)}.jpanel{top:auto;bottom:54px;right:calc(50% - 220px - 56px)}}
+@media(max-width:520px){.jump{top:10px;right:10px}.jpanel{top:44px;right:10px}}
+</style>
+</head>
+<body>
+<div class="stage-bg"></div>
+
+<div class="app">
+  <div class="topbar">
+    <div class="brand" onclick="go('home')"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z" fill="#fff"/></svg></span>Wingman</div>
+    <button class="wbtn" onclick="go('wallet'); renderWallet()"><span class="coin"></span><span id="wingBal">500</span></button>
+  </div>
+
+  <div class="screens" id="screens">
+
+    <!-- HOME -->
+    <section class="screen active" id="home">
+      <div class="hero">
+        <span class="eyebrow">Live dating, you direct it</span>
+        <h1 class="big">The dating show <span class="g">you call the shots on.</span></h1>
+        <p>Watch real first dates live. Spend Wings to send a play: make them ask the spicy question, trigger a dare, send a gift. You are the wingman now.</p>
+      </div>
+      <div class="live-rail">
+        <div class="rail-head"><b>🔴 Live right now</b><span class="see" onclick="go('lobby'); renderLobby()">See all</span></div>
+        <div id="homeLive"></div>
+      </div>
+      <div class="how">
+        <h4>How it works</h4>
+        <div class="step"><span class="n">1</span><p><b>Drop into a live date.</b> Real people, real first dates, hosted by your favorite dating creators.</p></div>
+        <div class="step"><span class="n">2</span><p><b>Send a play.</b> Spend Wings to make them ask a question, do a dare, or get a gift. Daters can pass anything, it is all opt-in.</p></div>
+        <div class="step"><span class="n">3</span><p><b>Change the night.</b> Your plays move the spark meter, hit the leaderboard, and might just make the match.</p></div>
+      </div>
+      <div class="pad"><button class="btn" onclick="enterRoom(0)">Enter the live date 🔴</button></div>
+    </section>
+
+    <!-- LOBBY -->
+    <section class="screen" id="lobby">
+      <div class="lobby-head">
+        <span class="eyebrow">Live now</span>
+        <h2 class="t" style="margin-top:12px">Pick a date to crash</h2>
+        <p class="muted" style="font-size:13.5px;margin-top:6px">Every date is live and opt-in. Jump in and start sending plays.</p>
+      </div>
+      <div class="pad" style="padding-top:14px" id="lobbyList"></div>
+    </section>
+
+    <!-- ROOM -->
+    <section class="screen" id="room">
+      <div class="room">
+        <div class="stream" id="stream">
+          <div class="vignette"></div>
+          <div class="rtop">
+            <button class="back2" onclick="leaveRoom()">‹</button>
+            <div style="display:flex;gap:8px">
+              <span class="live-badge"><span class="dot"></span>LIVE</span>
+              <span class="view-badge" id="viewers">12.4k 👁</span>
+            </div>
+          </div>
+          <div class="daters" id="daters"></div>
+          <div class="reactions-layer" id="reactLayer"></div>
+          <div class="spark">
+            <div class="lab"><span>💞 Spark meter</span><span class="v" id="sparkVal">55%</span></div>
+            <div class="track"><div class="fill" id="sparkFill"></div></div>
+          </div>
+        </div>
+
+        <div class="onstage idle" id="onstage">
+          <span class="ic">🎬</span>
+          <div class="txt"><b>You are live in the room.</b><div class="by">Send a play below to make something happen.</div></div>
+        </div>
+
+        <div class="chat" id="chat"></div>
+
+        <div class="influence">
+          <div class="inf-head"><b>Call the shots</b><span class="hint">tap to send · daters can pass</span></div>
+          <div class="react-row" id="reactRow"></div>
+          <div class="plays" id="plays"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WALLET -->
+    <section class="screen" id="wallet">
+      <div class="lobby-head" style="padding-bottom:0"><span class="eyebrow">Your Wings</span></div>
+      <div class="wallet-bal">
+        <div class="l">Balance</div>
+        <div class="v"><span class="coin"></span><span id="walletBal">500</span></div>
+      </div>
+      <div class="pkgs" id="pkgs"></div>
+      <div class="hist">
+        <div class="inf-head" style="margin:0 0 4px"><b style="font-family:var(--display);font-size:15px">Recent plays</b></div>
+        <div id="histList"></div>
+      </div>
+      <div class="pad"><button class="btn ghost" onclick="go('room')">Back to the date</button></div>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section class="screen" id="leaderboard">
+      <div class="lobby-head" style="padding-bottom:0"><span class="eyebrow">Tonight's producers</span></div>
+      <div class="lb-hero">
+        <div style="font-size:12px;color:var(--muted);font-weight:600">YOUR RANK TONIGHT</div>
+        <div class="yourrank" id="yourRank">#7</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:4px">You have triggered <b id="yourMoments" style="color:var(--gold2)">0</b> moments this date</div>
+      </div>
+      <div id="lbList" style="margin-top:8px"></div>
+      <div class="pad"><button class="btn" onclick="go('room')">Back to the date</button></div>
+    </section>
+
+    <!-- RECAP -->
+    <section class="screen" id="recap">
+      <div class="recap">
+        <div class="res">💘</div>
+        <h2 id="recapTitle">Maya &amp; Theo are getting a second date!</h2>
+        <div class="sub" id="recapSub">The crowd pushed them over the edge. 12.4k people watched it happen.</div>
+        <div class="votebar">
+          <div class="vl"><span style="color:var(--magenta2)">Second date 78%</span><span class="muted">Just friends 22%</span></div>
+          <div class="vt"><div class="vy" style="width:78%"></div></div>
+        </div>
+        <div class="impact">
+          <div class="il">Your impact tonight</div>
+          <div class="irow"><span class="ii">🎬</span><div>You triggered <b id="impMoments">0</b> live moments</div></div>
+          <div class="irow"><span class="ii">💞</span><div>You pushed the spark meter to <b id="impSpark">55%</b></div></div>
+          <div class="irow"><span class="ii">🏆</span><div>You ranked <b id="impRank">#7</b> of 3,402 producers</div></div>
+        </div>
+        <div class="earn-note">Where your Wings went: <b>Maya &amp; Theo</b> and host <b>@itsjordanlive</b> split 60% of every play you sent. That is how daters and creators get paid to show up.</div>
+      </div>
+      <div class="pad" style="padding-top:6px">
+        <button class="btn" onclick="go('lobby'); renderLobby()">Find another date</button>
+        <button class="btn ghost" style="margin-top:10px" onclick="resetDemo()">Restart demo</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<button class="jump" onclick="toggleJump()">☰ Screens</button>
+<div class="jpanel" id="jpanel">
+  <div class="jt">Jump to any screen</div>
+  <button onclick="jumpTo('home')"><span class="num">1</span>Home</button>
+  <button onclick="jumpTo('lobby'); renderLobby()"><span class="num">2</span>Live lobby</button>
+  <button onclick="jumpTo('room'); enterRoom(0)"><span class="num">3</span>Live date room</button>
+  <button onclick="jumpTo('wallet'); renderWallet()"><span class="num">4</span>Wallet · buy Wings</button>
+  <button onclick="jumpTo('leaderboard'); renderLeaderboard()"><span class="num">5</span>Leaderboard</button>
+  <button onclick="jumpTo('recap'); renderRecap()"><span class="num">6</span>Date recap</button>
+</div>
+
+<div class="toast" id="toast"><span class="ti" id="toastIc">✨</span><span id="toastTx"></span></div>
+
+<script>
+/* ===== DATA ===== */
+var DATES=[
+  {id:0,a:"Maya",b:"Theo",aAv:"M",bAv:"T",aGrad:"linear-gradient(150deg,#FF2E93,#FF8A3D)",bGrad:"linear-gradient(150deg,#3FE0FF,#9B5CFF)",
+   host:"@itsjordanlive",viewers:"12.4k",tags:["First date","Blind","Brooklyn"],heart:"💞"},
+  {id:1,a:"Priya",b:"Sam",aAv:"P",bAv:"S",aGrad:"linear-gradient(150deg,#9B5CFF,#FF2E93)",bGrad:"linear-gradient(150deg,#33E0A0,#3FE0FF)",
+   host:"@thedatenight",viewers:"8.1k",tags:["Speed round","Round 2"],heart:"🔥"},
+  {id:2,a:"Devon",b:"Alex",aAv:"D",bAv:"A",aGrad:"linear-gradient(150deg,#FFC43D,#FF8A3D)",bGrad:"linear-gradient(150deg,#FF2E93,#9B5CFF)",
+   host:"@cupidcrew",viewers:"21.7k",tags:["FINALE","2nd date vote"],heart:"💘"}
+];
+
+var PLAYS=[
+  {id:0,ic:"❓",cost:50,label:'Make them ask: "What\'s your most toxic trait?"',chat:"made them ask about toxic traits",spark:4},
+  {id:1,ic:"🎵",cost:80,label:"Make them show the last song they played",chat:"made them reveal their last played song",spark:3},
+  {id:2,ic:"🍸",cost:120,label:"Send the table a round of drinks",chat:"sent a round of drinks 🍸",spark:6},
+  {id:3,ic:"🔥",cost:300,wide:true,label:"Trigger the Hot Seat: 60 seconds of rapid-fire questions",chat:"triggered the HOT SEAT 🔥",spark:10},
+  {id:4,ic:"💃",cost:200,label:"Make them do a 20-second slow dance",chat:"made them slow dance",spark:8},
+  {id:5,ic:"⭐",cost:100,label:"Make them rate the date so far, out of 10, on camera",chat:"made them rate the date /10",spark:5},
+  {id:6,ic:"😈",cost:250,spicy:true,label:'Dare: "Reveal your dealbreaker, right now"',chat:"dared them to name their dealbreaker",spark:-3,passable:true},
+  {id:7,ic:"🗺️",cost:60,label:"Pick their next topic: worst travel disaster",chat:"set the topic to travel disasters",spark:3}
+];
+
+var WING_PKGS=[
+  {coins:100,price:"$1.99",bonus:""},
+  {coins:550,price:"$9.99",bonus:"+50 bonus"},
+  {coins:1200,price:"$19.99",bonus:"+200 bonus",best:true},
+  {coins:3000,price:"$44.99",bonus:"+700 bonus"}
+];
+
+var LEADERS=[
+  {nm:"BigMattEnergy",sub:"sent 14 plays",sp:"4,820",grad:"linear-gradient(150deg,#FF2E93,#FF8A3D)"},
+  {nm:"sofia_watches",sub:"sent 11 plays",sp:"3,410",grad:"linear-gradient(150deg,#3FE0FF,#9B5CFF)"},
+  {nm:"thirdwheel99",sub:"sent 9 plays",sp:"2,990",grad:"linear-gradient(150deg,#33E0A0,#3FE0FF)"},
+  {nm:"datedoctor",sub:"sent 8 plays",sp:"2,140",grad:"linear-gradient(150deg,#FFC43D,#FF8A3D)"},
+  {nm:"romeo_no",sub:"sent 6 plays",sp:"1,760",grad:"linear-gradient(150deg,#9B5CFF,#FF2E93)"},
+  {nm:"justhereforthedrama",sub:"sent 5 plays",sp:"1,300",grad:"linear-gradient(150deg,#FF5CAE,#FFC43D)"}
+];
+
+var CHAT_LINES=[
+  ["mads_x","cyan","NOT the toxic trait question 💀"],
+  ["jordanfan","mg","theo is so nervous lmaooo"],
+  ["livvy","cyan","send the drinks send the drinks"],
+  ["the_real_deal","cyan","maya is OUT of his league"],
+  ["bbygirl","mg","spark meter going UP 📈"],
+  ["kev","cyan","who triggered the hot seat 😭🔥"],
+  ["anon_44","cyan","second date energy fr"],
+  ["pluto","mg","this is better than netflix"],
+  ["sam_i_am","cyan","ask about the ex ask about the ex"],
+  ["mira","cyan","they keep laughing omg"]
+];
+
+/* ===== STATE ===== */
+var wings=500, spark=55, momentsTriggered=0, playHistory=[], curDate=0, chatTimer=null;
+
+/* ===== ROUTER ===== */
+function go(id){
+  if(id!=='room' && chatTimer){ clearInterval(chatTimer); chatTimer=null; }
+  var s=document.querySelectorAll('.screen');
+  for(var i=0;i<s.length;i++) s[i].classList.remove('active');
+  var el=document.getElementById(id); if(el) el.classList.add('active');
+  document.getElementById('screens').scrollTop=0;
+  closeJump();
+}
+function jumpTo(id){ go(id); }
+function toggleJump(){ document.getElementById('jpanel').classList.toggle('open'); }
+function closeJump(){ document.getElementById('jpanel').classList.remove('open'); }
+function setWings(n){ wings=n; document.getElementById('wingBal').textContent=n; var wb=document.getElementById('walletBal'); if(wb) wb.textContent=n; }
+
+/* ===== HOME / LOBBY ===== */
+function dateCardHTML(d){
+  return '<div class="dcard" onclick="enterRoom('+d.id+')">'+
+    '<div class="thumb" style="background:linear-gradient(135deg,#2a1140,#10303f)">'+
+      '<span class="live-badge"><span class="dot"></span>LIVE</span>'+
+      '<span class="view-badge">'+d.viewers+' 👁</span>'+
+      '<div class="avs"><div class="av" style="background:'+d.aGrad+'">'+d.aAv+'</div><div class="av" style="background:'+d.bGrad+'">'+d.bAv+'</div></div>'+
+      '<span class="heart">'+d.heart+'</span>'+
+    '</div>'+
+    '<div class="meta"><h3>'+d.a+' & '+d.b+'</h3>'+
+      '<div class="host">hosted by <span class="vp">'+d.host+'</span></div>'+
+      '<div class="dtags">'+d.tags.map(function(t){return '<span class="dtag">'+t+'</span>';}).join('')+'</div>'+
+    '</div></div>';
+}
+function renderHome(){ document.getElementById('homeLive').innerHTML=DATES.map(dateCardHTML).join(''); }
+function renderLobby(){ document.getElementById('lobbyList').innerHTML=DATES.map(dateCardHTML).join(''); }
+
+/* ===== ROOM ===== */
+function enterRoom(id){
+  curDate=id; var d=DATES[id];
+  go('room');
+  document.getElementById('viewers').textContent=d.viewers+' 👁';
+  document.getElementById('daters').innerHTML=
+    '<div class="dater"><div class="av" style="background:'+d.aGrad+'">'+d.aAv+'</div><span class="nm">'+d.a+'</span></div>'+
+    '<span class="vs">×</span>'+
+    '<div class="dater"><div class="av" style="background:'+d.bGrad+'">'+d.bAv+'</div><span class="nm">'+d.b+'</span></div>';
+  resetOnstage();
+  document.getElementById('plays').innerHTML=PLAYS.map(function(p){
+    return '<button class="play'+(p.wide?' wide':'')+(p.spicy?' spicy':'')+'" onclick="sendPlay('+p.id+')">'+
+      '<span class="pic">'+p.ic+'</span>'+
+      '<span class="pl">'+p.label+'</span>'+
+      (p.wide?'<span class="right"><span class="cost"><span class="coin"></span>'+p.cost+'</span></span>':'<span class="cost"><span class="coin"></span>'+p.cost+'</span>')+
+    '</button>';
+  }).join('');
+  var rs=["🔥","😂","😍","💀","👏"];
+  document.getElementById('reactRow').innerHTML=rs.map(function(e){return '<button onclick="react(\''+e+'\')">'+e+'</button>';}).join('');
+  document.getElementById('chat').innerHTML='';
+  pushChat('sys',null,'Welcome to the room. Be nice, send plays 💞');
+  if(chatTimer) clearInterval(chatTimer);
+  chatTimer=setInterval(randomChat, 2300);
+}
+function leaveRoom(){ if(chatTimer){clearInterval(chatTimer);chatTimer=null;} go('lobby'); renderLobby(); }
+function resetOnstage(){
+  var o=document.getElementById('onstage'); o.className='onstage idle';
+  o.innerHTML='<span class="ic">🎬</span><div class="txt"><b>You are live in the room.</b><div class="by">Send a play below to make something happen.</div></div>';
+}
+function pushChat(type,user,text){
+  var chat=document.getElementById('chat'); if(!chat) return;
+  var html;
+  if(type==='sys') html='<div class="msg sys">✨ '+text+'</div>';
+  else if(type==='me') html='<div class="msg"><span class="u gold">You</span> '+text+'</div>';
+  else html='<div class="msg"><span class="u '+(user[1]||'')+'">'+user[0]+'</span> '+text+'</div>';
+  chat.insertAdjacentHTML('beforeend',html);
+  while(chat.children.length>14) chat.removeChild(chat.firstChild);
+  chat.scrollTop=chat.scrollHeight;
+}
+function randomChat(){ var l=CHAT_LINES[Math.floor(Math.random()*CHAT_LINES.length)]; pushChat('them',[l[0],l[1]],l[2]); }
+
+function react(emoji){
+  var layer=document.getElementById('reactLayer'); if(!layer) return;
+  var s=document.createElement('span'); s.className='float-emoji'; s.textContent=emoji;
+  s.style.left=(20+Math.random()*60)+'%';
+  layer.appendChild(s);
+  setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); },2200);
+}
+
+function sendPlay(pid){
+  var p=PLAYS[pid], d=DATES[curDate];
+  if(wings < p.cost){
+    toast('💰','Not enough Wings. Top up to keep playing.');
+    setTimeout(function(){ go('wallet'); renderWallet(); }, 700);
+    return;
+  }
+  setWings(wings - p.cost);
+  playHistory.unshift({ic:p.ic,label:p.label,cost:p.cost});
+
+  if(p.passable && Math.random()<0.5){
+    flashOnstage('🙅', '<b>'+d.b+' passed on that one.</b>', 'Daters can decline any play. Your '+p.cost+' Wings were refunded.');
+    setWings(wings + p.cost);
+    playHistory.shift();
+    pushChat('sys',null,d.b+' passed, refund sent 💸');
+    toast('🙅','They passed. Refunded '+p.cost+' Wings.');
+    return;
+  }
+
+  momentsTriggered++;
+  spark=Math.max(0,Math.min(100, spark + p.spark));
+  var sf=document.getElementById('sparkFill'), sv=document.getElementById('sparkVal');
+  if(sf){ sf.style.width=spark+'%'; sv.textContent=spark+'%'; }
+  flashOnstage(p.ic, '<b>You</b> '+p.chat, 'Live on stage now · seen by '+d.viewers+' people');
+  pushChat('me', null, p.chat+' '+p.ic);
+  react(p.ic.length<=2?p.ic:'🔥');
+  toast('🎬','Play sent! '+d.a+' & '+d.b+' are doing it.');
+}
+function flashOnstage(ic,txt,by){
+  var o=document.getElementById('onstage');
+  o.className='onstage flash';
+  o.innerHTML='<span class="ic">'+ic+'</span><div class="txt">'+txt+'<div class="by">'+by+'</div></div>';
+  setTimeout(function(){ o.classList.remove('flash'); },600);
+}
+
+/* ===== WALLET ===== */
+function renderWallet(){
+  document.getElementById('walletBal').textContent=wings;
+  document.getElementById('pkgs').innerHTML=WING_PKGS.map(function(p,i){
+    return '<div class="pkg" onclick="buyWings('+i+')">'+
+      '<div class="coins">🪙</div>'+
+      '<div class="amt">'+p.coins+' Wings'+(p.bonus?'<small style="color:var(--green)">'+p.bonus+'</small>':'<small>top up your balance</small>')+'</div>'+
+      (p.best?'<span class="best">BEST VALUE</span>':'')+
+      '<span class="price">'+p.price+'</span>'+
+    '</div>';
+  }).join('');
+  var h=document.getElementById('histList');
+  if(playHistory.length===0){ h.innerHTML='<div style="color:var(--faint);font-size:13px;padding:14px 0">No plays sent yet. Jump into a date and start directing.</div>'; }
+  else { h.innerHTML=playHistory.slice(0,8).map(function(x){
+    return '<div class="hrow"><span class="hi">'+x.ic+'</span><span style="flex:1;color:var(--muted)">'+x.label+'</span><span class="hc">-'+x.cost+'</span></div>';
+  }).join(''); }
+}
+function buyWings(i){
+  var p=WING_PKGS[i];
+  setWings(wings + p.coins);
+  renderWallet();
+  toast('🪙','+'+p.coins+' Wings added. Go make some moments.');
+}
+
+/* ===== LEADERBOARD ===== */
+function renderLeaderboard(){
+  document.getElementById('yourMoments').textContent=momentsTriggered;
+  var youSpent = playHistory.reduce(function(s,x){return s+x.cost;},0);
+  var list=document.getElementById('lbList');
+  var html='';
+  for(var i=0;i<LEADERS.length;i++){
+    html+='<div class="lb-row"><span class="rk'+(i<3?' top':'')+'">'+(i+1)+'</span>'+
+      '<span class="av" style="background:'+LEADERS[i].grad+'">'+LEADERS[i].nm[0].toUpperCase()+'</span>'+
+      '<span class="nm">'+LEADERS[i].nm+'<small>'+LEADERS[i].sub+'</small></span>'+
+      '<span class="sp"><b>'+LEADERS[i].sp+'</b><small>Wings</small></span></div>';
+  }
+  html+='<div class="lb-row you"><span class="rk">#7</span>'+
+    '<span class="av" style="background:var(--grad)">Y</span>'+
+    '<span class="nm">You<small>sent '+playHistory.length+' plays</small></span>'+
+    '<span class="sp"><b>'+youSpent+'</b><small>Wings</small></span></div>';
+  list.innerHTML=html;
+}
+
+/* ===== RECAP ===== */
+function renderRecap(){
+  var d=DATES[curDate];
+  document.getElementById('recapTitle').innerHTML=d.a+' &amp; '+d.b+' are getting a second date!';
+  document.getElementById('recapSub').textContent='The crowd pushed them over the edge. '+d.viewers+' people watched it happen.';
+  document.getElementById('impMoments').textContent=momentsTriggered;
+  document.getElementById('impSpark').textContent=spark+'%';
+}
+
+/* ===== TOAST ===== */
+var toastT=null;
+function toast(ic,tx){
+  document.getElementById('toastIc').textContent=ic;
+  document.getElementById('toastTx').textContent=tx;
+  var t=document.getElementById('toast'); t.classList.add('show');
+  if(toastT) clearTimeout(toastT);
+  toastT=setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+/* ===== RESET ===== */
+function resetDemo(){
+  if(chatTimer){clearInterval(chatTimer);chatTimer=null;}
+  wings=500; spark=55; momentsTriggered=0; playHistory=[]; curDate=0;
+  setWings(500);
+  go('home');
+}
+
+/* init */
+renderHome();
+</script>
+</body>
+</html>

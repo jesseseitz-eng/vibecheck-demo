@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wingman — Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0B0912;--surface:#19142A;--surface2:#211A36;
+  --magenta:#FF2E93;--magenta2:#FF5CAE;--cyan:#3FE0FF;--purple:#9B5CFF;
+  --gold:#FFC43D;--gold2:#FFD876;--green:#33E0A0;--live:#FF3B5C;
+  --text:#F6F2FC;--muted:#A49FB8;--faint:#6E6981;
+  --line:rgba(255,255,255,.1);--line2:rgba(255,255,255,.18);
+  --grad:linear-gradient(110deg,#FF2E93,#9B5CFF 70%,#3FE0FF);
+  --grad-gold:linear-gradient(110deg,#FFC43D,#FF8A3D);
+  --display:"Sora",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--body);background:#06050A;color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased}
+.bg{position:fixed;inset:0;z-index:0;background:
+  radial-gradient(800px 600px at 12% 0%, rgba(255,46,147,.16), transparent 60%),
+  radial-gradient(800px 600px at 90% 100%, rgba(63,224,255,.13), transparent 60%),#06050A}
+.deck{position:relative;z-index:1;height:100vh;height:100dvh;display:flex;align-items:center;justify-content:center;padding:5vh 6vw}
+.slide{display:none;width:min(1000px,92vw);animation:fade .45s ease both}
+.slide.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.kicker{display:inline-block;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--magenta2);background:rgba(255,46,147,.12);border:1px solid rgba(255,46,147,.25);padding:7px 14px;border-radius:999px}
+h1{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-1.5px}
+.s-title h1{font-size:clamp(44px,8vw,86px)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(30px,5vw,52px);line-height:1.06;letter-spacing:-1px;margin-top:18px}
+.g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gg{background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(16px,2.3vw,21px);color:var(--muted);line-height:1.55;margin-top:22px;max-width:760px}
+.brandline{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:800;font-size:22px}
+.brandline .mk{width:38px;height:38px;border-radius:11px;background:var(--grad);display:flex;align-items:center;justify-content:center}
+.brandline .mk svg{width:22px;height:22px}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+.cols.three{grid-template-columns:repeat(3,1fr)}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px}
+.box .bi{font-size:26px;margin-bottom:12px}
+.box h3{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:8px}
+.box p{font-size:14.5px;color:var(--muted);line-height:1.5}
+.box.hot{background:var(--grad);}
+.box.hot h3,.box.hot p{color:#fff}
+.box.gold{background:var(--grad-gold)}
+.box.gold h3,.box.gold p{color:#2a1800}
+
+.big-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.stat .v{font-family:var(--display);font-weight:800;font-size:clamp(34px,6vw,58px);line-height:1}
+.stat .v.m{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .v.gd{background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.4}
+
+.flow{display:flex;align-items:stretch;gap:12px;margin-top:34px;flex-wrap:wrap}
+.flow .f{flex:1;min-width:150px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.flow .f .n{font-family:var(--display);font-weight:800;color:var(--magenta2);font-size:14px}
+.flow .f h4{font-family:var(--display);font-weight:700;font-size:16px;margin:8px 0 6px}
+.flow .f p{font-size:13px;color:var(--muted);line-height:1.45}
+.flow .arrow{align-self:center;color:var(--faint);font-size:20px}
+
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;margin-top:30px}
+.phone-mock{background:var(--surface);border:1px solid var(--line2);border-radius:24px;padding:16px;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.phone-mock .stream{height:150px;border-radius:14px;background:linear-gradient(135deg,#2a1140,#10303f);position:relative;display:flex;align-items:center;justify-content:center;gap:18px}
+.phone-mock .av{width:50px;height:50px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;color:#fff}
+.phone-mock .lb{position:absolute;top:10px;left:10px;background:var(--live);font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px}
+.phone-mock .play{margin-top:10px;background:var(--surface2);border:1px solid var(--line);border-radius:11px;padding:11px 12px;display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600}
+.phone-mock .play .c{margin-left:auto;color:var(--gold2);font-weight:800;font-size:12px}
+
+ul.pts{list-style:none;margin-top:30px}
+ul.pts li{font-size:clamp(15px,2.2vw,19px);padding:13px 0;border-top:1px solid var(--line);display:flex;gap:14px;align-items:flex-start;line-height:1.45}
+ul.pts li:first-child{border-top:none}
+ul.pts li .ck{flex:none;color:var(--magenta2);font-weight:800}
+ul.pts li b{color:var(--text)}
+ul.pts li .mut{color:var(--muted)}
+
+.model{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:30px}
+.model .m{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+.model .m .tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold2)}
+.model .m h3{font-family:var(--display);font-weight:700;font-size:19px;margin:8px 0}
+.model .m p{font-size:14px;color:var(--muted);line-height:1.5}
+
+.demo-link{display:inline-flex;align-items:center;gap:10px;margin-top:30px;background:var(--surface);border:1px solid var(--line2);border-radius:14px;padding:14px 20px;font-weight:700;font-size:15px}
+.demo-link .d{width:9px;height:9px;border-radius:50%;background:var(--live);box-shadow:0 0 10px var(--live)}
+.demo-link a{color:var(--cyan);text-decoration:none}
+
+/* nav */
+.nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:14px;background:rgba(25,20,42,.85);backdrop-filter:blur(10px);border:1px solid var(--line2);border-radius:999px;padding:8px 14px}
+.nav button{background:none;border:none;color:var(--text);cursor:pointer;font-size:18px;width:30px;height:30px;border-radius:50%}
+.nav button:hover{background:var(--surface2)}
+.dots{display:flex;gap:6px}
+.dots span{width:7px;height:7px;border-radius:50%;background:var(--line2);cursor:pointer;transition:.2s}
+.dots span.on{background:var(--magenta);width:20px;border-radius:4px}
+.counter{position:fixed;top:20px;right:24px;z-index:5;font-family:var(--display);font-weight:700;font-size:13px;color:var(--faint)}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--grad);z-index:6;transition:width .4s}
+.hint{position:fixed;bottom:20px;right:24px;z-index:5;font-size:11px;color:var(--faint)}
+@media(max-width:760px){.cols,.cols.three,.split,.model,.big-stat{grid-template-columns:1fr}.flow .arrow{display:none}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="progress" id="progress"></div>
+<div class="counter"><span id="cur">1</span> / <span id="tot">10</span></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide active s-title">
+    <div class="brandline"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z" fill="#fff"/></svg></span>Wingman</div>
+    <h1 style="margin-top:30px">The dating show<br><span class="g">you call the shots on.</span></h1>
+    <p class="lead">Live first dates you watch and steer. The audience spends to make daters ask the question, take the dare, or get the gift. Reality TV, but you are in the control room.</p>
+    <div class="demo-link"><span class="d"></span>Live demo: <a href="https://jesseseitz-eng.github.io/vibecheck-demo/wingman.html">jesseseitz-eng.github.io/vibecheck-demo/wingman.html</a></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <span class="kicker">The shift</span>
+    <h2>Dating is becoming <span class="g">entertainment.</span></h2>
+    <p class="lead">Love Island and Love Is Blind are cultural events. Dating YouTubers pull millions of views filming real dates. Livestream tipping turned watching into a paid, interactive sport. Three waves are colliding, and nobody has built the product that sits in the middle.</p>
+    <div class="cols three">
+      <div class="box"><div class="bi">📺</div><h3>Reality dating</h3><p>The most-watched format on streaming. People are obsessed with watching strangers fall for each other.</p></div>
+      <div class="box"><div class="bi">🎥</div><h3>Dating creators</h3><p>YouTubers and streamers film real dates for huge audiences, but have no native way to monetize the moment.</p></div>
+      <div class="box"><div class="bi">🪙</div><h3>Live tipping</h3><p>Twitch and TikTok proved audiences will pay, live, to influence what happens on screen.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <span class="kicker">The insight</span>
+    <h2>Two broken things, <span class="gg">one product.</span></h2>
+    <div class="cols">
+      <div class="box"><div class="bi">💔</div><h3>Dating apps can't grow</h3><p>Swipe fatigue is peaking, the big apps are shrinking, and customer acquisition is brutally expensive. The product is also boring to watch.</p></div>
+      <div class="box hot"><div class="bi">🍿</div><h3>Watching dates is content gold</h3><p>Audiences already love it and creators already make it. Wingman turns the date itself into an interactive, monetizable live show.</p></div>
+    </div>
+    <p class="lead">Wingman is not a better way to get matched. It is a new way to <b style="color:var(--text)">watch, fund, and direct other people's dates</b>, with the daters and creators getting paid to perform.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <span class="kicker">The product</span>
+    <h2>You drop in. You <span class="g">call the shots.</span></h2>
+    <div class="split">
+      <ul class="pts">
+        <li><span class="ck">1</span><span><b>Drop into a live date.</b> <span class="mut">Real people, hosted by your favorite dating creators.</span></span></li>
+        <li><span class="ck">2</span><span><b>Spend Wings to send a play.</b> <span class="mut">Force the spicy question, trigger a dare, send a gift, set the next topic.</span></span></li>
+        <li><span class="ck">3</span><span><b>Move the night.</b> <span class="mut">Your plays push the spark meter, hit the producer leaderboard, and might make the match.</span></span></li>
+        <li><span class="ck">✓</span><span><b>Opt-in by design.</b> <span class="mut">Daters can pass any play. It stays fun, never coercive.</span></span></li>
+      </ul>
+      <div class="phone-mock">
+        <div class="stream"><span class="lb">🔴 LIVE</span><div class="av" style="background:linear-gradient(150deg,#FF2E93,#FF8A3D)">M</div><div class="av" style="background:linear-gradient(150deg,#3FE0FF,#9B5CFF)">T</div></div>
+        <div class="play">❓ Make them ask the toxic-trait question <span class="c">50</span></div>
+        <div class="play">🔥 Trigger the Hot Seat <span class="c">300</span></div>
+        <div class="play">🍸 Send a round of drinks <span class="c">120</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <span class="kicker">Why it's sticky</span>
+    <h2>Pay-to-influence is the <span class="gg">most engaging loop online.</span></h2>
+    <div class="cols three">
+      <div class="box"><div class="bi">🎬</div><h3>Agency</h3><p>You are not watching, you are producing. Every viewer can change what happens next.</p></div>
+      <div class="box"><div class="bi">💞</div><h3>Parasocial</h3><p>You get attached to recurring daters across episodes. That is the entire Love Island engine.</p></div>
+      <div class="box"><div class="bi">🏆</div><h3>Status</h3><p>The producer leaderboard turns spending into clout. Whales compete to make the moments.</p></div>
+    </div>
+    <p class="lead">This is why live-tipping platforms out-monetize ad-supported feeds per user. We are pointing that loop at the most emotionally charged content there is: a first date.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <span class="kicker">Go to market</span>
+    <h2>Creators are our <span class="g">distribution.</span></h2>
+    <p class="lead">We do not fight the dating apps for users one expensive click at a time. We partner with dating YouTubers and streamers who already have the audience, and hand them a format plus the tools to monetize it. They bring the crowd, we power the show, everyone gets paid.</p>
+    <div class="flow">
+      <div class="f"><div class="n">PARTNER</div><h4>Dating creators</h4><p>Bring their existing audience and on-camera talent.</p></div>
+      <div class="arrow">→</div>
+      <div class="f"><div class="n">WINGMAN</div><h4>The live platform</h4><p>Streaming, plays, Wings, payouts, safety, all built in.</p></div>
+      <div class="arrow">→</div>
+      <div class="f"><div class="n">RESULT</div><h4>Near-zero CAC</h4><p>Audiences arrive through the creator, not paid ads.</p></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <span class="kicker">Business model</span>
+    <h2>Every play is <span class="gg">revenue.</span></h2>
+    <div class="model">
+      <div class="m"><div class="tag">Core</div><h3>Wings virtual currency</h3><p>Audiences buy Wings and spend them on plays. We take a platform fee on every transaction, the rest splits between daters and the host creator.</p></div>
+      <div class="m"><div class="tag">Recurring</div><h3>Producer subscriptions</h3><p>Follow favorite daters, unlock premium plays, ad-free viewing, and leaderboard perks.</p></div>
+      <div class="m"><div class="tag">Brands</div><h3>Sponsored dates &amp; gifts</h3><p>A drinks brand sponsors the "round of drinks" gift. A label sponsors the slow-dance play. Native, not banner ads.</p></div>
+      <div class="m"><div class="tag">Upside</div><h3>Format licensing</h3><p>Recurring shows and seasons become IP, on-platform and beyond.</p></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <span class="kicker">Why now</span>
+    <h2>Incumbents <span class="g">can't follow.</span></h2>
+    <div class="big-stat">
+      <div class="stat"><div class="v m">79%</div><div class="l">of Gen Z report dating-app fatigue. The swipe is over.</div></div>
+      <div class="stat"><div class="v gd">1st</div><div class="l">annual revenue decline ever for the dating-app category.</div></div>
+      <div class="stat"><div class="v m">$0</div><div class="l">incremental cost to acquire when creators bring the crowd.</div></div>
+    </div>
+    <p class="lead">Tinder, Hinge, and even the new AI-dating entrants are matching utilities. Their whole model is privacy and getting you off-app. Wingman is the opposite: public, performative, audience-funded. They structurally cannot copy it without breaking their core.</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <span class="kicker">Guardrails</span>
+    <h2>Built consensual, <span class="gg">on purpose.</span></h2>
+    <ul class="pts">
+      <li><span class="ck">✓</span><span><b>Opt-in everything.</b> <span class="mut">Daters choose to be on, and can pass or veto any play, instantly, with refunds.</span></span></li>
+      <li><span class="ck">✓</span><span><b>18+ and verified.</b> <span class="mut">ID and identity checks for everyone who appears on stream.</span></span></li>
+      <li><span class="ck">✓</span><span><b>No buying access to a person.</b> <span class="mut">You influence the show, never contact or control a participant directly. Live moderation throughout.</span></span></li>
+      <li><span class="ck">✓</span><span><b>Currency, not a casino.</b> <span class="mut">Wings buy moments and status, not bets on outcomes, keeping us clear of gambling rules.</span></span></li>
+    </ul>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide s-title">
+    <span class="kicker">The vision</span>
+    <h1 style="margin-top:22px">Become the home of<br><span class="g">dating entertainment.</span></h1>
+    <p class="lead">Start with one creator and one nightly show. Grow into a network of live dating shows with recurring casts and seasons. The audience does not just watch love happen. They fund it, direct it, and cannot look away.</p>
+    <div class="demo-link"><span class="d"></span>Try the live demo: <a href="https://jesseseitz-eng.github.io/vibecheck-demo/wingman.html">jesseseitz-eng.github.io/vibecheck-demo/wingman.html</a></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button onclick="prev()">‹</button>
+  <div class="dots" id="dots"></div>
+  <button onclick="next()">›</button>
+</div>
+<div class="hint">← → to navigate</div>
+
+<script>
+var slides=document.querySelectorAll('.slide'), i=0;
+var dots=document.getElementById('dots');
+document.getElementById('tot').textContent=slides.length;
+for(var k=0;k<slides.length;k++){(function(k){var s=document.createElement('span');if(k===0)s.className='on';s.onclick=function(){goto(k);};dots.appendChild(s);})(k);}
+function render(){
+  for(var k=0;k<slides.length;k++){slides[k].classList.toggle('active',k===i);dots.children[k].classList.toggle('on',k===i);}
+  document.getElementById('cur').textContent=i+1;
+  document.getElementById('progress').style.width=((i+1)/slides.length*100)+'%';
+}
+function goto(n){i=Math.max(0,Math.min(slides.length-1,n));render();}
+function next(){goto(i+1);}
+function prev(){goto(i-1);}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next();}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
+  else if(e.key==='Home'){goto(0);}else if(e.key==='End'){goto(slides.length-1);}
+});
+render();
+</script>
+</body>
+</html>
