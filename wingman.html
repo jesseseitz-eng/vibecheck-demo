@@ -26,28 +26,20 @@ body{font-family:var(--body);background:#06050A;color:var(--text);-webkit-font-s
   radial-gradient(700px 500px at 15% 0%, rgba(255,46,147,.18), transparent 60%),
   radial-gradient(700px 500px at 85% 100%, rgba(63,224,255,.14), transparent 60%),
   #06050A;z-index:0}
-
-/* phone column */
 .app{position:relative;z-index:1;width:min(440px,100vw);height:100vh;height:100dvh;margin:0 auto;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.6)}
 @media(min-width:480px){.app{height:min(900px,96vh);margin-top:max(0px,calc((100vh - 900px)/2));border-radius:30px;border:1px solid var(--line)}}
-
-/* top bar */
 .topbar{flex:none;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(11,9,18,.8);backdrop-filter:blur(12px);z-index:6}
 .brand{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.4px;cursor:pointer}
 .brand .mk{width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:15px}
 .brand .mk svg{width:16px;height:16px}
 .wbtn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,196,61,.12);border:1px solid rgba(255,196,61,.35);color:var(--gold2);font-weight:700;font-size:13.5px;padding:7px 12px;border-radius:11px;cursor:pointer;font-variant-numeric:tabular-nums}
 .wbtn .coin{width:16px;height:16px;border-radius:50%;background:var(--grad-gold);display:inline-block;box-shadow:0 0 8px rgba(255,196,61,.5)}
-
-/* screens */
 .screens{flex:1;overflow-y:auto;overflow-x:hidden;position:relative}
 .screens::-webkit-scrollbar{width:0}
 .screen{display:none;animation:fade .35s ease both}
 .screen.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .pad{padding:18px 16px 28px}
-
-/* type + buttons */
 h1.big{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.04;letter-spacing:-1.2px}
 h1.big .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--magenta2);background:rgba(255,46,147,.12);border:1px solid rgba(255,46,147,.25);padding:6px 11px;border-radius:999px}
@@ -58,8 +50,6 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .btn.gold{background:var(--grad-gold);color:#2a1800;box-shadow:0 10px 26px rgba(255,196,61,.3)}
 .btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line2);box-shadow:none}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg)}
-
-/* ===== HOME ===== */
 .hero{padding:26px 18px 8px}
 .hero h1{margin-top:16px}
 .hero p{margin-top:14px;font-size:15.5px;line-height:1.55;color:var(--muted);max-width:320px}
@@ -91,11 +81,32 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .how .step .n{flex:none;width:28px;height:28px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:13px}
 .how .step p{font-size:13px;line-height:1.45;color:var(--muted)}
 .how .step p b{color:var(--text)}
-
-/* ===== LOBBY ===== */
+.show-cta{margin:8px 16px 0;display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.show-cta button{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px 13px;cursor:pointer;color:var(--text);text-align:left;transition:border-color .15s}
+.show-cta button:hover{border-color:var(--magenta)}
+.show-cta button .ci{font-size:22px}
+.show-cta button b{display:block;font-family:var(--display);font-weight:700;font-size:14px;margin-top:8px}
+.show-cta button small{color:var(--muted);font-size:11px;line-height:1.3;display:block;margin-top:2px}
 .lobby-head{padding:16px 18px 4px}
-
-/* ===== ROOM ===== */
+.seg{display:flex;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;margin:14px 16px}
+.seg button{flex:1;background:none;border:none;color:var(--muted);font-family:var(--body);font-weight:700;font-size:13px;padding:9px;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--grad);color:#fff}
+.sub-h{font-family:var(--display);font-weight:700;font-size:15px;padding:8px 16px 0}
+.sub-p{font-size:12.5px;color:var(--muted);padding:4px 16px 0}
+.pick-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:12px 16px 4px}
+.pick{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:12px 6px;cursor:pointer;text-align:center;transition:.15s}
+.pick:hover{border-color:var(--line2)}
+.pick.sel{border-color:var(--magenta);background:rgba(255,46,147,.12)}
+.pick .pa{width:46px;height:46px;border-radius:50%;margin:0 auto 7px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;color:#fff;font-size:18px}
+.pick .pn{font-size:12px;font-weight:600}
+.pick .badge{font-size:8.5px;font-weight:800;color:var(--magenta2);margin-top:3px;height:11px;letter-spacing:.3px}
+.reasons{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px 4px}
+.chip3{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:.15s}
+.chip3.sel{border-color:var(--magenta);color:var(--text);background:rgba(255,46,147,.12)}
+.cast-status{margin:16px;background:var(--grad);border-radius:18px;padding:24px;text-align:center}
+.cast-status .e{font-size:42px}
+.cast-status h3{font-family:var(--display);font-weight:800;font-size:21px;margin-top:8px}
+.cast-status p{font-size:13px;margin-top:8px;opacity:.92;line-height:1.5}
 .room{display:flex;flex-direction:column;height:100%}
 .stream{position:relative;height:248px;flex:none;overflow:hidden;background:linear-gradient(135deg,#2a1140,#4a1d52 55%,#10303f)}
 .stream .vignette{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 30%,transparent,rgba(0,0,0,.55))}
@@ -114,7 +125,6 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .spark .lab .v{color:var(--gold2)}
 .spark .track{height:8px;background:rgba(0,0,0,.4);border-radius:999px;overflow:hidden}
 .spark .fill{height:100%;width:55%;background:var(--grad-gold);border-radius:999px;transition:width .6s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(255,196,61,.6)}
-
 .onstage{flex:none;padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--line);min-height:52px;display:flex;align-items:center;gap:11px;transition:background .3s}
 .onstage.flash{background:rgba(255,46,147,.18)}
 .onstage .ic{flex:none;width:30px;height:30px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:15px}
@@ -122,7 +132,6 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .onstage .txt b{color:var(--magenta2)}
 .onstage .txt .by{color:var(--faint);font-size:11px}
 .onstage.idle .ic{background:var(--surface)}
-
 .chat{flex:none;height:96px;overflow:hidden;padding:8px 14px;border-bottom:1px solid var(--line);position:relative;mask-image:linear-gradient(to bottom,transparent,#000 30%)}
 .chat .msg{font-size:12px;line-height:1.5;margin-bottom:2px;animation:slidein .3s ease}
 @keyframes slidein{from{opacity:0;transform:translateX(-8px)}to{opacity:1}}
@@ -130,7 +139,6 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .chat .msg .u.gold{color:var(--gold2)}
 .chat .msg .u.mg{color:var(--magenta2)}
 .chat .msg.sys{color:var(--gold2);font-weight:600}
-
 .influence{flex:1;overflow-y:auto;padding:14px 14px 90px}
 .influence::-webkit-scrollbar{width:0}
 .inf-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
@@ -150,8 +158,6 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .play .cost{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--gold2)}
 .play .cost .coin{width:13px;height:13px;border-radius:50%;background:var(--grad-gold)}
 .play.wide .right{margin-left:auto;text-align:right;display:flex;flex-direction:column;gap:4px;align-items:flex-end}
-
-/* ===== WALLET ===== */
 .wallet-bal{margin:16px;background:var(--grad);border-radius:var(--r-lg);padding:22px;text-align:center;position:relative;overflow:hidden}
 .wallet-bal .l{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.85}
 .wallet-bal .v{font-family:var(--display);font-weight:800;font-size:44px;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:10px}
@@ -168,8 +174,6 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .hist .hrow{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--line);font-size:13px}
 .hist .hrow .hi{flex:none;width:30px;height:30px;border-radius:9px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:14px}
 .hist .hrow .hc{margin-left:auto;font-weight:700;color:var(--magenta2);font-variant-numeric:tabular-nums}
-
-/* ===== LEADERBOARD ===== */
 .lb-hero{margin:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;text-align:center}
 .lb-hero .yourrank{font-family:var(--display);font-weight:800;font-size:30px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lb-row{display:flex;align-items:center;gap:12px;padding:11px 16px;margin:0 16px;border-radius:13px}
@@ -182,8 +186,6 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .lb-row .sp{margin-left:auto;text-align:right}
 .lb-row .sp b{color:var(--gold2);font-variant-numeric:tabular-nums}
 .lb-row .sp small{display:block;color:var(--faint);font-size:10.5px}
-
-/* ===== RECAP ===== */
 .recap{padding:24px 18px 30px;text-align:center}
 .recap .res{margin:8px auto 0;width:90px;height:90px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 0 40px rgba(255,46,147,.5)}
 .recap h2{font-family:var(--display);font-weight:800;font-size:24px;margin-top:18px;letter-spacing:-.5px}
@@ -200,13 +202,9 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .impact .irow b{color:var(--gold2)}
 .earn-note{margin-top:16px;font-size:11.5px;color:var(--faint);line-height:1.5}
 .earn-note b{color:var(--cyan)}
-
-/* toast */
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--surface2);border:1px solid var(--line2);color:var(--text);padding:13px 18px;border-radius:14px;font-size:13.5px;font-weight:600;box-shadow:0 12px 30px rgba(0,0,0,.5);opacity:0;transition:.3s;z-index:50;display:flex;align-items:center;gap:9px;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast .ti{font-size:17px}
-
-/* jump menu */
 .jump{position:fixed;top:14px;right:14px;z-index:60;background:rgba(25,20,42,.9);border:1px solid var(--line2);color:#fff;font-size:11.5px;font-weight:700;padding:8px 11px;border-radius:11px;cursor:pointer;backdrop-filter:blur(8px)}
 .jpanel{position:fixed;top:48px;right:14px;z-index:60;background:var(--surface);border:1px solid var(--line2);border-radius:15px;box-shadow:0 24px 50px rgba(0,0,0,.6);padding:7px;width:200px;display:none}
 .jpanel.open{display:block;animation:fade .2s ease both}
@@ -220,16 +218,12 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 </head>
 <body>
 <div class="stage-bg"></div>
-
 <div class="app">
   <div class="topbar">
     <div class="brand" onclick="go('home')"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z" fill="#fff"/></svg></span>Wingman</div>
     <button class="wbtn" onclick="go('wallet'); renderWallet()"><span class="coin"></span><span id="wingBal">500</span></button>
   </div>
-
   <div class="screens" id="screens">
-
-    <!-- HOME -->
     <section class="screen active" id="home">
       <div class="hero">
         <span class="eyebrow">Live dating, you direct it</span>
@@ -237,19 +231,21 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
         <p>Watch real first dates live. Spend Wings to send a play: make them ask the spicy question, trigger a dare, send a gift. You are the wingman now.</p>
       </div>
       <div class="live-rail">
-        <div class="rail-head"><b>🔴 Live right now</b><span class="see" onclick="go('lobby'); renderLobby()">See all</span></div>
+        <div class="rail-head"><b>Live right now</b><span class="see" onclick="go('lobby'); renderLobby()">See all</span></div>
         <div id="homeLive"></div>
       </div>
       <div class="how">
         <h4>How it works</h4>
         <div class="step"><span class="n">1</span><p><b>Drop into a live date.</b> Real people, real first dates, hosted by your favorite dating creators.</p></div>
         <div class="step"><span class="n">2</span><p><b>Send a play.</b> Spend Wings to make them ask a question, do a dare, or get a gift. Daters can pass anything, it is all opt-in.</p></div>
-        <div class="step"><span class="n">3</span><p><b>Change the night.</b> Your plays move the spark meter, hit the leaderboard, and might just make the match.</p></div>
+        <div class="step"><span class="n">3</span><p><b>Or be part of it.</b> Set two people up, nominate a single friend, or put yourself forward to be cast.</p></div>
       </div>
-      <div class="pad"><button class="btn" onclick="enterRoom(0)">Enter the live date 🔴</button></div>
+      <div class="show-cta">
+        <button onclick="go('setup'); renderSetup()"><span class="ci">&#128156;</span><b>Set someone up</b><small>Back a match or nominate a friend</small></button>
+        <button onclick="go('cast'); renderCast()"><span class="ci">&#10024;</span><b>Get cast</b><small>Put yourself on the show</small></button>
+      </div>
+      <div class="pad"><button class="btn" onclick="enterRoom(0)">Enter the live date</button></div>
     </section>
-
-    <!-- LOBBY -->
     <section class="screen" id="lobby">
       <div class="lobby-head">
         <span class="eyebrow">Live now</span>
@@ -258,43 +254,36 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
       </div>
       <div class="pad" style="padding-top:14px" id="lobbyList"></div>
     </section>
-
-    <!-- ROOM -->
     <section class="screen" id="room">
       <div class="room">
         <div class="stream" id="stream">
           <div class="vignette"></div>
           <div class="rtop">
-            <button class="back2" onclick="leaveRoom()">‹</button>
+            <button class="back2" onclick="leaveRoom()">&lsaquo;</button>
             <div style="display:flex;gap:8px">
               <span class="live-badge"><span class="dot"></span>LIVE</span>
-              <span class="view-badge" id="viewers">12.4k 👁</span>
+              <span class="view-badge" id="viewers">12.4k</span>
             </div>
           </div>
           <div class="daters" id="daters"></div>
           <div class="reactions-layer" id="reactLayer"></div>
           <div class="spark">
-            <div class="lab"><span>💞 Spark meter</span><span class="v" id="sparkVal">55%</span></div>
+            <div class="lab"><span>Spark meter</span><span class="v" id="sparkVal">55%</span></div>
             <div class="track"><div class="fill" id="sparkFill"></div></div>
           </div>
         </div>
-
         <div class="onstage idle" id="onstage">
-          <span class="ic">🎬</span>
+          <span class="ic">&#127916;</span>
           <div class="txt"><b>You are live in the room.</b><div class="by">Send a play below to make something happen.</div></div>
         </div>
-
         <div class="chat" id="chat"></div>
-
         <div class="influence">
-          <div class="inf-head"><b>Call the shots</b><span class="hint">tap to send · daters can pass</span></div>
+          <div class="inf-head"><b>Call the shots</b><span class="hint">tap to send &middot; daters can pass</span></div>
           <div class="react-row" id="reactRow"></div>
           <div class="plays" id="plays"></div>
         </div>
       </div>
     </section>
-
-    <!-- WALLET -->
     <section class="screen" id="wallet">
       <div class="lobby-head" style="padding-bottom:0"><span class="eyebrow">Your Wings</span></div>
       <div class="wallet-bal">
@@ -308,34 +297,31 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
       </div>
       <div class="pad"><button class="btn ghost" onclick="go('room')">Back to the date</button></div>
     </section>
-
-    <!-- LEADERBOARD -->
     <section class="screen" id="leaderboard">
-      <div class="lobby-head" style="padding-bottom:0"><span class="eyebrow">Tonight's producers</span></div>
-      <div class="lb-hero">
-        <div style="font-size:12px;color:var(--muted);font-weight:600">YOUR RANK TONIGHT</div>
+      <div class="lobby-head" style="padding-bottom:0"><span class="eyebrow">Tonight's leaderboard</span></div>
+      <div class="seg"><button id="lbTabP" class="on" onclick="switchLb('producers')">Producers</button><button id="lbTabM" onclick="switchLb('matchmakers')">Matchmakers</button></div>
+      <div class="lb-hero" style="margin-top:0">
+        <div style="font-size:12px;color:var(--muted);font-weight:600" id="lbHeroLabel">YOUR PRODUCER RANK</div>
         <div class="yourrank" id="yourRank">#7</div>
-        <div style="font-size:12.5px;color:var(--muted);margin-top:4px">You have triggered <b id="yourMoments" style="color:var(--gold2)">0</b> moments this date</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:4px" id="lbHeroLine"></div>
       </div>
       <div id="lbList" style="margin-top:8px"></div>
-      <div class="pad"><button class="btn" onclick="go('room')">Back to the date</button></div>
+      <div class="pad"><button class="btn" onclick="go('home')">Back to home</button></div>
     </section>
-
-    <!-- RECAP -->
     <section class="screen" id="recap">
       <div class="recap">
-        <div class="res">💘</div>
+        <div class="res">&#128152;</div>
         <h2 id="recapTitle">Maya &amp; Theo are getting a second date!</h2>
-        <div class="sub" id="recapSub">The crowd pushed them over the edge. 12.4k people watched it happen.</div>
+        <div class="sub" id="recapSub">The crowd pushed them over the edge.</div>
         <div class="votebar">
           <div class="vl"><span style="color:var(--magenta2)">Second date 78%</span><span class="muted">Just friends 22%</span></div>
           <div class="vt"><div class="vy" style="width:78%"></div></div>
         </div>
         <div class="impact">
           <div class="il">Your impact tonight</div>
-          <div class="irow"><span class="ii">🎬</span><div>You triggered <b id="impMoments">0</b> live moments</div></div>
-          <div class="irow"><span class="ii">💞</span><div>You pushed the spark meter to <b id="impSpark">55%</b></div></div>
-          <div class="irow"><span class="ii">🏆</span><div>You ranked <b id="impRank">#7</b> of 3,402 producers</div></div>
+          <div class="irow"><span class="ii">&#127916;</span><div>You triggered <b id="impMoments">0</b> live moments</div></div>
+          <div class="irow"><span class="ii">&#128157;</span><div>You pushed the spark meter to <b id="impSpark">55%</b></div></div>
+          <div class="irow"><span class="ii">&#127942;</span><div>You ranked <b id="impRank">#7</b> of 3,402 producers</div></div>
         </div>
         <div class="earn-note">Where your Wings went: <b>Maya &amp; Theo</b> and host <b>@itsjordanlive</b> split 60% of every play you sent. That is how daters and creators get paid to show up.</div>
       </div>
@@ -344,52 +330,53 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
         <button class="btn ghost" style="margin-top:10px" onclick="resetDemo()">Restart demo</button>
       </div>
     </section>
-
+    <section class="screen" id="setup">
+      <div class="lobby-head"><span class="eyebrow">Be the matchmaker</span><h2 class="t" style="margin-top:12px">Set someone up</h2><p class="muted" style="font-size:13px;margin-top:6px">Back a match on tonight's show, or put a single friend forward. Good matches climb the matchmaker leaderboard.</p></div>
+      <div class="seg"><button id="segPair" class="on" onclick="setupTab('pair')">Suggest a match</button><button id="segFriend" onclick="setupTab('friend')">Nominate a friend</button></div>
+      <div id="setupBody"></div>
+      <div class="pad" id="setupFoot"></div>
+    </section>
+    <section class="screen" id="cast">
+      <div class="lobby-head"><span class="eyebrow">Get on the show</span><h2 class="t" style="margin-top:12px">Put yourself forward</h2><p class="muted" style="font-size:13px;margin-top:6px">Want the spotlight? Tell us your vibe and you could be cast on an upcoming live date. 18+, verified, every dater opts in.</p></div>
+      <div id="castBody"></div>
+    </section>
   </div>
 </div>
-
-<button class="jump" onclick="toggleJump()">☰ Screens</button>
+<button class="jump" onclick="toggleJump()">Screens</button>
 <div class="jpanel" id="jpanel">
   <div class="jt">Jump to any screen</div>
   <button onclick="jumpTo('home')"><span class="num">1</span>Home</button>
   <button onclick="jumpTo('lobby'); renderLobby()"><span class="num">2</span>Live lobby</button>
   <button onclick="jumpTo('room'); enterRoom(0)"><span class="num">3</span>Live date room</button>
-  <button onclick="jumpTo('wallet'); renderWallet()"><span class="num">4</span>Wallet · buy Wings</button>
+  <button onclick="jumpTo('wallet'); renderWallet()"><span class="num">4</span>Wallet</button>
   <button onclick="jumpTo('leaderboard'); renderLeaderboard()"><span class="num">5</span>Leaderboard</button>
   <button onclick="jumpTo('recap'); renderRecap()"><span class="num">6</span>Date recap</button>
+  <button onclick="jumpTo('setup'); renderSetup()"><span class="num">7</span>Set someone up</button>
+  <button onclick="jumpTo('cast'); renderCast()"><span class="num">8</span>Get cast</button>
 </div>
-
-<div class="toast" id="toast"><span class="ti" id="toastIc">✨</span><span id="toastTx"></span></div>
-
+<div class="toast" id="toast"><span class="ti" id="toastIc"></span><span id="toastTx"></span></div>
 <script>
-/* ===== DATA ===== */
 var DATES=[
-  {id:0,a:"Maya",b:"Theo",aAv:"M",bAv:"T",aGrad:"linear-gradient(150deg,#FF2E93,#FF8A3D)",bGrad:"linear-gradient(150deg,#3FE0FF,#9B5CFF)",
-   host:"@itsjordanlive",viewers:"12.4k",tags:["First date","Blind","Brooklyn"],heart:"💞"},
-  {id:1,a:"Priya",b:"Sam",aAv:"P",bAv:"S",aGrad:"linear-gradient(150deg,#9B5CFF,#FF2E93)",bGrad:"linear-gradient(150deg,#33E0A0,#3FE0FF)",
-   host:"@thedatenight",viewers:"8.1k",tags:["Speed round","Round 2"],heart:"🔥"},
-  {id:2,a:"Devon",b:"Alex",aAv:"D",bAv:"A",aGrad:"linear-gradient(150deg,#FFC43D,#FF8A3D)",bGrad:"linear-gradient(150deg,#FF2E93,#9B5CFF)",
-   host:"@cupidcrew",viewers:"21.7k",tags:["FINALE","2nd date vote"],heart:"💘"}
+  {id:0,a:"Maya",b:"Theo",aAv:"M",bAv:"T",aGrad:"linear-gradient(150deg,#FF2E93,#FF8A3D)",bGrad:"linear-gradient(150deg,#3FE0FF,#9B5CFF)",host:"@itsjordanlive",viewers:"12.4k",tags:["First date","Blind","Brooklyn"],heart:"\u{1F49E}"},
+  {id:1,a:"Priya",b:"Sam",aAv:"P",bAv:"S",aGrad:"linear-gradient(150deg,#9B5CFF,#FF2E93)",bGrad:"linear-gradient(150deg,#33E0A0,#3FE0FF)",host:"@thedatenight",viewers:"8.1k",tags:["Speed round","Round 2"],heart:"\u{1F525}"},
+  {id:2,a:"Devon",b:"Alex",aAv:"D",bAv:"A",aGrad:"linear-gradient(150deg,#FFC43D,#FF8A3D)",bGrad:"linear-gradient(150deg,#FF2E93,#9B5CFF)",host:"@cupidcrew",viewers:"21.7k",tags:["FINALE","2nd date vote"],heart:"\u{1F498}"}
 ];
-
 var PLAYS=[
   {id:0,ic:"❓",cost:50,label:'Make them ask: "What\'s your most toxic trait?"',chat:"made them ask about toxic traits",spark:4},
-  {id:1,ic:"🎵",cost:80,label:"Make them show the last song they played",chat:"made them reveal their last played song",spark:3},
-  {id:2,ic:"🍸",cost:120,label:"Send the table a round of drinks",chat:"sent a round of drinks 🍸",spark:6},
-  {id:3,ic:"🔥",cost:300,wide:true,label:"Trigger the Hot Seat: 60 seconds of rapid-fire questions",chat:"triggered the HOT SEAT 🔥",spark:10},
-  {id:4,ic:"💃",cost:200,label:"Make them do a 20-second slow dance",chat:"made them slow dance",spark:8},
+  {id:1,ic:"\u{1F3B5}",cost:80,label:"Make them show the last song they played",chat:"made them reveal their last played song",spark:3},
+  {id:2,ic:"\u{1F378}",cost:120,label:"Send the table a round of drinks",chat:"sent a round of drinks",spark:6},
+  {id:3,ic:"\u{1F525}",cost:300,wide:true,label:"Trigger the Hot Seat: 60 seconds of rapid-fire questions",chat:"triggered the HOT SEAT",spark:10},
+  {id:4,ic:"\u{1F483}",cost:200,label:"Make them do a 20-second slow dance",chat:"made them slow dance",spark:8},
   {id:5,ic:"⭐",cost:100,label:"Make them rate the date so far, out of 10, on camera",chat:"made them rate the date /10",spark:5},
-  {id:6,ic:"😈",cost:250,spicy:true,label:'Dare: "Reveal your dealbreaker, right now"',chat:"dared them to name their dealbreaker",spark:-3,passable:true},
-  {id:7,ic:"🗺️",cost:60,label:"Pick their next topic: worst travel disaster",chat:"set the topic to travel disasters",spark:3}
+  {id:6,ic:"\u{1F608}",cost:250,spicy:true,label:'Dare: "Reveal your dealbreaker, right now"',chat:"dared them to name their dealbreaker",spark:-3,passable:true},
+  {id:7,ic:"\u{1F5FA}",cost:60,label:"Pick their next topic: worst travel disaster",chat:"set the topic to travel disasters",spark:3}
 ];
-
 var WING_PKGS=[
   {coins:100,price:"$1.99",bonus:""},
   {coins:550,price:"$9.99",bonus:"+50 bonus"},
   {coins:1200,price:"$19.99",bonus:"+200 bonus",best:true},
   {coins:3000,price:"$44.99",bonus:"+700 bonus"}
 ];
-
 var LEADERS=[
   {nm:"BigMattEnergy",sub:"sent 14 plays",sp:"4,820",grad:"linear-gradient(150deg,#FF2E93,#FF8A3D)"},
   {nm:"sofia_watches",sub:"sent 11 plays",sp:"3,410",grad:"linear-gradient(150deg,#3FE0FF,#9B5CFF)"},
@@ -398,24 +385,43 @@ var LEADERS=[
   {nm:"romeo_no",sub:"sent 6 plays",sp:"1,760",grad:"linear-gradient(150deg,#9B5CFF,#FF2E93)"},
   {nm:"justhereforthedrama",sub:"sent 5 plays",sp:"1,300",grad:"linear-gradient(150deg,#FF5CAE,#FFC43D)"}
 ];
-
 var CHAT_LINES=[
-  ["mads_x","cyan","NOT the toxic trait question 💀"],
+  ["mads_x","cyan","NOT the toxic trait question"],
   ["jordanfan","mg","theo is so nervous lmaooo"],
   ["livvy","cyan","send the drinks send the drinks"],
   ["the_real_deal","cyan","maya is OUT of his league"],
-  ["bbygirl","mg","spark meter going UP 📈"],
-  ["kev","cyan","who triggered the hot seat 😭🔥"],
+  ["bbygirl","mg","spark meter going UP"],
+  ["kev","cyan","who triggered the hot seat"],
   ["anon_44","cyan","second date energy fr"],
   ["pluto","mg","this is better than netflix"],
   ["sam_i_am","cyan","ask about the ex ask about the ex"],
   ["mira","cyan","they keep laughing omg"]
 ];
-
-/* ===== STATE ===== */
+var CONTACTS=[
+  {n:"Jess",g:"linear-gradient(150deg,#FF2E93,#FF8A3D)"},
+  {n:"Marcus",g:"linear-gradient(150deg,#3FE0FF,#9B5CFF)"},
+  {n:"Lena",g:"linear-gradient(150deg,#33E0A0,#3FE0FF)"},
+  {n:"Diego",g:"linear-gradient(150deg,#FFC43D,#FF8A3D)"},
+  {n:"Priya",g:"linear-gradient(150deg,#9B5CFF,#FF2E93)"},
+  {n:"Tomas",g:"linear-gradient(150deg,#FF5CAE,#FFC43D)"}
+];
+var SINGLES=[
+  {n:"Maya, 28",g:"linear-gradient(150deg,#FF2E93,#FF8A3D)"},
+  {n:"Theo, 30",g:"linear-gradient(150deg,#3FE0FF,#9B5CFF)"},
+  {n:"Nadia, 27",g:"linear-gradient(150deg,#9B5CFF,#FF2E93)"},
+  {n:"Sam, 31",g:"linear-gradient(150deg,#33E0A0,#3FE0FF)"},
+  {n:"Devon, 29",g:"linear-gradient(150deg,#FFC43D,#FF8A3D)"},
+  {n:"Alex, 26",g:"linear-gradient(150deg,#FF5CAE,#FFC43D)"}
+];
+var REASONS=["They're a total catch","Funniest person I know","Actually ready for something real","Too single for how great they are","Big green-flag energy"];
+var MM_LEADERS=[
+  {nm:"playcupid",sub:"7 matches made",made:"7",grad:"linear-gradient(150deg,#FF2E93,#FF8A3D)"},
+  {nm:"setupqueen",sub:"5 matches made",made:"5",grad:"linear-gradient(150deg,#3FE0FF,#9B5CFF)"},
+  {nm:"thehookup",sub:"4 matches made",made:"4",grad:"linear-gradient(150deg,#33E0A0,#3FE0FF)"},
+  {nm:"auntievibes",sub:"3 matches made",made:"3",grad:"linear-gradient(150deg,#FFC43D,#FF8A3D)"}
+];
 var wings=500, spark=55, momentsTriggered=0, playHistory=[], curDate=0, chatTimer=null;
-
-/* ===== ROUTER ===== */
+var setups=[], lbTab='producers';
 function go(id){
   if(id!=='room' && chatTimer){ clearInterval(chatTimer); chatTimer=null; }
   var s=document.querySelectorAll('.screen');
@@ -428,32 +434,28 @@ function jumpTo(id){ go(id); }
 function toggleJump(){ document.getElementById('jpanel').classList.toggle('open'); }
 function closeJump(){ document.getElementById('jpanel').classList.remove('open'); }
 function setWings(n){ wings=n; document.getElementById('wingBal').textContent=n; var wb=document.getElementById('walletBal'); if(wb) wb.textContent=n; }
-
-/* ===== HOME / LOBBY ===== */
 function dateCardHTML(d){
   return '<div class="dcard" onclick="enterRoom('+d.id+')">'+
     '<div class="thumb" style="background:linear-gradient(135deg,#2a1140,#10303f)">'+
       '<span class="live-badge"><span class="dot"></span>LIVE</span>'+
-      '<span class="view-badge">'+d.viewers+' 👁</span>'+
+      '<span class="view-badge">'+d.viewers+'</span>'+
       '<div class="avs"><div class="av" style="background:'+d.aGrad+'">'+d.aAv+'</div><div class="av" style="background:'+d.bGrad+'">'+d.bAv+'</div></div>'+
       '<span class="heart">'+d.heart+'</span>'+
     '</div>'+
-    '<div class="meta"><h3>'+d.a+' & '+d.b+'</h3>'+
+    '<div class="meta"><h3>'+d.a+' &amp; '+d.b+'</h3>'+
       '<div class="host">hosted by <span class="vp">'+d.host+'</span></div>'+
       '<div class="dtags">'+d.tags.map(function(t){return '<span class="dtag">'+t+'</span>';}).join('')+'</div>'+
     '</div></div>';
 }
 function renderHome(){ document.getElementById('homeLive').innerHTML=DATES.map(dateCardHTML).join(''); }
 function renderLobby(){ document.getElementById('lobbyList').innerHTML=DATES.map(dateCardHTML).join(''); }
-
-/* ===== ROOM ===== */
 function enterRoom(id){
   curDate=id; var d=DATES[id];
   go('room');
-  document.getElementById('viewers').textContent=d.viewers+' 👁';
+  document.getElementById('viewers').textContent=d.viewers;
   document.getElementById('daters').innerHTML=
     '<div class="dater"><div class="av" style="background:'+d.aGrad+'">'+d.aAv+'</div><span class="nm">'+d.a+'</span></div>'+
-    '<span class="vs">×</span>'+
+    '<span class="vs">x</span>'+
     '<div class="dater"><div class="av" style="background:'+d.bGrad+'">'+d.bAv+'</div><span class="nm">'+d.b+'</span></div>';
   resetOnstage();
   document.getElementById('plays').innerHTML=PLAYS.map(function(p){
@@ -463,22 +465,22 @@ function enterRoom(id){
       (p.wide?'<span class="right"><span class="cost"><span class="coin"></span>'+p.cost+'</span></span>':'<span class="cost"><span class="coin"></span>'+p.cost+'</span>')+
     '</button>';
   }).join('');
-  var rs=["🔥","😂","😍","💀","👏"];
+  var rs=["\u{1F525}","\u{1F602}","\u{1F60D}","\u{1F480}","\u{1F44F}"];
   document.getElementById('reactRow').innerHTML=rs.map(function(e){return '<button onclick="react(\''+e+'\')">'+e+'</button>';}).join('');
   document.getElementById('chat').innerHTML='';
-  pushChat('sys',null,'Welcome to the room. Be nice, send plays 💞');
+  pushChat('sys',null,'Welcome to the room. Be nice, send plays');
   if(chatTimer) clearInterval(chatTimer);
   chatTimer=setInterval(randomChat, 2300);
 }
 function leaveRoom(){ if(chatTimer){clearInterval(chatTimer);chatTimer=null;} go('lobby'); renderLobby(); }
 function resetOnstage(){
   var o=document.getElementById('onstage'); o.className='onstage idle';
-  o.innerHTML='<span class="ic">🎬</span><div class="txt"><b>You are live in the room.</b><div class="by">Send a play below to make something happen.</div></div>';
+  o.innerHTML='<span class="ic">\u{1F3AC}</span><div class="txt"><b>You are live in the room.</b><div class="by">Send a play below to make something happen.</div></div>';
 }
 function pushChat(type,user,text){
   var chat=document.getElementById('chat'); if(!chat) return;
   var html;
-  if(type==='sys') html='<div class="msg sys">✨ '+text+'</div>';
+  if(type==='sys') html='<div class="msg sys">'+text+'</div>';
   else if(type==='me') html='<div class="msg"><span class="u gold">You</span> '+text+'</div>';
   else html='<div class="msg"><span class="u '+(user[1]||'')+'">'+user[0]+'</span> '+text+'</div>';
   chat.insertAdjacentHTML('beforeend',html);
@@ -486,7 +488,6 @@ function pushChat(type,user,text){
   chat.scrollTop=chat.scrollHeight;
 }
 function randomChat(){ var l=CHAT_LINES[Math.floor(Math.random()*CHAT_LINES.length)]; pushChat('them',[l[0],l[1]],l[2]); }
-
 function react(emoji){
   var layer=document.getElementById('reactLayer'); if(!layer) return;
   var s=document.createElement('span'); s.className='float-emoji'; s.textContent=emoji;
@@ -494,34 +495,31 @@ function react(emoji){
   layer.appendChild(s);
   setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); },2200);
 }
-
 function sendPlay(pid){
   var p=PLAYS[pid], d=DATES[curDate];
   if(wings < p.cost){
-    toast('💰','Not enough Wings. Top up to keep playing.');
+    toast('\u{1F4B0}','Not enough Wings. Top up to keep playing.');
     setTimeout(function(){ go('wallet'); renderWallet(); }, 700);
     return;
   }
   setWings(wings - p.cost);
   playHistory.unshift({ic:p.ic,label:p.label,cost:p.cost});
-
   if(p.passable && Math.random()<0.5){
-    flashOnstage('🙅', '<b>'+d.b+' passed on that one.</b>', 'Daters can decline any play. Your '+p.cost+' Wings were refunded.');
+    flashOnstage('\u{1F645}', '<b>'+d.b+' passed on that one.</b>', 'Daters can decline any play. Your '+p.cost+' Wings were refunded.');
     setWings(wings + p.cost);
     playHistory.shift();
-    pushChat('sys',null,d.b+' passed, refund sent 💸');
-    toast('🙅','They passed. Refunded '+p.cost+' Wings.');
+    pushChat('sys',null,d.b+' passed, refund sent');
+    toast('\u{1F645}','They passed. Refunded '+p.cost+' Wings.');
     return;
   }
-
   momentsTriggered++;
   spark=Math.max(0,Math.min(100, spark + p.spark));
   var sf=document.getElementById('sparkFill'), sv=document.getElementById('sparkVal');
   if(sf){ sf.style.width=spark+'%'; sv.textContent=spark+'%'; }
-  flashOnstage(p.ic, '<b>You</b> '+p.chat, 'Live on stage now · seen by '+d.viewers+' people');
+  flashOnstage(p.ic, '<b>You</b> '+p.chat, 'Live on stage now, seen by '+d.viewers+' people');
   pushChat('me', null, p.chat+' '+p.ic);
-  react(p.ic.length<=2?p.ic:'🔥');
-  toast('🎬','Play sent! '+d.a+' & '+d.b+' are doing it.');
+  react(p.ic.length<=2?p.ic:'\u{1F525}');
+  toast('\u{1F3AC}','Play sent! '+d.a+' &amp; '+d.b+' are doing it.');
 }
 function flashOnstage(ic,txt,by){
   var o=document.getElementById('onstage');
@@ -529,13 +527,11 @@ function flashOnstage(ic,txt,by){
   o.innerHTML='<span class="ic">'+ic+'</span><div class="txt">'+txt+'<div class="by">'+by+'</div></div>';
   setTimeout(function(){ o.classList.remove('flash'); },600);
 }
-
-/* ===== WALLET ===== */
 function renderWallet(){
   document.getElementById('walletBal').textContent=wings;
   document.getElementById('pkgs').innerHTML=WING_PKGS.map(function(p,i){
     return '<div class="pkg" onclick="buyWings('+i+')">'+
-      '<div class="coins">🪙</div>'+
+      '<div class="coins">\u{1FA99}</div>'+
       '<div class="amt">'+p.coins+' Wings'+(p.bonus?'<small style="color:var(--green)">'+p.bonus+'</small>':'<small>top up your balance</small>')+'</div>'+
       (p.best?'<span class="best">BEST VALUE</span>':'')+
       '<span class="price">'+p.price+'</span>'+
@@ -551,29 +547,33 @@ function buyWings(i){
   var p=WING_PKGS[i];
   setWings(wings + p.coins);
   renderWallet();
-  toast('🪙','+'+p.coins+' Wings added. Go make some moments.');
+  toast('\u{1FA99}','+'+p.coins+' Wings added. Go make some moments.');
 }
-
-/* ===== LEADERBOARD ===== */
+function switchLb(tab){ lbTab=tab; renderLeaderboard(); }
 function renderLeaderboard(){
-  document.getElementById('yourMoments').textContent=momentsTriggered;
-  var youSpent = playHistory.reduce(function(s,x){return s+x.cost;},0);
-  var list=document.getElementById('lbList');
-  var html='';
-  for(var i=0;i<LEADERS.length;i++){
-    html+='<div class="lb-row"><span class="rk'+(i<3?' top':'')+'">'+(i+1)+'</span>'+
-      '<span class="av" style="background:'+LEADERS[i].grad+'">'+LEADERS[i].nm[0].toUpperCase()+'</span>'+
-      '<span class="nm">'+LEADERS[i].nm+'<small>'+LEADERS[i].sub+'</small></span>'+
-      '<span class="sp"><b>'+LEADERS[i].sp+'</b><small>Wings</small></span></div>';
+  document.getElementById('lbTabP').classList.toggle('on',lbTab==='producers');
+  document.getElementById('lbTabM').classList.toggle('on',lbTab==='matchmakers');
+  var list=document.getElementById('lbList'), html='';
+  if(lbTab==='producers'){
+    document.getElementById('lbHeroLabel').textContent='YOUR PRODUCER RANK';
+    document.getElementById('yourRank').textContent='#7';
+    document.getElementById('lbHeroLine').innerHTML='You triggered <b style="color:var(--gold2)">'+momentsTriggered+'</b> moments tonight';
+    var youSpent=playHistory.reduce(function(s,x){return s+x.cost;},0);
+    for(var i=0;i<LEADERS.length;i++){
+      html+='<div class="lb-row"><span class="rk'+(i<3?' top':'')+'">'+(i+1)+'</span><span class="av" style="background:'+LEADERS[i].grad+'">'+LEADERS[i].nm[0].toUpperCase()+'</span><span class="nm">'+LEADERS[i].nm+'<small>'+LEADERS[i].sub+'</small></span><span class="sp"><b>'+LEADERS[i].sp+'</b><small>Wings</small></span></div>';
+    }
+    html+='<div class="lb-row you"><span class="rk">#7</span><span class="av" style="background:var(--grad)">Y</span><span class="nm">You<small>sent '+playHistory.length+' plays</small></span><span class="sp"><b>'+youSpent+'</b><small>Wings</small></span></div>';
+  } else {
+    document.getElementById('lbHeroLabel').textContent='YOUR MATCHMAKER RANK';
+    document.getElementById('yourRank').textContent=setups.length>0?'#5':'-';
+    document.getElementById('lbHeroLine').innerHTML='You made <b style="color:var(--gold2)">'+setups.length+'</b> setups tonight';
+    for(var j=0;j<MM_LEADERS.length;j++){
+      html+='<div class="lb-row"><span class="rk'+(j<3?' top':'')+'">'+(j+1)+'</span><span class="av" style="background:'+MM_LEADERS[j].grad+'">'+MM_LEADERS[j].nm[0].toUpperCase()+'</span><span class="nm">'+MM_LEADERS[j].nm+'<small>'+MM_LEADERS[j].sub+'</small></span><span class="sp"><b>'+MM_LEADERS[j].made+'</b><small>matches</small></span></div>';
+    }
+    html+='<div class="lb-row you"><span class="rk">'+(setups.length>0?'#5':'-')+'</span><span class="av" style="background:var(--grad)">Y</span><span class="nm">You<small>'+setups.length+' setups made</small></span><span class="sp"><b>'+setups.length+'</b><small>matches</small></span></div>';
   }
-  html+='<div class="lb-row you"><span class="rk">#7</span>'+
-    '<span class="av" style="background:var(--grad)">Y</span>'+
-    '<span class="nm">You<small>sent '+playHistory.length+' plays</small></span>'+
-    '<span class="sp"><b>'+youSpent+'</b><small>Wings</small></span></div>';
   list.innerHTML=html;
 }
-
-/* ===== RECAP ===== */
 function renderRecap(){
   var d=DATES[curDate];
   document.getElementById('recapTitle').innerHTML=d.a+' &amp; '+d.b+' are getting a second date!';
@@ -581,26 +581,102 @@ function renderRecap(){
   document.getElementById('impMoments').textContent=momentsTriggered;
   document.getElementById('impSpark').textContent=spark+'%';
 }
-
-/* ===== TOAST ===== */
-var toastT=null;
+var setupMode='pair', pairSel=[], friendSel=-1, reasonSel=-1;
+function renderSetup(){ setupTab('pair'); }
+function setupTab(mode){
+  setupMode=mode; pairSel=[]; friendSel=-1; reasonSel=-1;
+  document.getElementById('segPair').classList.toggle('on',mode==='pair');
+  document.getElementById('segFriend').classList.toggle('on',mode==='friend');
+  var body=document.getElementById('setupBody');
+  if(mode==='pair'){
+    body.innerHTML='<div class="sub-h">Who should date who?</div><div class="sub-p">Pick two singles from tonight\'s pool.</div>'+
+      '<div class="pick-grid" id="pairGrid">'+SINGLES.map(function(s,i){return pickHTML(s,i,'togglePair');}).join('')+'</div>';
+  } else {
+    body.innerHTML='<div class="sub-h">Put a friend on the show</div><div class="sub-p">Nominate someone single. They get an invite, you get the credit.</div>'+
+      '<div class="pick-grid" id="friendGrid">'+CONTACTS.map(function(c,i){return pickHTML(c,i,'pickFriend');}).join('')+'</div>'+
+      '<div class="sub-h" style="margin-top:14px">Why them?</div>'+
+      '<div class="reasons" id="reasonRow">'+REASONS.map(function(r,i){return '<button class="chip3" onclick="pickReason('+i+')">'+r+'</button>';}).join('')+'</div>';
+  }
+  renderSetupFoot();
+}
+function pickHTML(p,i,fn){ return '<button class="pick" data-i="'+i+'" onclick="'+fn+'('+i+')"><div class="pa" style="background:'+p.g+'">'+p.n[0]+'</div><div class="pn">'+p.n+'</div><div class="badge"></div></button>'; }
+function togglePair(i){
+  var at=pairSel.indexOf(i);
+  if(at>-1) pairSel.splice(at,1); else { if(pairSel.length>=2) pairSel.shift(); pairSel.push(i); }
+  var picks=document.querySelectorAll('#pairGrid .pick');
+  for(var k=0;k<picks.length;k++){ var idx=+picks[k].getAttribute('data-i'); var pos=pairSel.indexOf(idx); picks[k].classList.toggle('sel',pos>-1); picks[k].querySelector('.badge').textContent=pos>-1?(pos===0?'PICK 1':'PICK 2'):''; }
+  renderSetupFoot();
+}
+function pickFriend(i){
+  friendSel=i;
+  var ps=document.querySelectorAll('#friendGrid .pick');
+  for(var k=0;k<ps.length;k++){ ps[k].classList.toggle('sel',+ps[k].getAttribute('data-i')===i); }
+  renderSetupFoot();
+}
+function pickReason(i){
+  reasonSel=i;
+  var cs=document.querySelectorAll('#reasonRow .chip3');
+  for(var k=0;k<cs.length;k++){ cs[k].classList.toggle('sel',k===i); }
+  renderSetupFoot();
+}
+function renderSetupFoot(){
+  var foot=document.getElementById('setupFoot');
+  if(setupMode==='pair'){
+    if(pairSel.length===2) foot.innerHTML='<button class="btn" onclick="backMatch()">Back '+SINGLES[pairSel[0]].n.split(',')[0]+' x '+SINGLES[pairSel[1]].n.split(',')[0]+'</button>';
+    else foot.innerHTML='<button class="btn" style="opacity:.45;pointer-events:none">Pick two to back a match</button>';
+  } else {
+    if(friendSel>-1 && reasonSel>-1) foot.innerHTML='<button class="btn" onclick="nominateFriend()">Send '+CONTACTS[friendSel].n+' an invite</button>';
+    else foot.innerHTML='<button class="btn" style="opacity:.45;pointer-events:none">Pick a friend and a reason</button>';
+  }
+}
+function backMatch(){
+  var a=SINGLES[pairSel[0]].n.split(',')[0], b=SINGLES[pairSel[1]].n.split(',')[0];
+  setups.push({type:'match',label:a+' x '+b});
+  toast('\u{1F498}','You backed '+a+' x '+b+'. Nice call.');
+  setupTab('pair');
+}
+function nominateFriend(){
+  var nm=CONTACTS[friendSel].n;
+  setups.push({type:'friend',label:nm});
+  toast('\u{1F49D}','You put '+nm+' forward. Invite sent.');
+  setupTab('friend');
+}
+var castVibe=-1, castShow=-1;
+function renderCast(){
+  castVibe=-1; castShow=-1;
+  var vibes=["Something serious","Just for fun","Open to anything"];
+  var shows=["Maya &amp; Theo's show","Any live show","Surprise me"];
+  document.getElementById('castBody').innerHTML=
+    '<div class="sub-h">What are you looking for?</div>'+
+    '<div class="reasons" id="castVibe">'+vibes.map(function(v,i){return '<button class="chip3" onclick="pickCast(\'v\','+i+')">'+v+'</button>';}).join('')+'</div>'+
+    '<div class="sub-h" style="margin-top:12px">Which show?</div>'+
+    '<div class="reasons" id="castShow">'+shows.map(function(s,i){return '<button class="chip3" onclick="pickCast(\'s\','+i+')">'+s+'</button>';}).join('')+'</div>'+
+    '<div class="pad" id="castFoot"><button class="btn" style="opacity:.45;pointer-events:none">Pick your vibe and a show</button></div>';
+}
+function pickCast(type,i){
+  if(type==='v'){ castVibe=i; var a=document.querySelectorAll('#castVibe .chip3'); for(var k=0;k<a.length;k++) a[k].classList.toggle('sel',k===i); }
+  else { castShow=i; var b=document.querySelectorAll('#castShow .chip3'); for(var k=0;k<b.length;k++) b[k].classList.toggle('sel',k===i); }
+  if(castVibe>-1 && castShow>-1) document.getElementById('castFoot').innerHTML='<button class="btn" onclick="submitCast()">Put me in the casting pool</button>';
+}
+function submitCast(){
+  document.getElementById('castBody').innerHTML=
+    '<div class="cast-status"><div class="e">✨</div><h3>You are in the casting pool!</h3><p>Spot #214 in line. A host will reach out when a slot opens on an upcoming live date.</p></div>'+
+    '<div class="pad"><button class="btn ghost" onclick="go(\'home\')">Back to home</button></div>';
+  toast('\u{1F3AC}','You put yourself forward. Lights, camera...');
+}
 function toast(ic,tx){
   document.getElementById('toastIc').textContent=ic;
-  document.getElementById('toastTx').textContent=tx;
+  document.getElementById('toastTx').innerHTML=tx;
   var t=document.getElementById('toast'); t.classList.add('show');
-  if(toastT) clearTimeout(toastT);
-  toastT=setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  if(window._toastT) clearTimeout(window._toastT);
+  window._toastT=setTimeout(function(){ t.classList.remove('show'); }, 2200);
 }
-
-/* ===== RESET ===== */
 function resetDemo(){
   if(chatTimer){clearInterval(chatTimer);chatTimer=null;}
-  wings=500; spark=55; momentsTriggered=0; playHistory=[]; curDate=0;
+  wings=500; spark=55; momentsTriggered=0; playHistory=[]; curDate=0; setups=[]; lbTab='producers';
   setWings(500);
   go('home');
 }
-
-/* init */
 renderHome();
 </script>
 </body>
