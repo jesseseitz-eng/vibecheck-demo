@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Wingman — The dating show you call the shots on</title>
+<title>Wingman House — the dating show that never closes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -29,7 +29,7 @@ body{font-family:var(--body);background:#06050A;color:var(--text);-webkit-font-s
 .app{position:relative;z-index:1;width:min(440px,100vw);height:100vh;height:100dvh;margin:0 auto;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.6)}
 @media(min-width:480px){.app{height:min(900px,96vh);margin-top:max(0px,calc((100vh - 900px)/2));border-radius:30px;border:1px solid var(--line)}}
 .topbar{flex:none;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(11,9,18,.8);backdrop-filter:blur(12px);z-index:6}
-.brand{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.4px;cursor:pointer}
+.brand{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:16px;letter-spacing:-.4px;cursor:pointer}
 .brand .mk{width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:15px}
 .brand .mk svg{width:16px;height:16px}
 .wbtn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,196,61,.12);border:1px solid rgba(255,196,61,.35);color:var(--gold2);font-weight:700;font-size:13.5px;padding:7px 12px;border-radius:11px;cursor:pointer;font-variant-numeric:tabular-nums}
@@ -40,7 +40,7 @@ body{font-family:var(--body);background:#06050A;color:var(--text);-webkit-font-s
 .screen.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .pad{padding:18px 16px 28px}
-h1.big{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.04;letter-spacing:-1.2px}
+h1.big{font-family:var(--display);font-weight:800;font-size:33px;line-height:1.04;letter-spacing:-1.2px}
 h1.big .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--magenta2);background:rgba(255,46,147,.12);border:1px solid rgba(255,46,147,.25);padding:6px 11px;border-radius:999px}
 h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.4px}
@@ -50,9 +50,13 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .btn.gold{background:var(--grad-gold);color:#2a1800;box-shadow:0 10px 26px rgba(255,196,61,.3)}
 .btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line2);box-shadow:none}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg)}
-.hero{padding:26px 18px 8px}
-.hero h1{margin-top:16px}
-.hero p{margin-top:14px;font-size:15.5px;line-height:1.55;color:var(--muted);max-width:320px}
+.hero{padding:24px 18px 8px}
+.hero h1{margin-top:14px}
+.hero p{margin-top:13px;font-size:14.5px;line-height:1.55;color:var(--muted);max-width:330px}
+.house-status{margin:14px 16px 0;display:flex;gap:8px;flex-wrap:wrap}
+.hs{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:11.5px;font-weight:700}
+.hs .d{width:7px;height:7px;border-radius:50%;background:var(--live);animation:pulse 1.2s infinite}
+.hs.pot{color:var(--gold2);border-color:rgba(255,196,61,.3)}
 .live-rail{padding:6px 16px 4px}
 .rail-head{display:flex;align-items:center;justify-content:space-between;margin:18px 4px 12px}
 .rail-head b{font-family:var(--display);font-weight:700;font-size:16px}
@@ -108,11 +112,11 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .cast-status h3{font-family:var(--display);font-weight:800;font-size:21px;margin-top:8px}
 .cast-status p{font-size:13px;margin-top:8px;opacity:.92;line-height:1.5}
 .room{display:flex;flex-direction:column;height:100%}
-.stream{position:relative;height:248px;flex:none;overflow:hidden;background:linear-gradient(135deg,#2a1140,#4a1d52 55%,#10303f)}
+.stream{position:relative;height:236px;flex:none;overflow:hidden;background:linear-gradient(135deg,#2a1140,#4a1d52 55%,#10303f)}
 .stream .vignette{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 30%,transparent,rgba(0,0,0,.55))}
 .stream .daters{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:24px;padding-bottom:30px}
 .stream .dater{display:flex;flex-direction:column;align-items:center;gap:8px}
-.stream .dater .av{width:78px;height:78px;border-radius:50%;border:3px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:32px;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.stream .dater .av{width:74px;height:74px;border-radius:50%;border:3px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:30px;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.4)}
 .stream .dater .nm{font-size:13px;font-weight:700;background:rgba(0,0,0,.45);padding:3px 10px;border-radius:999px}
 .stream .vs{font-family:var(--display);font-weight:800;font-size:18px;color:var(--magenta2);filter:drop-shadow(0 0 10px rgba(255,46,147,.6))}
 .stream .rtop{position:absolute;top:12px;left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;z-index:4}
@@ -125,14 +129,14 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .spark .lab .v{color:var(--gold2)}
 .spark .track{height:8px;background:rgba(0,0,0,.4);border-radius:999px;overflow:hidden}
 .spark .fill{height:100%;width:55%;background:var(--grad-gold);border-radius:999px;transition:width .6s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(255,196,61,.6)}
-.onstage{flex:none;padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--line);min-height:52px;display:flex;align-items:center;gap:11px;transition:background .3s}
+.onstage{flex:none;padding:9px 14px;background:var(--surface2);border-bottom:1px solid var(--line);min-height:48px;display:flex;align-items:center;gap:11px;transition:background .3s}
 .onstage.flash{background:rgba(255,46,147,.18)}
-.onstage .ic{flex:none;width:30px;height:30px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:15px}
-.onstage .txt{font-size:12.5px;line-height:1.35}
+.onstage .ic{flex:none;width:28px;height:28px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:14px}
+.onstage .txt{font-size:12px;line-height:1.3}
 .onstage .txt b{color:var(--magenta2)}
 .onstage .txt .by{color:var(--faint);font-size:11px}
 .onstage.idle .ic{background:var(--surface)}
-.chat{flex:none;height:96px;overflow:hidden;padding:8px 14px;border-bottom:1px solid var(--line);position:relative;mask-image:linear-gradient(to bottom,transparent,#000 30%)}
+.chat{flex:none;height:74px;overflow:hidden;padding:7px 14px;border-bottom:1px solid var(--line);position:relative;mask-image:linear-gradient(to bottom,transparent,#000 30%)}
 .chat .msg{font-size:12px;line-height:1.5;margin-bottom:2px;animation:slidein .3s ease}
 @keyframes slidein{from{opacity:0;transform:translateX(-8px)}to{opacity:1}}
 .chat .msg .u{font-weight:700;color:var(--cyan)}
@@ -141,6 +145,18 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .chat .msg.sys{color:var(--gold2);font-weight:600}
 .influence{flex:1;overflow-y:auto;padding:14px 14px 90px}
 .influence::-webkit-scrollbar{width:0}
+.callvote{background:var(--surface);border:1px solid var(--line2);border-radius:var(--r-md);padding:14px;margin-bottom:14px}
+.cv-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;flex-wrap:wrap}
+.cv-tag{font-size:9.5px;font-weight:800;letter-spacing:.8px;color:#15121b;background:var(--grad-gold);padding:3px 8px;border-radius:6px}
+.cv-q{font-size:13px;font-weight:700}
+.cv-bar{height:30px;border-radius:9px;overflow:hidden;display:flex;font-size:11px;font-weight:800}
+.cv-yes{background:var(--grad);display:flex;align-items:center;padding-left:10px;color:#fff;transition:width .5s;white-space:nowrap}
+.cv-no{background:var(--surface2);flex:1;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:var(--muted);white-space:nowrap}
+.cv-btns{display:flex;gap:8px;margin-top:10px}
+.cv-btn{flex:1;border:1px solid var(--line2);background:var(--surface2);color:var(--text);font-family:var(--body);font-weight:700;font-size:13px;padding:11px;border-radius:10px;cursor:pointer}
+.cv-btn.yes:hover{border-color:var(--magenta)}
+.cv-btn.no:hover{border-color:var(--live)}
+.cv-foot{font-size:10.5px;color:var(--faint);margin-top:9px;display:flex;align-items:center;gap:6px}
 .inf-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .inf-head b{font-family:var(--display);font-weight:700;font-size:16px}
 .inf-head .hint{font-size:11px;color:var(--faint)}
@@ -188,7 +204,7 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 .lb-row .sp small{display:block;color:var(--faint);font-size:10.5px}
 .recap{padding:24px 18px 30px;text-align:center}
 .recap .res{margin:8px auto 0;width:90px;height:90px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 0 40px rgba(255,46,147,.5)}
-.recap h2{font-family:var(--display);font-weight:800;font-size:24px;margin-top:18px;letter-spacing:-.5px}
+.recap h2{font-family:var(--display);font-weight:800;font-size:23px;margin-top:18px;letter-spacing:-.5px}
 .recap .sub{color:var(--muted);font-size:14px;margin-top:8px}
 .votebar{margin:20px 0 6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:15px}
 .votebar .vl{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:8px}
@@ -220,37 +236,42 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 <div class="stage-bg"></div>
 <div class="app">
   <div class="topbar">
-    <div class="brand" onclick="go('home')"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z" fill="#fff"/></svg></span>Wingman</div>
+    <div class="brand" onclick="go('home')"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z" fill="#fff"/></svg></span>Wingman House</div>
     <button class="wbtn" onclick="go('wallet'); renderWallet()"><span class="coin"></span><span id="wingBal">500</span></button>
   </div>
   <div class="screens" id="screens">
     <section class="screen active" id="home">
       <div class="hero">
-        <span class="eyebrow">Live dating, you direct it</span>
-        <h1 class="big">The dating show <span class="g">you call the shots on.</span></h1>
-        <p>Watch real first dates live. Spend Wings to send a play: make them ask the spicy question, trigger a dare, send a gift. You are the wingman now.</p>
+        <span class="eyebrow">The house never closes</span>
+        <h1 class="big">The dating show <span class="g">that never closes.</span></h1>
+        <p>One house, streamed live, all night. AI casts the lineup, the crowd directs the dates and votes who gets a second shot, and contestants play for the nightly pot.</p>
+      </div>
+      <div class="house-status">
+        <span class="hs"><span class="d"></span>House is live</span>
+        <span class="hs pot">$2,400 pot tonight</span>
+        <span class="hs">AI-cast lineup</span>
       </div>
       <div class="live-rail">
-        <div class="rail-head"><b>Live right now</b><span class="see" onclick="go('lobby'); renderLobby()">See all</span></div>
+        <div class="rail-head"><b>In the house now</b><span class="see" onclick="go('lobby'); renderLobby()">See all</span></div>
         <div id="homeLive"></div>
       </div>
       <div class="how">
         <h4>How it works</h4>
-        <div class="step"><span class="n">1</span><p><b>Drop into a live date.</b> Real people, real first dates, hosted by your favorite dating creators.</p></div>
-        <div class="step"><span class="n">2</span><p><b>Send a play.</b> Spend Wings to make them ask a question, do a dare, or get a gift. Daters can pass anything, it is all opt-in.</p></div>
-        <div class="step"><span class="n">3</span><p><b>Or be part of it.</b> Set two people up, nominate a single friend, or put yourself forward to be cast.</p></div>
+        <div class="step"><span class="n">1</span><p><b>Drop into the house.</b> Real first dates, streamed live, a fresh lineup cast by AI every night.</p></div>
+        <div class="step"><span class="n">2</span><p><b>Direct the date, then call it.</b> Spend Wings to send plays, then vote the real outcome: second date, or cut.</p></div>
+        <div class="step"><span class="n">3</span><p><b>Back a winner, fairly.</b> Contestants play for the nightly pot. Everyone is vetted, opts in, and can tap out anytime, with support on call.</p></div>
       </div>
       <div class="show-cta">
-        <button onclick="go('setup'); renderSetup()"><span class="ci">&#128156;</span><b>Set someone up</b><small>Back a match or nominate a friend</small></button>
-        <button onclick="go('cast'); renderCast()"><span class="ci">&#10024;</span><b>Get cast</b><small>Put yourself on the show</small></button>
+        <button onclick="go('setup'); renderSetup()"><span class="ci">&#128152;</span><b>Set someone up</b><small>Back a match or nominate a friend</small></button>
+        <button onclick="go('cast'); renderCast()"><span class="ci">&#10024;</span><b>Get cast</b><small>Put yourself in the house</small></button>
       </div>
-      <div class="pad"><button class="btn" onclick="enterRoom(0)">Enter the live date</button></div>
+      <div class="pad"><button class="btn" onclick="enterRoom(0)">Enter the house</button></div>
     </section>
     <section class="screen" id="lobby">
       <div class="lobby-head">
-        <span class="eyebrow">Live now</span>
-        <h2 class="t" style="margin-top:12px">Pick a date to crash</h2>
-        <p class="muted" style="font-size:13.5px;margin-top:6px">Every date is live and opt-in. Jump in and start sending plays.</p>
+        <span class="eyebrow">In the house now</span>
+        <h2 class="t" style="margin-top:12px">Tonight's lineup</h2>
+        <p class="muted" style="font-size:13.5px;margin-top:6px">Cast by AI, vetted by us. Jump into any date and start directing.</p>
       </div>
       <div class="pad" style="padding-top:14px" id="lobbyList"></div>
     </section>
@@ -274,10 +295,16 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
         </div>
         <div class="onstage idle" id="onstage">
           <span class="ic">&#127916;</span>
-          <div class="txt"><b>You are live in the room.</b><div class="by">Send a play below to make something happen.</div></div>
+          <div class="txt"><b>You are live in the house.</b><div class="by">Send a play, then call the vote.</div></div>
         </div>
         <div class="chat" id="chat"></div>
         <div class="influence">
+          <div class="callvote">
+            <div class="cv-head"><span class="cv-tag">TONIGHT'S CALL</span><span class="cv-q" id="cvQ">Second date for Maya &amp; Theo?</span></div>
+            <div class="cv-bar"><div class="cv-yes" id="cvYesBar" style="width:62%"><span id="cvYesTxt">Second date 62%</span></div><div class="cv-no" id="cvNoBar"><span id="cvNoTxt">Cut 38%</span></div></div>
+            <div class="cv-btns"><button class="cv-btn yes" onclick="castVote('yes')">Vote: second date</button><button class="cv-btn no" onclick="castVote('no')">Vote: cut</button></div>
+            <div class="cv-foot"><span>The crowd decides the outcome. Contestants opted in and can tap out anytime.</span></div>
+          </div>
           <div class="inf-head"><b>Call the shots</b><span class="hint">tap to send &middot; daters can pass</span></div>
           <div class="react-row" id="reactRow"></div>
           <div class="plays" id="plays"></div>
@@ -295,7 +322,7 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
         <div class="inf-head" style="margin:0 0 4px"><b style="font-family:var(--display);font-size:15px">Recent plays</b></div>
         <div id="histList"></div>
       </div>
-      <div class="pad"><button class="btn ghost" onclick="go('room')">Back to the date</button></div>
+      <div class="pad"><button class="btn ghost" onclick="go('room')">Back to the house</button></div>
     </section>
     <section class="screen" id="leaderboard">
       <div class="lobby-head" style="padding-bottom:0"><span class="eyebrow">Tonight's leaderboard</span></div>
@@ -310,34 +337,34 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
     </section>
     <section class="screen" id="recap">
       <div class="recap">
-        <div class="res">&#128152;</div>
-        <h2 id="recapTitle">Maya &amp; Theo are getting a second date!</h2>
-        <div class="sub" id="recapSub">The crowd pushed them over the edge.</div>
+        <div class="res" id="recapEmoji">&#128152;</div>
+        <h2 id="recapTitle">The crowd gave Maya &amp; Theo a second date!</h2>
+        <div class="sub" id="recapSub">62% of the house voted yes. Maya takes tonight's $2,400 pot.</div>
         <div class="votebar">
-          <div class="vl"><span style="color:var(--magenta2)">Second date 78%</span><span class="muted">Just friends 22%</span></div>
-          <div class="vt"><div class="vy" style="width:78%"></div></div>
+          <div class="vl"><span style="color:var(--magenta2)" id="rcYes">Second date 62%</span><span class="muted" id="rcNo">Cut 38%</span></div>
+          <div class="vt"><div class="vy" id="rcBar" style="width:62%"></div></div>
         </div>
         <div class="impact">
           <div class="il">Your impact tonight</div>
           <div class="irow"><span class="ii">&#127916;</span><div>You triggered <b id="impMoments">0</b> live moments</div></div>
-          <div class="irow"><span class="ii">&#128157;</span><div>You pushed the spark meter to <b id="impSpark">55%</b></div></div>
+          <div class="irow"><span class="ii">&#128499;</span><div>You helped call the outcome with <b id="impVote">your vote</b></div></div>
           <div class="irow"><span class="ii">&#127942;</span><div>You ranked <b id="impRank">#7</b> of 3,402 producers</div></div>
         </div>
-        <div class="earn-note">Where your Wings went: <b>Maya &amp; Theo</b> and host <b>@itsjordanlive</b> split 60% of every play you sent. That is how daters and creators get paid to show up.</div>
+        <div class="earn-note">Where your Wings went: the contestants and host <b>@itsjordanlive</b> split 60% of every play. The pot is funded by the crowd and paid to the night's most-loved contestant.</div>
       </div>
       <div class="pad" style="padding-top:6px">
-        <button class="btn" onclick="go('lobby'); renderLobby()">Find another date</button>
+        <button class="btn" onclick="go('lobby'); renderLobby()">Back to the lineup</button>
         <button class="btn ghost" style="margin-top:10px" onclick="resetDemo()">Restart demo</button>
       </div>
     </section>
     <section class="screen" id="setup">
-      <div class="lobby-head"><span class="eyebrow">Be the matchmaker</span><h2 class="t" style="margin-top:12px">Set someone up</h2><p class="muted" style="font-size:13px;margin-top:6px">Back a match on tonight's show, or put a single friend forward. Good matches climb the matchmaker leaderboard.</p></div>
+      <div class="lobby-head"><span class="eyebrow">Be the matchmaker</span><h2 class="t" style="margin-top:12px">Set someone up</h2><p class="muted" style="font-size:13px;margin-top:6px">Back a match in the house, or put a single friend forward for an upcoming night. Good matches climb the matchmaker leaderboard.</p></div>
       <div class="seg"><button id="segPair" class="on" onclick="setupTab('pair')">Suggest a match</button><button id="segFriend" onclick="setupTab('friend')">Nominate a friend</button></div>
       <div id="setupBody"></div>
       <div class="pad" id="setupFoot"></div>
     </section>
     <section class="screen" id="cast">
-      <div class="lobby-head"><span class="eyebrow">Get on the show</span><h2 class="t" style="margin-top:12px">Put yourself forward</h2><p class="muted" style="font-size:13px;margin-top:6px">Want the spotlight? Tell us your vibe and you could be cast on an upcoming live date. 18+, verified, every dater opts in.</p></div>
+      <div class="lobby-head"><span class="eyebrow">Get in the house</span><h2 class="t" style="margin-top:12px">Put yourself forward</h2><p class="muted" style="font-size:13px;margin-top:6px">Want a shot at the pot? Tell us your vibe and you could be cast on an upcoming night. 18+, vetted, every contestant opts in and can tap out anytime.</p></div>
       <div id="castBody"></div>
     </section>
   </div>
@@ -346,20 +373,20 @@ h2.t{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.
 <div class="jpanel" id="jpanel">
   <div class="jt">Jump to any screen</div>
   <button onclick="jumpTo('home')"><span class="num">1</span>Home</button>
-  <button onclick="jumpTo('lobby'); renderLobby()"><span class="num">2</span>Live lobby</button>
-  <button onclick="jumpTo('room'); enterRoom(0)"><span class="num">3</span>Live date room</button>
+  <button onclick="jumpTo('lobby'); renderLobby()"><span class="num">2</span>Tonight's lineup</button>
+  <button onclick="jumpTo('room'); enterRoom(0)"><span class="num">3</span>Live date + vote</button>
   <button onclick="jumpTo('wallet'); renderWallet()"><span class="num">4</span>Wallet</button>
   <button onclick="jumpTo('leaderboard'); renderLeaderboard()"><span class="num">5</span>Leaderboard</button>
-  <button onclick="jumpTo('recap'); renderRecap()"><span class="num">6</span>Date recap</button>
+  <button onclick="jumpTo('recap'); renderRecap()"><span class="num">6</span>Night recap</button>
   <button onclick="jumpTo('setup'); renderSetup()"><span class="num">7</span>Set someone up</button>
   <button onclick="jumpTo('cast'); renderCast()"><span class="num">8</span>Get cast</button>
 </div>
 <div class="toast" id="toast"><span class="ti" id="toastIc"></span><span id="toastTx"></span></div>
 <script>
 var DATES=[
-  {id:0,a:"Maya",b:"Theo",aAv:"M",bAv:"T",aGrad:"linear-gradient(150deg,#FF2E93,#FF8A3D)",bGrad:"linear-gradient(150deg,#3FE0FF,#9B5CFF)",host:"@itsjordanlive",viewers:"12.4k",tags:["First date","Blind","Brooklyn"],heart:"\u{1F49E}"},
+  {id:0,a:"Maya",b:"Theo",aAv:"M",bAv:"T",aGrad:"linear-gradient(150deg,#FF2E93,#FF8A3D)",bGrad:"linear-gradient(150deg,#3FE0FF,#9B5CFF)",host:"@itsjordanlive",viewers:"12.4k",tags:["First date","Blind","Pot: $2.4k"],heart:"\u{1F49E}"},
   {id:1,a:"Priya",b:"Sam",aAv:"P",bAv:"S",aGrad:"linear-gradient(150deg,#9B5CFF,#FF2E93)",bGrad:"linear-gradient(150deg,#33E0A0,#3FE0FF)",host:"@thedatenight",viewers:"8.1k",tags:["Speed round","Round 2"],heart:"\u{1F525}"},
-  {id:2,a:"Devon",b:"Alex",aAv:"D",bAv:"A",aGrad:"linear-gradient(150deg,#FFC43D,#FF8A3D)",bGrad:"linear-gradient(150deg,#FF2E93,#9B5CFF)",host:"@cupidcrew",viewers:"21.7k",tags:["FINALE","2nd date vote"],heart:"\u{1F498}"}
+  {id:2,a:"Devon",b:"Alex",aAv:"D",bAv:"A",aGrad:"linear-gradient(150deg,#FFC43D,#FF8A3D)",bGrad:"linear-gradient(150deg,#FF2E93,#9B5CFF)",host:"@cupidcrew",viewers:"21.7k",tags:["Finale","Pot vote"],heart:"\u{1F498}"}
 ];
 var PLAYS=[
   {id:0,ic:"❓",cost:50,label:'Make them ask: "What\'s your most toxic trait?"',chat:"made them ask about toxic traits",spark:4},
@@ -388,13 +415,13 @@ var LEADERS=[
 var CHAT_LINES=[
   ["mads_x","cyan","NOT the toxic trait question"],
   ["jordanfan","mg","theo is so nervous lmaooo"],
-  ["livvy","cyan","send the drinks send the drinks"],
+  ["livvy","cyan","vote second date i'm begging"],
   ["the_real_deal","cyan","maya is OUT of his league"],
   ["bbygirl","mg","spark meter going UP"],
   ["kev","cyan","who triggered the hot seat"],
-  ["anon_44","cyan","second date energy fr"],
+  ["anon_44","cyan","she's winning that pot fr"],
   ["pluto","mg","this is better than netflix"],
-  ["sam_i_am","cyan","ask about the ex ask about the ex"],
+  ["sam_i_am","cyan","CUT. cut cut cut"],
   ["mira","cyan","they keep laughing omg"]
 ];
 var CONTACTS=[
@@ -422,6 +449,7 @@ var MM_LEADERS=[
 ];
 var wings=500, spark=55, momentsTriggered=0, playHistory=[], curDate=0, chatTimer=null;
 var setups=[], lbTab='producers';
+var voteYes=62, myVote=null;
 function go(id){
   if(id!=='room' && chatTimer){ clearInterval(chatTimer); chatTimer=null; }
   var s=document.querySelectorAll('.screen');
@@ -458,6 +486,8 @@ function enterRoom(id){
     '<span class="vs">x</span>'+
     '<div class="dater"><div class="av" style="background:'+d.bGrad+'">'+d.bAv+'</div><span class="nm">'+d.b+'</span></div>';
   resetOnstage();
+  document.getElementById('cvQ').innerHTML='Second date for '+d.a+' &amp; '+d.b+'?';
+  renderVote();
   document.getElementById('plays').innerHTML=PLAYS.map(function(p){
     return '<button class="play'+(p.wide?' wide':'')+(p.spicy?' spicy':'')+'" onclick="sendPlay('+p.id+')">'+
       '<span class="pic">'+p.ic+'</span>'+
@@ -468,14 +498,26 @@ function enterRoom(id){
   var rs=["\u{1F525}","\u{1F602}","\u{1F60D}","\u{1F480}","\u{1F44F}"];
   document.getElementById('reactRow').innerHTML=rs.map(function(e){return '<button onclick="react(\''+e+'\')">'+e+'</button>';}).join('');
   document.getElementById('chat').innerHTML='';
-  pushChat('sys',null,'Welcome to the room. Be nice, send plays');
+  pushChat('sys',null,'Welcome to the house. Send a play, then call the vote.');
   if(chatTimer) clearInterval(chatTimer);
   chatTimer=setInterval(randomChat, 2300);
 }
 function leaveRoom(){ if(chatTimer){clearInterval(chatTimer);chatTimer=null;} go('lobby'); renderLobby(); }
 function resetOnstage(){
   var o=document.getElementById('onstage'); o.className='onstage idle';
-  o.innerHTML='<span class="ic">\u{1F3AC}</span><div class="txt"><b>You are live in the room.</b><div class="by">Send a play below to make something happen.</div></div>';
+  o.innerHTML='<span class="ic">\u{1F3AC}</span><div class="txt"><b>You are live in the house.</b><div class="by">Send a play, then call the vote.</div></div>';
+}
+function renderVote(){
+  var no=100-voteYes;
+  document.getElementById('cvYesBar').style.width=voteYes+'%';
+  document.getElementById('cvYesTxt').textContent='Second date '+voteYes+'%';
+  document.getElementById('cvNoTxt').textContent='Cut '+no+'%';
+}
+function castVote(side){
+  myVote=side;
+  if(side==='yes') voteYes=Math.min(95, voteYes+5); else voteYes=Math.max(5, voteYes-5);
+  renderVote();
+  toast(side==='yes'?'\u{1F49E}':'✂️', side==='yes'?'Voted: second date. The crowd is '+voteYes+'% yes.':'Voted: cut. The crowd is '+(100-voteYes)+'% cut.');
 }
 function pushChat(type,user,text){
   var chat=document.getElementById('chat'); if(!chat) return;
@@ -538,7 +580,7 @@ function renderWallet(){
     '</div>';
   }).join('');
   var h=document.getElementById('histList');
-  if(playHistory.length===0){ h.innerHTML='<div style="color:var(--faint);font-size:13px;padding:14px 0">No plays sent yet. Jump into a date and start directing.</div>'; }
+  if(playHistory.length===0){ h.innerHTML='<div style="color:var(--faint);font-size:13px;padding:14px 0">No plays sent yet. Jump into the house and start directing.</div>'; }
   else { h.innerHTML=playHistory.slice(0,8).map(function(x){
     return '<div class="hrow"><span class="hi">'+x.ic+'</span><span style="flex:1;color:var(--muted)">'+x.label+'</span><span class="hc">-'+x.cost+'</span></div>';
   }).join(''); }
@@ -575,11 +617,15 @@ function renderLeaderboard(){
   list.innerHTML=html;
 }
 function renderRecap(){
-  var d=DATES[curDate];
-  document.getElementById('recapTitle').innerHTML=d.a+' &amp; '+d.b+' are getting a second date!';
-  document.getElementById('recapSub').textContent='The crowd pushed them over the edge. '+d.viewers+' people watched it happen.';
+  var d=DATES[curDate], no=100-voteYes, yes=voteYes>=50;
+  document.getElementById('recapEmoji').innerHTML=yes?'\u{1F498}':'\u{1F494}';
+  document.getElementById('recapTitle').innerHTML=yes?('The crowd gave '+d.a+' &amp; '+d.b+' a second date!'):('The crowd cut '+d.a+' &amp; '+d.b+' tonight.');
+  document.getElementById('recapSub').innerHTML=(yes?(voteYes+'% of the house voted yes.'):(no+'% voted to cut.'))+' '+d.a+' takes tonight\'s $2,400 pot.';
+  document.getElementById('rcYes').textContent='Second date '+voteYes+'%';
+  document.getElementById('rcNo').textContent='Cut '+no+'%';
+  document.getElementById('rcBar').style.width=voteYes+'%';
   document.getElementById('impMoments').textContent=momentsTriggered;
-  document.getElementById('impSpark').textContent=spark+'%';
+  document.getElementById('impVote').textContent=myVote?('your '+(myVote==='yes'?'second-date':'cut')+' vote'):'no vote yet';
 }
 var setupMode='pair', pairSel=[], friendSel=-1, reasonSel=-1;
 function renderSetup(){ setupTab('pair'); }
@@ -589,10 +635,10 @@ function setupTab(mode){
   document.getElementById('segFriend').classList.toggle('on',mode==='friend');
   var body=document.getElementById('setupBody');
   if(mode==='pair'){
-    body.innerHTML='<div class="sub-h">Who should date who?</div><div class="sub-p">Pick two singles from tonight\'s pool.</div>'+
+    body.innerHTML='<div class="sub-h">Who should date who?</div><div class="sub-p">Pick two singles from the house pool.</div>'+
       '<div class="pick-grid" id="pairGrid">'+SINGLES.map(function(s,i){return pickHTML(s,i,'togglePair');}).join('')+'</div>';
   } else {
-    body.innerHTML='<div class="sub-h">Put a friend on the show</div><div class="sub-p">Nominate someone single. They get an invite, you get the credit.</div>'+
+    body.innerHTML='<div class="sub-h">Put a friend in the house</div><div class="sub-p">Nominate someone single. They get an invite, you get the credit.</div>'+
       '<div class="pick-grid" id="friendGrid">'+CONTACTS.map(function(c,i){return pickHTML(c,i,'pickFriend');}).join('')+'</div>'+
       '<div class="sub-h" style="margin-top:14px">Why them?</div>'+
       '<div class="reasons" id="reasonRow">'+REASONS.map(function(r,i){return '<button class="chip3" onclick="pickReason('+i+')">'+r+'</button>';}).join('')+'</div>';
@@ -645,13 +691,13 @@ var castVibe=-1, castShow=-1;
 function renderCast(){
   castVibe=-1; castShow=-1;
   var vibes=["Something serious","Just for fun","Open to anything"];
-  var shows=["Maya &amp; Theo's show","Any live show","Surprise me"];
+  var shows=["Maya &amp; Theo's night","Any night this week","Surprise me"];
   document.getElementById('castBody').innerHTML=
     '<div class="sub-h">What are you looking for?</div>'+
     '<div class="reasons" id="castVibe">'+vibes.map(function(v,i){return '<button class="chip3" onclick="pickCast(\'v\','+i+')">'+v+'</button>';}).join('')+'</div>'+
-    '<div class="sub-h" style="margin-top:12px">Which show?</div>'+
+    '<div class="sub-h" style="margin-top:12px">Which night?</div>'+
     '<div class="reasons" id="castShow">'+shows.map(function(s,i){return '<button class="chip3" onclick="pickCast(\'s\','+i+')">'+s+'</button>';}).join('')+'</div>'+
-    '<div class="pad" id="castFoot"><button class="btn" style="opacity:.45;pointer-events:none">Pick your vibe and a show</button></div>';
+    '<div class="pad" id="castFoot"><button class="btn" style="opacity:.45;pointer-events:none">Pick your vibe and a night</button></div>';
 }
 function pickCast(type,i){
   if(type==='v'){ castVibe=i; var a=document.querySelectorAll('#castVibe .chip3'); for(var k=0;k<a.length;k++) a[k].classList.toggle('sel',k===i); }
@@ -660,7 +706,7 @@ function pickCast(type,i){
 }
 function submitCast(){
   document.getElementById('castBody').innerHTML=
-    '<div class="cast-status"><div class="e">✨</div><h3>You are in the casting pool!</h3><p>Spot #214 in line. A host will reach out when a slot opens on an upcoming live date.</p></div>'+
+    '<div class="cast-status"><div class="e">✨</div><h3>You are in the casting pool!</h3><p>Spot #214 in line. Our team reviews and vets every contestant before a night, and you can tap out anytime.</p></div>'+
     '<div class="pad"><button class="btn ghost" onclick="go(\'home\')">Back to home</button></div>';
   toast('\u{1F3AC}','You put yourself forward. Lights, camera...');
 }
@@ -673,7 +719,7 @@ function toast(ic,tx){
 }
 function resetDemo(){
   if(chatTimer){clearInterval(chatTimer);chatTimer=null;}
-  wings=500; spark=55; momentsTriggered=0; playHistory=[]; curDate=0; setups=[]; lbTab='producers';
+  wings=500; spark=55; momentsTriggered=0; playHistory=[]; curDate=0; setups=[]; lbTab='producers'; voteYes=62; myVote=null;
   setWings(500);
   go('home');
 }
